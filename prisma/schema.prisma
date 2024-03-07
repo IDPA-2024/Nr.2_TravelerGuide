@@ -36,7 +36,21 @@ model Restaurant {
   vegetarian        Boolean
   website           String?
   opening_hours     OpeningHours?
+  category          Category[]
   comments          Comment[]     @relation("RestaurantToComment")
+}
+
+enum Category {
+ASIAN
+FASTFODD
+VEGAN
+BURGER
+SWISS
+KEBAB
+GREEK
+TAKE_AWAY
+SANDWICH
+ITALIAN
 }
 
 enum Price {

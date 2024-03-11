@@ -23,17 +23,13 @@ model Restaurant {
   price             Price
   quality           Quality
   seating_option    Boolean
-  allot_place       Boolean
   indoor_seating    Boolean
   outdoor_seating   Boolean
   take_away         Boolean
   student_reduction Boolean?
-  service           Service
   delivery_service  Boolean?
   ambience          Ambience
-  regular_type      RegularType
   vegan             Boolean
-  vegetarian        Boolean
   website           String?
   opening_hours     OpeningHours?
   category          Category[]
@@ -48,7 +44,6 @@ BURGER
 SWISS
 KEBAB
 GREEK
-TAKE_AWAY
 SANDWICH
 ITALIAN
 }
@@ -69,10 +64,6 @@ enum Quality {
   EKELHAFT
 }
 
-enum Service {
-  SELF_SERVICE
-  TABLE_SERVICE
-}
 
 enum Style {
   MODERN
@@ -99,14 +90,6 @@ type Ambience {
   space      Space
   brightness Brightness
   loudness   Loudness
-}
-
-enum RegularType {
-  BUSINESS_PEOPLE
-  PUPILS_STUDENTS
-  FAMILIES
-  PENSIONERS
-  ALL
 }
 
 type OpeningHours {

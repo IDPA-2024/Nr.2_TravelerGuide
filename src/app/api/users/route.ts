@@ -27,33 +27,3 @@ export async function POST(req: Request) {
   if (!result) return Response.json({ message: "error", status: 500 });
   return Response.json({ message: "ok", status: 200, data: result });
 }
-
-export async function GET(req: Request) {
-  const result = await prisma.user.findMany();
-  return Response.json({ message: "ok", status: 200, data: result });
-}
-
-export async function PUT(req: Request) {
-  const body = await req.json();
-  const result = await prisma.user.update({
-    where: {
-      id: body.id,
-    },
-    data: {
-      ...body,
-    },
-  });
-  if (!result) return Response.json({ message: "error", status: 500 });
-  return Response.json({ message: "ok", status: 200, data: result });
-}
-
-export async function DELETE(req: Request) {
-  const body = await req.json();
-  const result = await prisma.user.delete({
-    where: {
-      id: body.id,
-    },
-  });
-  if (!result) return Response.json({ message: "error", status: 500 });
-  return Response.json({ message: "ok", status: 200, data: result });
-}

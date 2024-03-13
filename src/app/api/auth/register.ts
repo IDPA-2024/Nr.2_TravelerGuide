@@ -32,5 +32,5 @@ export async function POST(req: Request) {
   // TODO: Send verification email
 
   if (!result) return Response.json({ message: "error", status: 500 });
-  return Response.json({ message: "ok", status: 200, data: result });
+  return Response.json({ message: "ok", status: 200 });
 }

@@ -1,7 +1,11 @@
 import prisma from "@/lib/prisma";
+import { NextApiRequest } from "next";
 
-export async function POST(req: Request) {
-  const body = await req.json();
+export async function POST(req: NextApiRequest) {
+  const token = req.cookies.token;
+  if (!token) return Response.json({ message: "error", status: 401 });
+
+  const body = await req.body;
   const result = await prisma.restaurant.create({
     data: {
       ...body,

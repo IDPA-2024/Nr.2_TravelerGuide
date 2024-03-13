@@ -1,6 +1,9 @@
 import prisma from "@/lib/prisma";
+import { NextApiRequest } from "next";
 
-export async function GET(req: Request, params: { id: string }) {
+export async function GET(req: NextApiRequest, params: { id: string }) {
+  const token = req.cookies.token;
+  if (!token) return Response.json({ message: "error", status: 401 });
   const { id } = params;
   const result = await prisma.user.findUnique({
     where: {
@@ -11,8 +14,10 @@ export async function GET(req: Request, params: { id: string }) {
   return Response.json({ message: "ok", status: 200, data: result });
 }
 
-export async function PUT(req: Request, params: { id: string }) {
-  const body = await req.json();
+export async function PUT(req: NextApiRequest, params: { id: string }) {
+  const token = req.cookies.token;
+  if (!token) return Response.json({ message: "error", status: 401 });
+  const body = await req.body;
   const { id } = params;
   const result = await prisma.user.update({
     where: {
@@ -26,7 +31,9 @@ export async function PUT(req: Request, params: { id: string }) {
   return Response.json({ message: "ok", status: 200, data: result });
 }
 
-export async function DELETE(req: Request, params: { id: string }) {
+export async function DELETE(req: NextApiRequest, params: { id: string }) {
+  const token = req.cookies.token;
+  if (!token) return Response.json({ message: "error", status: 401 });
   const { id } = params;
   const result = await prisma.user.delete({
     where: {

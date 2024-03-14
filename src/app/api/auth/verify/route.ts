@@ -1,7 +1,7 @@
 import { User } from "@/lib/mongoose";
 
-export async function POST(req: Request) {
-  const { id } = await req.json();
+export async function GET(req: Request) {
+  const id = await req.url.split("=")[1];
   const result = await User.findOneAndUpdate(
     { _id: id },
     { verified: true },

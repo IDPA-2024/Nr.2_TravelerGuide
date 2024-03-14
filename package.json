@@ -21,6 +21,7 @@
     "cookie-parser": "^1.4.6",
     "framer-motion": "^11.0.8",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.1",
     "next": "14.1.2",
     "react": "^18",
     "react-dom": "^18"

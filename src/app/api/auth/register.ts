@@ -3,8 +3,18 @@ import bcrypt from "bcrypt";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { password } = body;
+  const { password, email } = body;
   const passwordHash = await bcrypt.hash(password, 10);
+  let emailPattern: RegExp = /[a-zA-Z0-9._%+-]+@(stud.kbw|stud.krw|edu.zh).ch/g;
+  if (emailPattern.test(email) === false) {
+    return Response.json({ message: "error", status: 400 });
+  }
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+  if (user) return Response.json({ message: "error", status: 400 });
 
   const image = await fetch(
     `https://ui-avatars.com/api/?background=random&name=${

@@ -1,33 +1,35 @@
-import prisma from "@/lib/prisma";
+import { User } from "@/lib/mongoose";
 import { generateToken } from "@/utils/jwt";
 import bcrypt from "bcrypt";
 import { NextApiResponse } from "next";
 
 export async function POST(req: Request, res: NextApiResponse) {
   const body = await req.json();
-  const { username, password } = body;
-  const user = await prisma.user.findUnique({
-    where: {
-      email: username,
-    },
+  const { email, password } = body;
+  const user = await User.findOne({
+    email: email,
   });
 
   if (user) {
     const passwordMatch = await bcrypt.compare(password, user.passwordHash);
     if (passwordMatch) {
       if (!user.verified) {
-        return res.status(401).json({ message: "Nutzer nicht verifiziert" });
+        return Response.json({
+          message: "Nutzer nicht verifiziert",
+          status: 401,
+        });
       }
       const token = generateToken({ email: user.email });
-      res.setHeader(
+      const res = new Response(null, { status: 200 });
+      res.headers.set(
         "Set-Cookie",
         `token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=3600`
       );
-      res.status(200).json({ message: "ok" });
+      return res;
     } else {
-      res.status(401).json({ message: "Passwort falsch" });
+      return Response.json({ message: "Passwort falsch", status: 401 });
     }
   } else {
-    res.status(401).json({ message: "Nutzer nicht gefunden" });
+    return Response.json({ message: "Nutzer nicht gefunden", status: 401 });
   }
 }

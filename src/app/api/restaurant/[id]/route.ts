@@ -1,12 +1,11 @@
+import { Restaurant } from "@/lib/mongoose";
 import prisma from "@/lib/prisma";
 import { NextApiRequest } from "next";
 
 export async function GET(req: Request, params: { id: string }) {
   const { id } = params;
-  const result = await prisma.restaurant.findUnique({
-    where: {
-      id: id,
-    },
+  const result = await Restaurant.findOne({
+    _id: id,
   });
   if (!result) return Response.json({ message: "error", status: 500 });
   return Response.json({ message: "ok", status: 200, data: result });
@@ -17,14 +16,11 @@ export async function PUT(req: NextApiRequest, params: { id: string }) {
   if (!token) return Response.json({ message: "error", status: 401 });
   const { id } = params;
   const body = await req.body;
-  const result = await prisma.restaurant.update({
-    where: {
-      id: id,
-    },
-    data: {
-      ...body,
-    },
-  });
+  const result = await Restaurant.findOneAndUpdate(
+    { _id: id },
+    { ...body },
+    { new: true }
+  );
   if (!result) return Response.json({ message: "error", status: 500 });
   return Response.json({ message: "ok", status: 200, data: result });
 }

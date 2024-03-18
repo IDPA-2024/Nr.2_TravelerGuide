@@ -1,5 +1,4 @@
 import { User } from "@/lib/mongoose";
-import prisma from "@/lib/prisma";
 import { NextApiRequest } from "next";
 
 export async function GET(req: NextApiRequest, params: { id: string }) {

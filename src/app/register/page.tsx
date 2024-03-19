@@ -30,7 +30,7 @@ const page = () => {
             label="Ich akzeptiere die AGB's"
           />
         </div>
-        <Button button="Registrieren" size="lg"  />
+        <Button text="Registrieren" size="lg"  />
         <Link href="/login" className="text-white text-lg md:h-1/4 text-center">
           Klicke hier, um anzumelden?
         </Link>

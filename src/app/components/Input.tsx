@@ -1,14 +1,23 @@
-import React, { InputHTMLAttributes } from "react";
+import React from "react";
 
-const InputPassword = ({ value, onChange, placeholder }: InputHTMLAttributes<HTMLInputElement>) => {
+const InputPassword = ({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string;
+  onChange: (e:any) => void;
+  placeholder: string
+}) => {
   return (
+    <div className="flex flex-row gap-0 h-20 w-3/4 justify-center items-center bg-black/50 rounded-lg shadow-md shadow-black md:h-1/2 focus-within:border-b-[#0BCAAD] focus-within:border-b-2 focus-within:shadow-none md:pt-2 md:pb-2">
       <input
         value={value}
         onChange={onChange}
-        className="text-white text-3xl outline-none focus:outline-none flex-grow pl-4 flex flex-row gap-0 h-20 justify-center w-3/4 items-center bg-black/50 rounded-lg shadow-md shadow-black md:h-1/2 focus:border-b-[#0BCAAD] focus:border-b-2 focus:shadow-none"
+        className="text-white text-3xl outline-none bg-transparent focus:outline-none flex-grow w-full ml-4 "
         placeholder={placeholder}
       />
-
+    </div>
   );
 };
 

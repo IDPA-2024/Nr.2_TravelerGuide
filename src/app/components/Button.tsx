@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ button, size }: { button: string; size: string }) => {
+const Button = ({ text, size }: { text: string; size: string }) => {
   let actualSize = "";
   switch (size) {
     case "lg":
@@ -19,7 +19,7 @@ const Button = ({ button, size }: { button: string; size: string }) => {
         actualSize
       }
     >
-      {button}
+      {text}
     </div>
   );
 };

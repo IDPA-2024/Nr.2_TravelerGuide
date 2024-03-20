@@ -1,5 +1,7 @@
+import { EmailTemplate } from "@/email/VerifyEmail";
 import { User } from "@/lib/mongoose";
 import bcrypt from "bcrypt";
+import { Resend } from "resend";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -35,8 +37,19 @@ export async function POST(req: Request) {
     passwordHash: passwordHash,
     verified: false,
   });
-  // TODO: Send verification email
-
   if (!result) return Response.json({ message: "error", status: 500 });
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const { data, error } = await resend.emails.send({
+    from: "noreply@banyard.tech",
+    to: [body.email],
+    subject: "Verifiziere deine E-Mail-Adresse",
+    react: EmailTemplate({
+      name: result.name,
+      link: `${process.env.NEXT_PUBLIC_URL}/auth/verify?id=${result._id}`,
+    }),
+  });
+  if (error) {
+    return Response.json({ message: error, status: 500 });
+  }
   return Response.json({ message: "ok", status: 200 });
 }

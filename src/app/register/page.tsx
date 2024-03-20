@@ -7,21 +7,39 @@ import Link from "next/link";
 import Checkbox from "@mui/material/Checkbox";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+
   const [checked, setChecked] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
   const [email, setEmail] = React.useState("");
 
   const handleRegister = () => {
-    if (
-      password !== passwordConfirm ||
-      password === "" ||
-      passwordConfirm === ""
-    ) {
-      toast.error("Passwort stimmt nicht überein", {
+    if (email === "" || password === "" || passwordConfirm === "") {
+      toast.error("Bitte fülle alle Felder aus", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    } else if (password.length < 6) {
+      toast.error("Passwort muss mindestens 6 Zeichen lang sein", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    } else if (password !== passwordConfirm) {
+      toast.error("Passwörter stimmen nicht überein", {
         position: "top-left",
         autoClose: 2000,
         hideProgressBar: false,
@@ -41,7 +59,7 @@ const page = () => {
         theme: "dark",
       });
     } else {
-      redirect("/verify");
+      router.push("/verify");
     }
     setChecked(false);
     setPassword("");
@@ -80,7 +98,15 @@ const page = () => {
             }}
           />
           <div className="flex items-center justify-center ">
-            <Checkbox onChange={handleChecked} />
+            <Checkbox
+              onChange={handleChecked}
+              sx={{
+                color: "white",
+                "&.Mui-checked": {
+                  color: "#0BCAAD",
+                },
+              }}
+            />  
             <p>
               Ich akzeptiere die{" "}
               <Link href="" className="text-[#0BCAAD] hover:underline">

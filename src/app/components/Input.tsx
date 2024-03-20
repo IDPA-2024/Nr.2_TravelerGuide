@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputPassword = ({
+const Input = ({
   value,
   onChange,
   placeholder,
@@ -14,11 +14,11 @@ const InputPassword = ({
       <input
         value={value}
         onChange={onChange}
-        className="text-white text-3xl outline-none bg-transparent focus:outline-none flex-grow w-full ml-4 "
+        className="text-white text-xl md:text-3xl outline-none bg-transparent focus:outline-none flex-grow w-full ml-4 "
         placeholder={placeholder}
       />
     </div>
   );
 };
 
-export default InputPassword;
+export default Input;

@@ -1,5 +1,4 @@
 import { Restaurant } from "@/lib/mongoose";
-import prisma from "@/lib/prisma";
 import { NextApiRequest } from "next";
 
 export async function GET(req: Request, params: { id: string }) {

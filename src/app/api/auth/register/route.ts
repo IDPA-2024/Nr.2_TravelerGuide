@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const user = await User.findOne({
     email: email,
   });
-  if (user) return Response.json({ message: "error", status: 400 });
+  if (user) return Response.json({ message: "error", status: 401 });
 
   const image = await fetch(
     `https://ui-avatars.com/api/?background=random&name=${

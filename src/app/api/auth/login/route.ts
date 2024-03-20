@@ -27,9 +27,9 @@ export async function POST(req: Request, res: NextApiResponse) {
       );
       return res;
     } else {
-      return Response.json({ message: "Passwort falsch", status: 401 });
+      return Response.json({ message: "Passwort falsch", status: 402 });
     }
   } else {
-    return Response.json({ message: "Nutzer nicht gefunden", status: 401 });
+    return Response.json({ message: "Nutzer nicht gefunden", status: 403 });
   }
 }

@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     subject: "Verifiziere deine E-Mail-Adresse",
     react: EmailTemplate({
       name: result.name,
-      link: `${process.env.NEXT_PUBLIC_URL}/auth/verify?id=${result._id}`,
+      link: `${process.env.NEXT_PUBLIC_URL}/verify?id=${result._id}`,
     }),
   });
   if (error) {

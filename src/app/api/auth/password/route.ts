@@ -1,13 +1,24 @@
 import { User } from "@/lib/mongoose";
 import { NextApiRequest } from "next";
 import bcrypt from "bcrypt";
+import { Resend } from "resend";
+import { EmailTemplate } from "@/email/PasswordEmail";
 
 export async function GET(req: Request, params: { email: string }) {
   const { email } = params;
   const user = await User.findOne({ email });
   if (!user) return Response.json({ message: "error", status: 404 });
 
-  // TODO: Send reset email
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const { data, error } = await resend.emails.send({
+    from: "noreply@banyard.tech",
+    to: [user.email],
+    subject: "Passwort zurücksetzen - Lunch Guide",
+    react: EmailTemplate({
+      name: user.name,
+      link: `${process.env.NEXT_PUBLIC_URL}/resetPassword?id=${user._id}`,
+    }),
+  });
 }
 
 export async function POST(req: NextApiRequest) {

@@ -1,0 +1,140 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  lat               Float
+  lng               Float
+  name              String
+  address           String
+  image             String
+  price             Price
+  quality           Quality
+  seating_option    Boolean
+  indoor_seating    Boolean
+  outdoor_seating   Boolean
+  take_away         Boolean
+  student_reduction Boolean?
+  delivery_service  Boolean?
+  ambience          Ambience
+  vegan             Boolean
+  website           String?
+  opening_hours     OpeningHours?
+  category          Category[]
+  comments          Comment[]     @relation("RestaurantToComment")
+}
+
+enum Category {
+ASIAN
+FASTFODD
+VEGAN
+BURGER
+SWISS
+KEBAB
+GREEK
+SANDWICH
+ITALIAN
+}
+
+enum Price {
+  SEHR_GUENSTIG
+  GUENSTIG
+  INORDNUNG
+  TEUER
+  SEHR_TEUER
+}
+
+enum Quality {
+  SEHR_LECKER
+  LECKER
+  INORDNUNG
+  NICHT_LECKER
+  EKELHAFT
+}
+
+
+enum Style {
+  MODERN
+  OLD_FASHIONED
+}
+
+enum Space {
+  SPACIOUS
+  TIGHT
+}
+
+enum Brightness {
+  BRIGHT
+  GRIM
+}
+
+enum Loudness {
+  LOUD
+  QUIET
+}
+
+type Ambience {
+  style      Style
+  space      Space
+  brightness Brightness
+  loudness   Loudness
+}
+
+type OpeningHours {
+  periods      Period[]
+  weekday_text String[]
+}
+
+type Period {
+  day   String
+  open  Open
+  close Close?
+}
+
+type Open {
+  day       Int
+  hours     Int
+  minutes   Int
+  time      String
+  next_date Int?
+}
+
+type Close {
+  day       Int
+  hours     Int
+  minutes   Int
+  time      String
+  next_date Int?
+}
+
+model Comment {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  user_id      String     @db.ObjectId
+  text         String
+  stars        Int        @default(0)
+  restaurant   Restaurant @relation("RestaurantToComment", fields: [restaurantId], references: [id])
+  restaurantId String     @db.ObjectId
+  user         User       @relation(fields: [user_id], references: [id])
+}
+
+model User {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  email        String    @unique
+  passwordHash String
+  name         String
+  image        String?
+  verified     Boolean   @default(false)
+  comments     Comment[]
+}

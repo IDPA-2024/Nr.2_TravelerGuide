@@ -5,7 +5,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 export default function CheckboxLabels() {
   return (
-    <FormGroup className="bg-gray-700">
+    <FormGroup className="bg-gray-700 text-white">
       <FormControlLabel
         control={
           <Checkbox
@@ -19,11 +19,71 @@ export default function CheckboxLabels() {
         }
         label="Checkbox1"
       />
-      <FormControlLabel control={<Checkbox />} label="Checkbox2" />
-      <FormControlLabel control={<Checkbox />} label="Checkbox3" />
-      <FormControlLabel control={<Checkbox />} label="Checkbox4" />
-      <FormControlLabel control={<Checkbox />} label="Checkbox5" />
-      <FormControlLabel control={<Checkbox />} label="Checkbox6" />
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              color: "white",
+              "&.Mui-checked": {
+                color: "#0BCAAD",
+              },
+            }}
+          />
+        }
+        label="Checkbox2"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              color: "white",
+              "&.Mui-checked": {
+                color: "#0BCAAD",
+              },
+            }}
+          />
+        }
+        label="Checkbox3"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              color: "white",
+              "&.Mui-checked": {
+                color: "#0BCAAD",
+              },
+            }}
+          />
+        }
+        label="Checkbox4"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              color: "white",
+              "&.Mui-checked": {
+                color: "#0BCAAD",
+              },
+            }}
+          />
+        }
+        label="Checkbox5"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{
+              color: "white",
+              "&.Mui-checked": {
+                color: "#0BCAAD",
+              },
+            }}
+          />
+        }
+        label="Checkbox6"
+      />
     </FormGroup>
   );
 }

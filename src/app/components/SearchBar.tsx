@@ -4,8 +4,8 @@ import { FaFilter } from "react-icons/fa";
 import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import CheckboxFormgroup from "./CheckboxLabels";
-
+import CheckboxLabels from "./CheckboxLabels";
+import Button from "./Button";
 
 const SearchBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -34,15 +34,14 @@ const SearchBar = () => {
           className=" w-full rounded-md text-center bg-transparent text-lg pl-3 border-none focus:outline-none focus:placeholder:text-transparent"
           placeholder="Suche"
         />
-        <button
-          aria-describedby={id}
-          onClick={handleClick}
-        >
+        <button aria-describedby={id} onClick={handleClick}>
           <div className=" bg-black rounded-r-lg py-4 px-5">
             <FaFilter />
           </div>
         </button>
+        </div>
         <Popover
+        className="mt-4 mr-10"
           id={id}
           open={open}
           anchorEl={anchorEl}
@@ -51,10 +50,15 @@ const SearchBar = () => {
             vertical: "bottom",
             horizontal: "left",
           }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
         >
-          <Typography><CheckboxFormgroup /></Typography>
+          <Typography>
+            <CheckboxLabels />
+          </Typography>
         </Popover>
-      </div>
     </div>
   );
 };

@@ -1,14 +1,15 @@
+import Header from "./components/Header";
+import Map from "./components/Map";
 import OverviewDrawer from "./components/OverviewDrawer";
-import SearchBar from "./components/SearchBar";
-
 
 const page = () => {
   return (
     <div>
       <OverviewDrawer/>
+      <Map />
+      <Header/>
     </div>
   );
 };
 
 export default page;
-

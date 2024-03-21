@@ -1,10 +1,9 @@
-import SearchBar from "./components/SearchBar";
-
+import Header from "./components/Header";
 
 const page = () => {
   return (
     <div>
-      <SearchBar/>
+      <Header/>
     </div>
   );
 };

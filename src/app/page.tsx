@@ -1,10 +1,11 @@
+import OverviewDrawer from "./components/OverviewDrawer";
 import SearchBar from "./components/SearchBar";
 
 
 const page = () => {
   return (
     <div>
-      <SearchBar/>
+      <OverviewDrawer/>
     </div>
   );
 };

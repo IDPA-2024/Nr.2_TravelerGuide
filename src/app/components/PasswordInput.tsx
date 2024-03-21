@@ -9,7 +9,7 @@ const InputPassword = ({ value, onChange, placeholder }: InputHTMLAttributes<HTM
         type={show ? "text" : "password"}
         value={value}
         onChange={onChange}
-        className="text-white text-3xl outline-none border-none p-0 bg-transparent focus:outline-transparent focus:border-transparent flex-grow w-full ml-4 "
+        className="text-white text-xl md:text-3xl outline-none border-none p-0 bg-transparent focus:outline-transparent focus:border-transparent flex-grow w-full ml-4 "
         placeholder={placeholder}
       />
       {show ? (

@@ -4,10 +4,10 @@ const Button = ({ text, size, onClick }: { text: string; size: string, onClick: 
   let actualSize = "";
   switch (size) {
     case "lg":
-      actualSize = "h-24 w-3/4 text-3xl";
+      actualSize = "min-h-16 w-3/4 text-3xl";
       break;
     case "sm":
-      actualSize = "h-10 w-2/4 text-lg";
+      actualSize = "h-10 w-1/3 text-lg";
       break;
     default:
       break;

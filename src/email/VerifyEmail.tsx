@@ -8,7 +8,7 @@ export const EmailTemplate = ({
   <div
     style={{
       width: "100%",
-      height: "100vh",
+      height: "1500px",
       background:
         "linear-gradient(90deg, rgba(0,38,96,1) 0%, rgba(147,230,199,1) 50%, rgba(6,142,186,1) 100%)",
       display: "flex",
@@ -35,8 +35,8 @@ export const EmailTemplate = ({
       <p>
         Hallo {name},
         <br />
-        Du hast dich auf unserer seite Registriert und nun musst du deine
-        E-Mail verifizieren.
+        Du hast dich auf unserer seite Registriert und nun musst du deine E-Mail
+        verifizieren.
       </p>
       <a
         href={link}

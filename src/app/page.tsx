@@ -6,8 +6,6 @@ const page = () => {
   return (
     <div>
       <OverviewDrawer/>
-      <Map />
-      <Header/>
     </div>
   );
 };

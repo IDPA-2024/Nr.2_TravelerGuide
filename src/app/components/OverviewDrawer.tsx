@@ -8,20 +8,23 @@ import {
   DrawerContent,
   useDisclosure,
   Button,
+  RadioGroup,
+  Stack,
+  Radio,
 } from "@chakra-ui/react";
 
-const OverviewDrawer = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function OverviewDrawer() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <div>
-      <Button onClick={onOpen}>
+    <>
+      <Button colorScheme='blue' onClick={onOpen}>
         Open
       </Button>
-      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="md">
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
+          <DrawerHeader borderBottomWidth='1px'>Basic Drawer</DrawerHeader>
           <DrawerBody>
             <p>Some contents...</p>
             <p>Some contents...</p>
@@ -29,8 +32,8 @@ const OverviewDrawer = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </div>
-  );
-};
+    </>
+  )
+}
 
 export default OverviewDrawer;

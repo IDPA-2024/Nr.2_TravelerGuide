@@ -23,6 +23,10 @@ const Map = () => {
         center: position,
         zoom: 16,
         mapId: "1d3709bffc5c137f",
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoomControl: false,
       };
 
       const map = new Map(mapRef.current, mapOptions);
@@ -30,7 +34,7 @@ const Map = () => {
     };
     initMap();
   }, []);
-  return <div className="w-screen h-[calc(100vh+3rem)] -mt-12" ref={mapRef} />;
+  return <div className="w-screen h-screen" ref={mapRef} />;
 };
 
 export default Map;

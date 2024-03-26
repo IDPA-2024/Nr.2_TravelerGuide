@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -16,8 +16,8 @@ const page = () => {
             <p className="text-2xl text-center">
               Es wurde eine Email gesendet. Bitte verifizieren Sie sich
             </p>
-            <Button text="Erneut senden" size="lg" onClick={() => {}} />
-            <Button text="Anmelden" size="sm" onClick={() => {router.push("/login")}} />
+            <CustomButton text="Erneut senden" size="lg" onClick={() => {}} />
+            <CustomButton text="Anmelden" size="sm" onClick={() => {router.push("/login")}} />
           </div>
         </div>
   );

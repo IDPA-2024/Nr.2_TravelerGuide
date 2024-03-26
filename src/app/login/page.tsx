@@ -2,7 +2,7 @@
 import React from "react";
 import PasswordInput from "../components/PasswordInput";
 import Input from "../components/Input";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +54,7 @@ const page = () => {
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full">
           
-        <Button text="Anmelden" size="lg" onClick={handleLogin} />
+        <CustomButton text="Anmelden" size="lg" onClick={handleLogin} />
           <Link
             href="/register"
             className="text-white text-lg md:h-1/4 text-center hover:underline"
@@ -68,7 +68,7 @@ const page = () => {
             Passwort vergessen
           </Link>
         </div>
-        <Button text="Gast" size="sm" onClick={() => {router.push("/")}} />
+        <CustomButton text="Gast" size="sm" onClick={() => {router.push("/")}} />
       </div>
       <ToastContainer />
     </div>

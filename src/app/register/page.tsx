@@ -2,7 +2,7 @@
 import React from "react";
 import PasswordInput from "../components/PasswordInput";
 import Input from "../components/Input";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import Link from "next/link";
 import Checkbox from "@mui/material/Checkbox";
 import { ToastContainer, toast } from "react-toastify";
@@ -115,7 +115,7 @@ const page = () => {
             </p>
           </div>
         </div>
-        <Button text="Registrieren" size="lg" onClick={handleRegister} />
+        <CustomButton text="Registrieren" size="lg" onClick={handleRegister} />
         <Link
           href="/login"
           className="text-white text-lg md:h-1/4 text-center hover:underline"

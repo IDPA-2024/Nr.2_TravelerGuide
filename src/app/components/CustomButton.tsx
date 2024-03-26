@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ text, size, onClick }: { text: string; size: string, onClick: () => void }) => {
+const CustomButton = ({ text, size, onClick, custom, type }: { text: string; size: string, onClick?: () => void, custom?: string, type?: any }) => {
   let actualSize = "";
   switch (size) {
     case "lg":
@@ -9,20 +9,24 @@ const Button = ({ text, size, onClick }: { text: string; size: string, onClick: 
     case "sm":
       actualSize = "h-10 w-1/3 text-lg";
       break;
+    case "custom": 
+      actualSize = custom || "";
+      break;
     default:
       break;
   }
   return (
-    <div
+    <button
       className={
         " bg-[#0BCAAD] rounded-lg flex justify-center items-center shadow-md shadow-black hover:bg-opacity-50 transition duration-150 ease-in-out cursor-pointer " +
         actualSize
       }
       onClick={onClick}
+      type={type || "button"}
     >
       {text}
-    </div>
+    </button>
   );
 };
 
-export default Button;
+export default CustomButton;

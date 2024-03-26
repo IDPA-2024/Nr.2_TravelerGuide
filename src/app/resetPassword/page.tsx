@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Input from "../components/Input";
-import Button from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import Link from "next/link";
 
 const page = () => {
@@ -17,7 +17,7 @@ const page = () => {
         </p>
         <div className="flex flex-col gap-5 md:h-1/3 justify-center items-center w-full">
           <Input placeholder="Email" onChange={() => {}} value={""} />
-          <Button text="Anmelden" size="lg" onClick={handleSend} />
+          <CustomButton text="Anmelden" size="lg" onClick={handleSend} />
         </div>
         <div className="flex flex-col gap-4">
           <div className="text-white text-lg md:h-1/4 text-center hover:underline">

@@ -23,14 +23,18 @@ export async function POST(req: Request) {
   ).then((res) => res.text());
   const result = await User.create({
     name:
+      body.email.split("@")[0].split(".")[0].charAt(0).toUpperCase() +
       body.email
         .split("@")[0]
         .split(".")[0]
+        .slice(1)
         .replace(/[^a-zA-Z0-9]/g, "") +
       " " +
+      body.email.split("@")[0].split(".")[1].charAt(0).toUpperCase() +
       body.email
         .split("@")[0]
         .split(".")[1]
+        .slice(1)
         .replace(/[^a-zA-Z0-9]/g, ""),
     image: image,
     email: body.email,

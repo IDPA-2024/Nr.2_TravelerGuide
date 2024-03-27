@@ -8,12 +8,23 @@ import Checkbox from "./CheckboxLabels";
 const Header = () => {
   const [filterOpen, setFilterOpen] = React.useState(false);
   const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+  const [filterOptions, setFilterOptions] = React.useState([
+    { label: "Asiatisch", value: "asian", checked: false },
+    { label: "Griechisch", value: "greek", checked: false },
+    { label: "Italienisch", value: "italian", checked: false },
+    { label: "Fast Food", value: "fastfood", checked: false },
+    { label: "Burger", value: "burger", checked: false },
+    { label: "Kebab", value: "kebab", checked: false },
+    { label: "Sandwhich", value: "sandwhich", checked: false },
+    { label: "Sonstiges", value: "other", checked: false },
+  ]);
 
   const handleClick = () => {
     setFilterOpen(!filterOpen);
+    // TODO: API call with checkedValues
   };
 
-  const handleFilter = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleFilter = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let checkedValues: Array<string> = [];
@@ -22,9 +33,18 @@ const Header = () => {
         checkedValues.push((checkbox as HTMLInputElement).value);
       }
     });
-    console.log(checkedValues);
+    let newFilterOptions = filterOptions.map((option) => {
+      if (checkedValues.includes(option.value)) {
+        return { ...option, checked: true };
+      } else {
+        return { ...option};
+      }
+    }
+    );
+    setFilterOptions(newFilterOptions);
+    // TODO: API call with checkedValues
+
     setFilterOpen(false);
-    
   };
 
   return (
@@ -46,22 +66,32 @@ const Header = () => {
         {filterOpen && (
           <form
             className="flex flex-col justify-center w-full bg-black/50 rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-[55vh] absolute top-full right-0 mt-5 p-5 md:w-1/2"
-            onSubmit={(e) => {handleFilter(e)}}
+            onSubmit={(e) => {
+              handleFilter(e);
+            }}
           >
             <div>
-              <Checkbox label="Asiatisch"  />
-              <Checkbox label="Griechisch"/>
-              <Checkbox label="Italienisch" />
-              <Checkbox label="Fast Food" />
-              <Checkbox label="Burger" />
-              <Checkbox label="Kebab" />
-              <Checkbox label="Sandwhich" />
-              <Checkbox label="Sonstiges" />
+              {filterOptions.map((option) => (
+                <Checkbox
+                  label={option.label}
+                  checked={option.checked}
+                  onChange={() => {
+                    let newFilterOptions = filterOptions.map((filterOption) => {
+                      if (filterOption.label === option.label) {
+                        return { ...filterOption, checked: !filterOption.checked };
+                      } else {
+                        return { ...filterOption };
+                      }
+                    });
+                    setFilterOptions(newFilterOptions);
+                  }}
+                />
+              ))}
             </div>
             <CustomButton
-              text="Übernehmen"
+              text="Schliessen"
               size="custom"
-              custom=" min-h-10 w-full "
+              custom=" h-8 w-full "
               type="submit"
             />
           </form>

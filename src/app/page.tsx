@@ -5,7 +5,7 @@ import OverviewDrawer from "./components/OverviewDrawer";
 const page = () => {
   return (
     <div>
-      {/* <OverviewDrawer/> */}
+      <OverviewDrawer/>
       <Map />
       <Header/>
     </div>

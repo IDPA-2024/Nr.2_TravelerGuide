@@ -30,6 +30,7 @@ const page = () => {
   const [takeaway, setTakeaway] = React.useState(false);
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
+
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen w-screen flex justify-center items-center md:justify-end">
       <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full min-h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 my-8">
@@ -38,6 +39,7 @@ const page = () => {
         </p>
         <div className="flex flex-col gap-5 justify-center items-center w-full">
           <SearchRestaurant search={search} setSearch={setSearch} />
+          <p>Welchen Kategorien ordnest du das Restaurant ein?</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="category-select">Kategorie</InputLabel>
             <Select
@@ -58,6 +60,7 @@ const page = () => {
               <MenuItem value="other">Sonstiges</MenuItem>
             </Select>
           </FormControl>
+          <p>Wie ist der Preis</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="price-select">Preis</InputLabel>
             <Select
@@ -67,13 +70,24 @@ const page = () => {
               onChange={(e) => setPrice(e.target.value)}
               variant="standard"
             >
-              <MenuItem value="cheap">Sehr Günstig</MenuItem>
-              <MenuItem value="medium">Günstig</MenuItem>
-              <MenuItem value="expensive">In Ordnung</MenuItem>
-              <MenuItem value="expensive">Teuer</MenuItem>
-              <MenuItem value="expensive">sehr Teuer</MenuItem>
+              <MenuItem value="sehrguenstig">
+                Sehr Günstig (5 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="guenstig">
+                Günstig (&gt;7 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="io">
+                In Ordnung (&gt;10 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="teuer">
+                Teuer (&gt;15 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="sehrteuer">
+                sehr Teuer (&gt;20 CHF für 1 Mahlzeit)
+              </MenuItem>
             </Select>
           </FormControl>
+          <p>Wie ist die Qualität?</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="quality-select">Qualität</InputLabel>
             <Select
@@ -83,16 +97,17 @@ const page = () => {
               onChange={(e) => setQuality(e.target.value)}
               variant="standard"
             >
-              <MenuItem value="cheap">Sehr Lecker</MenuItem>
-              <MenuItem value="medium">Lecker</MenuItem>
-              <MenuItem value="expensive">In Ordnung</MenuItem>
-              <MenuItem value="expensive">nicht Lecker</MenuItem>
-              <MenuItem value="expensive">Ekelhaft</MenuItem>
+              <MenuItem value="sehrlecker">Sehr Lecker</MenuItem>
+              <MenuItem value="lecker">Lecker</MenuItem>
+              <MenuItem value="io">In Ordnung</MenuItem>
+              <MenuItem value="nichtlecker">nicht Lecker</MenuItem>
+              <MenuItem value="ekelhaft">Ekelhaft</MenuItem>
             </Select>
           </FormControl>
 
           <FormControl>
             <FormLabel id="radio-ambiance-group-label">Ambiance</FormLabel>
+            <p>Wie ist der Style?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -113,6 +128,7 @@ const page = () => {
                 label="Altmodisch"
               />
             </RadioGroup>
+            <p>Wie ist der Platz?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -133,6 +149,7 @@ const page = () => {
                 label="Gross"
               />
             </RadioGroup>
+            <p>Wie ist die Helligkeit?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -153,6 +170,7 @@ const page = () => {
                 label="Hell"
               />
             </RadioGroup>
+            <p>Wie ist die Lautstärke?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -171,6 +189,7 @@ const page = () => {
             </RadioGroup>
           </FormControl>
           <div className="flex flex-col justify-center items-start">
+            <p>Suche die Optionen aus die dem Restaurant zustimmen!</p>
             <CheckboxLabels
               label="Vegan"
               checked={vegan}
@@ -185,25 +204,29 @@ const page = () => {
                 setSeatingOption(!seatingOption);
               }}
             />
+            {seatingOption && (
+              <>
+                <CheckboxLabels
+                  label="Innenbereich"
+                  checked={seatingIndoor}
+                  onChange={() => {
+                    setSeatingIndoor(!seatingIndoor);
+                  }}
+                />
+                <CheckboxLabels
+                  label="Aussenbereich"
+                  checked={seatingOutdoor}
+                  onChange={() => {
+                    setSeatingOutdoor(!seatingOutdoor);
+                  }}
+                />
+              </>
+            )}
             <CheckboxLabels
               label="Takeaway"
               checked={takeaway}
               onChange={() => {
                 setTakeaway(!takeaway);
-              }}
-            />
-            <CheckboxLabels
-              label="Innenbereich"
-              checked={seatingIndoor}
-              onChange={() => {
-                setSeatingIndoor(!seatingIndoor);
-              }}
-            />
-            <CheckboxLabels
-              label="Aussenbereich"
-              checked={seatingOutdoor}
-              onChange={() => {
-                setSeatingOutdoor(!seatingOutdoor);
               }}
             />
           </div>

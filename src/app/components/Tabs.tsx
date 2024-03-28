@@ -5,6 +5,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Overview from "./tabs/Overview";
+import Route from "./tabs/Route";
+import Comments from "./tabs/Comments";
 
 function CustomTabPanel(props: {
   children: React.ReactNode;
@@ -65,19 +67,19 @@ export default function BasicTabs() {
           variant="fullWidth"
           textColor="inherit"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="Übersicht" {...a11yProps(0)} />
+          <Tab label="Kommentare" {...a11yProps(1)} />
+          <Tab label="Route" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
         <Overview />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <Comments />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Item Three
+        <Route />
       </CustomTabPanel>
     </Box>
   );

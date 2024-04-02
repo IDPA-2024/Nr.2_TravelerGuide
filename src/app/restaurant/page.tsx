@@ -13,6 +13,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import CheckboxLabels from "../components/CheckboxLabels";
 import CustomButton from "../components/CustomButton";
 import { Loader } from "@googlemaps/js-api-loader";
+import SelectInput from "../components/SelectInput";
 
 const page = () => {
   const mapRef = React.useRef(null);
@@ -102,8 +103,8 @@ const page = () => {
   };
 
   return (
-    <div className="bg-bg bg-cover bg-fixed min-h-screen w-screen flex justify-center items-center md:justify-end">
-      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full min-h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 my-8">
+    <div className="bg-bg bg-cover bg-fixed min-h-screen max-w-screen flex justify-center items-center md:justify-end">
+      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full min-h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 my-8 ">
         <p className="font-bold text-white md:h-1/4 text-6xl">
           Neues Restaurant
         </p>
@@ -115,7 +116,6 @@ const page = () => {
           />
           <p>Welchen Kategorien ordnest du das Restaurant ein?</p>
           <FormControl className="w-3/4 flex-grow">
-            <InputLabel id="category-select">Kategorie</InputLabel>
             <Select
               id="category-select"
               value={category}
@@ -123,6 +123,7 @@ const page = () => {
               onChange={(e) => setCategory(e.target.value as [])}
               variant="standard"
               multiple
+              input={<SelectInput />}
             >
               <MenuItem value="asian">Asiatisch</MenuItem>
               <MenuItem value="greek">Griechisch</MenuItem>
@@ -136,13 +137,13 @@ const page = () => {
           </FormControl>
           <p>Wie ist der Preis</p>
           <FormControl className="w-3/4 flex-grow">
-            <InputLabel id="price-select">Preis</InputLabel>
             <Select
               id="price-select"
               value={price}
               label="Preis"
               onChange={(e) => setPrice(e.target.value)}
               variant="standard"
+              input={<SelectInput />}
             >
               <MenuItem value="sehrguenstig">
                 Sehr Günstig (5 CHF für 1 Mahlzeit)
@@ -163,13 +164,12 @@ const page = () => {
           </FormControl>
           <p>Wie ist die Qualität?</p>
           <FormControl className="w-3/4 flex-grow">
-            <InputLabel id="quality-select">Qualität</InputLabel>
             <Select
-              id="quality-select"
               value={quality}
               label="Qualität"
               onChange={(e) => setQuality(e.target.value)}
               variant="standard"
+              input={<SelectInput />}
             >
               <MenuItem value="sehrlecker">Sehr Lecker</MenuItem>
               <MenuItem value="lecker">Lecker</MenuItem>

@@ -4,7 +4,6 @@ import InputBase from "@mui/material/InputBase";
 
 const SelectInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
-    marginTop: theme.spacing(3),
     color: "white",
   },
   "& .MuiSvgIcon-root": {

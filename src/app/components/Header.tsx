@@ -44,10 +44,6 @@ const Header = ({
     setUserMenuOpen(!userMenuOpen);
   };
 
-  const handleOpenProfile = (newOpen: boolean) => () => {
-    setOpenProfile(newOpen);
-  };
-
   const handleFilter = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -136,9 +132,18 @@ const Header = ({
         </div>
         {userMenuOpen && (
           <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
-            <div className="cursor-pointer" onClick={() =>{handleOpenProfile(!openProfile)}}>Mein Konto</div>  
+            <div
+              className="cursor-pointer"
+              onClick={() => {
+                setOpenProfile(!openProfile);
+              }}
+            >
+              Mein Konto
+            </div>
             <Link href="/restaurant">Restaurant hinzufügen</Link>
-            <div className="border-t border-white mt-2 pt-2 cursor-pointer">Abmelden</div>
+            <div className="border-t border-white mt-2 pt-2 cursor-pointer">
+              Abmelden
+            </div>
           </div>
         )}
       </div>

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Input from "../components/Input";
 import { ToastContainer } from "react-toastify";
 import SearchRestaurant from "../components/SearchRestaurant";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,8 +12,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CheckboxLabels from "../components/CheckboxLabels";
 import CustomButton from "../components/CustomButton";
+import { Loader } from "@googlemaps/js-api-loader";
 
 const page = () => {
+  const mapRef = React.useRef(null);
   const [search, setSearch] = React.useState("");
   const [category, setCategory] = React.useState([]);
   const [price, setPrice] = React.useState("");
@@ -30,6 +31,75 @@ const page = () => {
   const [takeaway, setTakeaway] = React.useState(false);
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
+  const [restaurantId, setRestaurantId] = React.useState("");
+
+  const createRestaurant: any = async () => {
+    const loader = new Loader({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
+      version: "weekly",
+    });
+
+    const { PlacesService } = await loader.importLibrary("places");
+
+    const { Map } = await loader.importLibrary("maps");
+    const position = {
+      lat: 47.500229,
+      lng: 8.72875,
+    };
+
+    const mapOptions = {
+      center: position,
+      zoom: 16,
+      mapId: "1d3709bffc5c137f",
+      fullscreenControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      zoomControl: false,
+    };
+
+    const map = new Map(mapRef.current, mapOptions);
+    const service = new PlacesService(map);
+    if (
+      !search ||
+      category.length === 0 ||
+      !price ||
+      !quality ||
+      !restaurantId
+    ) {
+      return;
+    }
+    let data;
+
+    await service.getDetails(
+      { placeId: restaurantId },
+      (result: any, status: any) => {
+        if (status === "OK") {
+          data = {
+            name: result.name,
+            category: category,
+            price: price,
+            quality: quality,
+            ambiance: ambiance,
+            vegan: vegan,
+            seatingOption: seatingOption,
+            seatingIndoor: seatingIndoor,
+            seatingOutdoor: seatingOutdoor,
+            takeaway: takeaway,
+            lat: result.geometry.location.lat(),
+            lng: result.geometry.location.lng(),
+            address: result.formatted_address,
+            image: result.photos[0].getUrl(),
+            website: result.website,
+            opening_hours: result.opening_hours,
+            comments: [],
+          };
+          // TODO: Send data to backend
+          // TODO: Send toasts
+          // TODO: Redirect to main page
+        }
+      }
+    );
+  };
 
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen w-screen flex justify-center items-center md:justify-end">
@@ -38,7 +108,11 @@ const page = () => {
           Neues Restaurant
         </p>
         <div className="flex flex-col gap-5 justify-center items-center w-full">
-          <SearchRestaurant search={search} setSearch={setSearch} />
+          <SearchRestaurant
+            search={search}
+            setSearch={setSearch}
+            setId={setRestaurantId}
+          />
           <p>Welchen Kategorien ordnest du das Restaurant ein?</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="category-select">Kategorie</InputLabel>
@@ -230,11 +304,12 @@ const page = () => {
               }}
             />
           </div>
-          <CustomButton text="Erstellen" size="lg" />
+          <CustomButton text="Erstellen" size="lg" onClick={createRestaurant} />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>
       <ToastContainer />
+      <div className="hidden" ref={mapRef}></div>
     </div>
   );
 };

@@ -1,17 +1,20 @@
 import React from "react";
 import Input from "./Input";
 import { Loader } from "@googlemaps/js-api-loader";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 const SearchRestaurant = ({
   search,
   setSearch,
+  setId,
 }: {
   search: string;
   setSearch: (value: string) => void;
+  setId: (value: string) => void;
 }) => {
   const [searchResults, setSearchResults] = React.useState<Array<any>>([]);
   const mapRef = React.useRef(null);
-  const [showResults, setShowResults] = React.useState(false);
 
   React.useEffect(() => {
     const searchAPI = async () => {
@@ -59,8 +62,13 @@ const SearchRestaurant = ({
             let searchResults = results.filter(
               (x) => x.types.includes("restaurant") || x.types.includes("food")
             );
-            setSearchResults(searchResults);
-            console.log(searchResults);
+            let searchResultsFormatted = searchResults.map((result: any) => {
+              return {
+                label: result.name + ", " + result.formatted_address,
+                place_id: result.place_id,
+              };
+            });
+            setSearchResults(searchResultsFormatted);
           }
         }
       );
@@ -68,37 +76,32 @@ const SearchRestaurant = ({
     searchAPI();
   }, [search]);
   return (
-    <div className="relative w-3/4 flex justify-center items-center">
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="text-white text-xl outline-none focus:outline-none w-3/4 flex-grow bg-black/50 rounded-lg shadow-md shadow-black focus-within:border-b-[#0BCAAD] focus-within:border-b-2 focus-within:shadow-none md:pt-2 md:pb-2 pl-2 relative"
-        placeholder="Name des Restaurants"
-        onFocus={() => setShowResults(true)}
-        onBlur={() => setShowResults(false)}
-      />
-      <div
-        className={
-          " absolute top-full left-0 right-0 bg-black max-h-20 overflow-scroll z-10" +
-          (showResults ? " block" : " hidden")
-        }
-      >
-        {searchResults.map((result: any) => (
-          <div
-            key={result.place_id}
-            onClick={() => {
-              setSearch(result.name);
+    <>
+      <Autocomplete
+        onChange={(e, value) => {
+          if (!value) {
+            return;
+          }
+          setSearch(value.label);
+          setId(value.place_id);
+        }}
+        disablePortal
+        id="combo-box-demo"
+        options={searchResults}
+        sx={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Name des Restaurant"
+            onChange={(e) => {
+              setSearch(e.target.value);
             }}
-            className="p-2 hover:bg-gray-700 cursor-pointer"
-          >
-            <p>
-              {result.name}, {result.formatted_address}
-            </p>
-          </div>
-        ))}
-      </div>
+            value={search}
+          />
+        )}
+      />
       <div className="hidden" ref={mapRef}></div>
-    </div>
+    </>
   );
 };
 

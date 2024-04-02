@@ -13,6 +13,7 @@ const Map = () => {
       });
 
       const { Map } = await loader.importLibrary("maps");
+      const { Marker } = await loader.importLibrary("marker");
 
       const position = {
         lat: 47.500229,
@@ -30,6 +31,16 @@ const Map = () => {
       };
 
       const map = new Map(mapRef.current, mapOptions);
+
+      const marker = new Marker({
+        position,
+        map,
+        title: "Hello World!",
+        label: "H",
+      });
+      marker.addListener("click", () => {
+        alert("Hello World!");
+      });
       return map;
     };
     initMap();

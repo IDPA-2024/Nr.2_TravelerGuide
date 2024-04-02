@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Input from "../components/Input";
 import { ToastContainer } from "react-toastify";
 import SearchRestaurant from "../components/SearchRestaurant";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,8 +12,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CheckboxLabels from "../components/CheckboxLabels";
 import CustomButton from "../components/CustomButton";
+import { Loader } from "@googlemaps/js-api-loader";
 
 const page = () => {
+  const mapRef = React.useRef(null);
   const [search, setSearch] = React.useState("");
   const [category, setCategory] = React.useState([]);
   const [price, setPrice] = React.useState("");
@@ -30,6 +31,76 @@ const page = () => {
   const [takeaway, setTakeaway] = React.useState(false);
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
+  const [restaurantId, setRestaurantId] = React.useState("");
+
+  const createRestaurant: any = async () => {
+    const loader = new Loader({
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
+      version: "weekly",
+    });
+
+    const { PlacesService } = await loader.importLibrary("places");
+
+    const { Map } = await loader.importLibrary("maps");
+    const position = {
+      lat: 47.500229,
+      lng: 8.72875,
+    };
+
+    const mapOptions = {
+      center: position,
+      zoom: 16,
+      mapId: "1d3709bffc5c137f",
+      fullscreenControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      zoomControl: false,
+    };
+
+    const map = new Map(mapRef.current, mapOptions);
+    const service = new PlacesService(map);
+    if (
+      !search ||
+      category.length === 0 ||
+      !price ||
+      !quality ||
+      !restaurantId
+    ) {
+      return;
+    }
+    let data;
+
+    await service.getDetails(
+      { placeId: restaurantId },
+      (result: any, status: any) => {
+        if (status === "OK") {
+          data = {
+            name: result.name,
+            category: category,
+            price: price,
+            quality: quality,
+            ambiance: ambiance,
+            vegan: vegan,
+            seatingOption: seatingOption,
+            seatingIndoor: seatingIndoor,
+            seatingOutdoor: seatingOutdoor,
+            takeaway: takeaway,
+            lat: result.geometry.location.lat(),
+            lng: result.geometry.location.lng(),
+            address: result.formatted_address,
+            image: result.photos[0].getUrl(),
+            website: result.website,
+            opening_hours: result.opening_hours,
+            comments: [],
+          };
+          // TODO: Send data to backend
+          // TODO: Send toasts
+          // TODO: Redirect to main page
+        }
+      }
+    );
+  };
+
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen w-screen flex justify-center items-center md:justify-end">
       <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full min-h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 my-8">
@@ -37,7 +108,12 @@ const page = () => {
           Neues Restaurant
         </p>
         <div className="flex flex-col gap-5 justify-center items-center w-full">
-          <SearchRestaurant search={search} setSearch={setSearch} />
+          <SearchRestaurant
+            search={search}
+            setSearch={setSearch}
+            setId={setRestaurantId}
+          />
+          <p>Welchen Kategorien ordnest du das Restaurant ein?</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="category-select">Kategorie</InputLabel>
             <Select
@@ -58,6 +134,7 @@ const page = () => {
               <MenuItem value="other">Sonstiges</MenuItem>
             </Select>
           </FormControl>
+          <p>Wie ist der Preis</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="price-select">Preis</InputLabel>
             <Select
@@ -67,13 +144,24 @@ const page = () => {
               onChange={(e) => setPrice(e.target.value)}
               variant="standard"
             >
-              <MenuItem value="cheap">Sehr Günstig</MenuItem>
-              <MenuItem value="medium">Günstig</MenuItem>
-              <MenuItem value="expensive">In Ordnung</MenuItem>
-              <MenuItem value="expensive">Teuer</MenuItem>
-              <MenuItem value="expensive">sehr Teuer</MenuItem>
+              <MenuItem value="sehrguenstig">
+                Sehr Günstig (5 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="guenstig">
+                Günstig (&gt;7 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="io">
+                In Ordnung (&gt;10 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="teuer">
+                Teuer (&gt;15 CHF für 1 Mahlzeit)
+              </MenuItem>
+              <MenuItem value="sehrteuer">
+                sehr Teuer (&gt;20 CHF für 1 Mahlzeit)
+              </MenuItem>
             </Select>
           </FormControl>
+          <p>Wie ist die Qualität?</p>
           <FormControl className="w-3/4 flex-grow">
             <InputLabel id="quality-select">Qualität</InputLabel>
             <Select
@@ -83,16 +171,17 @@ const page = () => {
               onChange={(e) => setQuality(e.target.value)}
               variant="standard"
             >
-              <MenuItem value="cheap">Sehr Lecker</MenuItem>
-              <MenuItem value="medium">Lecker</MenuItem>
-              <MenuItem value="expensive">In Ordnung</MenuItem>
-              <MenuItem value="expensive">nicht Lecker</MenuItem>
-              <MenuItem value="expensive">Ekelhaft</MenuItem>
+              <MenuItem value="sehrlecker">Sehr Lecker</MenuItem>
+              <MenuItem value="lecker">Lecker</MenuItem>
+              <MenuItem value="io">In Ordnung</MenuItem>
+              <MenuItem value="nichtlecker">nicht Lecker</MenuItem>
+              <MenuItem value="ekelhaft">Ekelhaft</MenuItem>
             </Select>
           </FormControl>
 
           <FormControl>
             <FormLabel id="radio-ambiance-group-label">Ambiance</FormLabel>
+            <p>Wie ist der Style?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -113,6 +202,7 @@ const page = () => {
                 label="Altmodisch"
               />
             </RadioGroup>
+            <p>Wie ist der Platz?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -133,6 +223,7 @@ const page = () => {
                 label="Gross"
               />
             </RadioGroup>
+            <p>Wie ist die Helligkeit?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -153,6 +244,7 @@ const page = () => {
                 label="Hell"
               />
             </RadioGroup>
+            <p>Wie ist die Lautstärke?</p>
             <RadioGroup
               row
               aria-labelledby="radio-ambiance-group-label"
@@ -171,6 +263,7 @@ const page = () => {
             </RadioGroup>
           </FormControl>
           <div className="flex flex-col justify-center items-start">
+            <p>Suche die Optionen aus die dem Restaurant zustimmen!</p>
             <CheckboxLabels
               label="Vegan"
               checked={vegan}
@@ -185,6 +278,24 @@ const page = () => {
                 setSeatingOption(!seatingOption);
               }}
             />
+            {seatingOption && (
+              <>
+                <CheckboxLabels
+                  label="Innenbereich"
+                  checked={seatingIndoor}
+                  onChange={() => {
+                    setSeatingIndoor(!seatingIndoor);
+                  }}
+                />
+                <CheckboxLabels
+                  label="Aussenbereich"
+                  checked={seatingOutdoor}
+                  onChange={() => {
+                    setSeatingOutdoor(!seatingOutdoor);
+                  }}
+                />
+              </>
+            )}
             <CheckboxLabels
               label="Takeaway"
               checked={takeaway}
@@ -192,26 +303,13 @@ const page = () => {
                 setTakeaway(!takeaway);
               }}
             />
-            <CheckboxLabels
-              label="Innenbereich"
-              checked={seatingIndoor}
-              onChange={() => {
-                setSeatingIndoor(!seatingIndoor);
-              }}
-            />
-            <CheckboxLabels
-              label="Aussenbereich"
-              checked={seatingOutdoor}
-              onChange={() => {
-                setSeatingOutdoor(!seatingOutdoor);
-              }}
-            />
           </div>
-          <CustomButton text="Erstellen" size="lg" />
+          <CustomButton text="Erstellen" size="lg" onClick={createRestaurant} />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>
       <ToastContainer />
+      <div className="hidden" ref={mapRef}></div>
     </div>
   );
 };

@@ -10,12 +10,16 @@ const Header = ({
   filterOpen,
   setFilterOpen,
   userMenuOpen,
-  setUserMenuOpen
+  setUserMenuOpen,
+  openProfile,
+  setOpenProfile,
 }: {
   filterOpen: boolean;
   setFilterOpen: (value: boolean) => void;
   userMenuOpen: boolean;
   setUserMenuOpen: (value: boolean) => void;
+  openProfile: boolean;
+  setOpenProfile: (value: boolean) => void;
 }) => {
   const [filterOptions, setFilterOptions] = React.useState([
     { label: "Asiatisch", value: "asian", checked: false },
@@ -38,6 +42,10 @@ const Header = ({
 
   const handleOpenMenu = () => {
     setUserMenuOpen(!userMenuOpen);
+  };
+
+  const handleOpenProfile = (newOpen: boolean) => () => {
+    setOpenProfile(newOpen);
   };
 
   const handleFilter = (e: React.FormEvent<HTMLFormElement>) => {
@@ -128,7 +136,7 @@ const Header = ({
         </div>
         {userMenuOpen && (
           <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
-            <div className="cursor-pointer">Mein Konto</div>
+            <div className="cursor-pointer" onClick={() =>{handleOpenProfile(!openProfile)}}>Mein Konto</div>  
             <Link href="/restaurant">Restaurant hinzufügen</Link>
             <div className="border-t border-white mt-2 pt-2 cursor-pointer">Abmelden</div>
           </div>

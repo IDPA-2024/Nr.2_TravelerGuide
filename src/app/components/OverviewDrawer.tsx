@@ -5,7 +5,6 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { FaBlackTie } from "react-icons/fa6";
 import Tabs from "./Tabs";
 
 export default function OverviewDrawer() {

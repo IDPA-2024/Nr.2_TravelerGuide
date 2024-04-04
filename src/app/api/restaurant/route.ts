@@ -1,12 +1,14 @@
 import { Restaurant } from "@/lib/mongoose";
 import { NextApiRequest } from "next";
 
-export async function POST(req: NextApiRequest) {
-  const token = req.cookies.token;
-  if (!token) return Response.json({ message: "error", status: 401 });
-
-  const body = await req.body;
-  const result = await Restaurant.create(body);
+export async function POST(req: Request) {
+  const body = await req.json();
+  const token = body.token;
+  if (token === "" || token === undefined) {
+    return Response.json({ message: "No Token", status: 401 });
+  }
+  const restaurant = body.restaurant;
+  const result = await Restaurant.create(restaurant);
 
   if (!result) return Response.json({ message: "error", status: 500 });
   return Response.json({ message: "ok", status: 200, data: result });

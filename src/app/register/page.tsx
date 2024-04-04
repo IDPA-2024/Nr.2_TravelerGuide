@@ -59,6 +59,7 @@ const page = () => {
         theme: "dark",
       });
     } else {
+      // TODO: API call
       router.push("/verify");
     }
     setChecked(false);

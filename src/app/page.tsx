@@ -4,8 +4,12 @@ import Map from "./components/Map";
 import OverviewDrawer from "./components/OverviewDrawer";
 import { useState } from "react";
 import ProfileDrawer from "./components/ProfileDrawer";
+import { useTokenContext } from "@/context/useToken";
+import { useUserContext } from "@/context/useUser";
 
 const page = () => {
+  const { token, setToken } = useTokenContext();
+  const { user } = useUserContext();
   const [filterOpen, setFilterOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
@@ -28,8 +32,8 @@ const page = () => {
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
       />
-      <ProfileDrawer 
-        openProfile={openProfile} 
+      <ProfileDrawer
+        openProfile={openProfile}
         setOpenProfile={setOpenProfile}
       />
     </div>

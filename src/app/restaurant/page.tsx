@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import SearchRestaurant from "../components/SearchRestaurant";
 import InputLabel from "@mui/material/InputLabel";
@@ -14,8 +14,12 @@ import CheckboxLabels from "../components/CheckboxLabels";
 import CustomButton from "../components/CustomButton";
 import { Loader } from "@googlemaps/js-api-loader";
 import SelectInput from "../components/SelectInput";
+import { useTokenContext } from "@/context/useToken";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const { token } = useTokenContext();
+  const router = useRouter();
   const mapRef = React.useRef(null);
   const [search, setSearch] = React.useState("");
   const [category, setCategory] = React.useState([]);
@@ -33,6 +37,12 @@ const page = () => {
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
   const [restaurantId, setRestaurantId] = React.useState("");
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
 
   const createRestaurant: any = async () => {
     const loader = new Loader({
@@ -73,7 +83,7 @@ const page = () => {
 
     await service.getDetails(
       { placeId: restaurantId },
-      (result: any, status: any) => {
+      async (result: any, status: any) => {
         if (status === "OK") {
           data = {
             name: result.name,
@@ -94,9 +104,19 @@ const page = () => {
             opening_hours: result.opening_hours,
             comments: [],
           };
-          // TODO: Send data to backend
-          // TODO: Send toasts
-          // TODO: Redirect to main page
+          const response = await fetch("/api/restaurant", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          if (response.status === 200) {
+            // TODO: Send toasts
+            // TODO: Redirect to main page
+          } else {
+            // TODO: Send toasts
+          }
         }
       }
     );
@@ -400,7 +420,12 @@ const page = () => {
               }}
             />
           </div>
-          <CustomButton text="Erstellen" size="custom" custom="text-2xl w-full h-16" onClick={createRestaurant} />
+          <CustomButton
+            text="Erstellen"
+            size="custom"
+            custom="text-2xl w-full h-16"
+            onClick={createRestaurant}
+          />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>

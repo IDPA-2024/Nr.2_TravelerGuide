@@ -18,7 +18,7 @@ export default function OverviewDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>Prototype Drawer</Button>
+      <button className="absolute z-40 text-black" onClick={toggleDrawer(true)}>Prototype Button</button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box
           sx={{

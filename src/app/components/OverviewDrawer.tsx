@@ -18,11 +18,13 @@ export default function OverviewDrawer() {
 
   return (
     <div>
-      <button className="absolute z-40 text-black" onClick={toggleDrawer(true)}>Prototype Button</button>
+      <button className="absolute z-40 text-black" onClick={toggleDrawer(true)}>
+        Prototype Button
+      </button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box
           sx={{
-            width: isMobile ? "100%" : 410,
+            width: isMobile ? "100vw" : 410,
             backgroundColor: "#2d2d30",
             color: "white",
             height: "100%",

@@ -17,7 +17,7 @@ const page = () => {
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
   const [email, setEmail] = React.useState("");
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (email === "" || password === "" || passwordConfirm === "") {
       toast.error("Bitte fülle alle Felder aus", {
         position: "top-left",
@@ -59,8 +59,38 @@ const page = () => {
         theme: "dark",
       });
     } else {
-      // TODO: API call
-      router.push("/verify");
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        toast.success("Registrierung erfolgreich", {
+          position: "top-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+        setTimeout(() => {
+          router.push("/verify");
+        }, 2000);
+      } else {
+        toast.error(data.message, {
+          position: "top-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+      }
     }
     setChecked(false);
     setPassword("");
@@ -107,7 +137,7 @@ const page = () => {
                   color: "#0BCAAD",
                 },
               }}
-            />  
+            />
             <p>
               Ich akzeptiere die{" "}
               <Link href="" className="text-[#0BCAAD] hover:underline">

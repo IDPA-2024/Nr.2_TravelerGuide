@@ -52,7 +52,7 @@ export default function OverviewDrawer({
                 style={{ width: "100%",}}
               />
             </div>
-            <Tabs />
+            <Tabs restaurant={restaurant} />
         </div>
           <CustomButton text="Schliessen" size="custom" custom="self-center h-10 w-1/3 text-lg mb-5" onClick={() => {setOpenDrawer(false)}} />
         </Box>

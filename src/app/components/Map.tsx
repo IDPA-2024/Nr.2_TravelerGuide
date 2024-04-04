@@ -2,7 +2,13 @@
 import React, { useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const Map = () => {
+const Map = ({
+  setRestaurant,
+  setOpenDrawer,
+}: {
+  setRestaurant: (restaurant: any) => void;
+  setOpenDrawer: (value: boolean) => void;
+}) => {
   const mapRef = React.useRef(null);
 
   useEffect(() => {
@@ -32,14 +38,20 @@ const Map = () => {
 
       const map = new Map(mapRef.current, mapOptions);
 
-      const marker = new Marker({
-        position,
-        map,
-        title: "Hello World!",
-        label: "H",
-      });
-      marker.addListener("click", () => {
-        alert("Hello World!");
+      const restaurants = await fetch("/api/restaurant?filter=&search=", {
+        method: "GET",
+      }).then((res) => res.json());
+      restaurants.data.forEach((restaurant: any) => {
+        const marker = new Marker({
+          position: { lat: restaurant.lat, lng: restaurant.lng },
+          map,
+          title: restaurant.name,
+          label: restaurant.name.charAt(0),
+        });
+        marker.addListener("click", () => {
+          setRestaurant(restaurant);
+          setOpenDrawer(true);
+        });
       });
       return map;
     };

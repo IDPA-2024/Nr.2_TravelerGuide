@@ -7,21 +7,24 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Tabs from "./Tabs";
 
-export default function OverviewDrawer() {
+export default function OverviewDrawer({
+  openDrawer,
+  setOpenDrawer,
+  restaurant,
+}: {
+  openDrawer: boolean;
+  setOpenDrawer: (value: boolean) => void;
+  restaurant: any;
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Define breakpoint for mobile screens
-
-  const [open, setOpen] = React.useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
+    setOpenDrawer(newOpen);
   };
 
   return (
     <div>
-      <button className="absolute z-40 text-black" onClick={toggleDrawer(true)}>
-        Prototype Button
-      </button>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
+      <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
         <Box
           sx={{
             width: isMobile ? "100vw" : 410,
@@ -33,7 +36,11 @@ export default function OverviewDrawer() {
           role="presentation"
         >
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
+            src={
+              restaurant
+                ? restaurant.image
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
+            }
             alt="My Image"
             style={{ width: "100%", maxHeight: "30vh" }}
           />

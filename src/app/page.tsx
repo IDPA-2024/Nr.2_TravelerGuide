@@ -13,11 +13,17 @@ const page = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [restaurant, setRestaurant] = useState(null);
 
   return (
     <div>
-      <OverviewDrawer />
-      <Map />
+      <OverviewDrawer
+        openDrawer={openDrawer}
+        setOpenDrawer={setOpenDrawer}
+        restaurant={restaurant}
+      />
+      <Map setRestaurant={setRestaurant} setOpenDrawer={setOpenDrawer} />
       <div
         className={
           "absolute bg-black/75 top-0 left-0 right-0 bottom-0 z-10  " +

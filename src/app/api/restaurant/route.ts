@@ -19,29 +19,32 @@ export async function GET(
   params: { filter: Array<string>; search: string }
 ) {
   const { filter, search } = params;
-  if (filter.length > 0 || search.length > 0) {
-    if (filter.length > 0 && search.length > 0) {
-      const result = await Restaurant.find({
-        category: { $in: filter },
-        name: { $regex: search, $options: "i" },
-      });
-      if (!result) return Response.json({ message: "error", status: 500 });
-      return Response.json({ message: "ok", status: 200, data: result });
-    }
-    if (search.length > 0) {
-      const result = await Restaurant.find({
-        name: { $regex: search, $options: "i" },
-      });
-      if (!result) return Response.json({ message: "error", status: 500 });
-      return Response.json({ message: "ok", status: 200, data: result });
-    }
-    if (filter.length > 0) {
-      const result = await Restaurant.find({ category: { $in: filter } });
-      if (!result) return Response.json({ message: "error", status: 500 });
-      return Response.json({ message: "ok", status: 200, data: result });
+  if (filter === undefined || search === undefined) {
+    const result = await Restaurant.find();
+    if (!result) return Response.json({ message: "error", status: 500 });
+    return Response.json({ message: "ok", status: 200, data: result });
+  } else {
+    if (filter.length > 0 || search.length > 0) {
+      if (filter.length > 0 && search.length > 0) {
+        const result = await Restaurant.find({
+          category: { $in: filter },
+          name: { $regex: search, $options: "i" },
+        });
+        if (!result) return Response.json({ message: "error", status: 500 });
+        return Response.json({ message: "ok", status: 200, data: result });
+      }
+      if (search.length > 0) {
+        const result = await Restaurant.find({
+          name: { $regex: search, $options: "i" },
+        });
+        if (!result) return Response.json({ message: "error", status: 500 });
+        return Response.json({ message: "ok", status: 200, data: result });
+      }
+      if (filter.length > 0) {
+        const result = await Restaurant.find({ category: { $in: filter } });
+        if (!result) return Response.json({ message: "error", status: 500 });
+        return Response.json({ message: "ok", status: 200, data: result });
+      }
     }
   }
-  const result = await Restaurant.find();
-  if (!result) return Response.json({ message: "error", status: 500 });
-  return Response.json({ message: "ok", status: 200, data: result });
 }

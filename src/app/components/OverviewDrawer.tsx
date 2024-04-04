@@ -2,10 +2,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Tabs from "./Tabs";
+import CustomButton from "./CustomButton";
 
 export default function OverviewDrawer({
   openDrawer,
@@ -32,6 +32,10 @@ export default function OverviewDrawer({
             color: "white",
             height: "100%",
             overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            jusitfyItems: "center",
           }}
           role="presentation"
         >

@@ -21,11 +21,12 @@ const Overview = () => {
   const [todayOpeningHours, setTodayOpeningHours] = React.useState(
     "11:30-14:00, 17:00-22:00"
   );
+  const [vegan, setVegan] = React.useState(true);
 
   return (
     <div className="flex flex-col gap-10">
       <h1 className="text-center font-bold text-2xl">RestaurantName</h1>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <div className="grid grid-cols-6">
           <RiMapPinLine size={40} />
           <p className="flex items-center gap-5 col-span-5">
@@ -61,10 +62,10 @@ const Overview = () => {
           <IoRestaurantOutline size={40} />
           <p className="flex items-center gap-5 col-span-5">Qualität</p>
         </div>
-        <div className="grid grid-cols-6">
+        { vegan && <div className="grid grid-cols-6">
           <LuLeaf size={40} />
           <p className="flex items-center gap-5 col-span-5">Vegan</p>
-        </div>
+        </div>}
       </div>
     </div>
   );

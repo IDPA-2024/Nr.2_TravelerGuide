@@ -86,18 +86,28 @@ const SearchRestaurant = ({
           setId(value.place_id);
         }}
         disablePortal
-        id="combo-box-demo"
         options={searchResults}
-        sx={{ width: 300 }}
+        sx={{
+          width: "100%",
+          color: "white",
+          "& MuiAutocomplete-root": { color: "white" },
+        }}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Name des Restaurant"
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-            value={search}
-          />
+          <div
+            ref={params.InputProps.ref}
+            className="flex flex-row h-20 w-full justify-center items-center bg-black/50 rounded-lg shadow-md shadow-black md:h-1/2 focus-within:border-b-[#0BCAAD] focus-within:border-b-2 focus-within:shadow-none md:pt-2 md:pb-2"
+          >
+            <input
+              type="text"
+              {...params.inputProps}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              className="text-white text-xl md:text-xl outline-none bg-transparent focus:outline-none flex-grow w-full ml-4 "
+              placeholder="Name des Restaurant"
+            />
+          </div>
         )}
       />
       <div className="hidden" ref={mapRef}></div>

@@ -104,168 +104,264 @@ const page = () => {
 
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen max-w-screen flex justify-center items-center md:justify-end">
-      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full min-h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 my-8 ">
-        <p className="font-bold text-white md:h-1/4 text-6xl">
+      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 md:my-8 p-16 ">
+        <p className="font-bold text-white md:h-1/4 text-6xl text-center">
           Neues Restaurant
         </p>
-        <div className="flex flex-col gap-5 justify-center items-center w-full">
+        <div className="flex flex-col gap-5 justify-center items-center w-full ">
           <SearchRestaurant
             search={search}
             setSearch={setSearch}
             setId={setRestaurantId}
           />
-          <p>Welchen Kategorien ordnest du das Restaurant ein?</p>
-          <FormControl className="w-3/4 flex-grow">
-            <Select
-              id="category-select"
-              value={category}
-              label="Kategorie"
-              onChange={(e) => setCategory(e.target.value as [])}
-              variant="standard"
-              multiple
-              input={<SelectInput />}
-            >
-              <MenuItem value="asian">Asiatisch</MenuItem>
-              <MenuItem value="greek">Griechisch</MenuItem>
-              <MenuItem value="italian">Italienisch</MenuItem>
-              <MenuItem value="fastfood">Fast Food</MenuItem>
-              <MenuItem value="burger">Burger</MenuItem>
-              <MenuItem value="kebab">Kebab</MenuItem>
-              <MenuItem value="sandwich">Sandwich</MenuItem>
-              <MenuItem value="other">Sonstiges</MenuItem>
-            </Select>
-          </FormControl>
-          <p>Wie ist der Preis</p>
-          <FormControl className="w-3/4 flex-grow">
-            <Select
-              id="price-select"
-              value={price}
-              label="Preis"
-              onChange={(e) => setPrice(e.target.value)}
-              variant="standard"
-              input={<SelectInput />}
-            >
-              <MenuItem value="sehrguenstig">
-                Sehr Günstig (5 CHF für 1 Mahlzeit)
-              </MenuItem>
-              <MenuItem value="guenstig">
-                Günstig (&gt;7 CHF für 1 Mahlzeit)
-              </MenuItem>
-              <MenuItem value="io">
-                In Ordnung (&gt;10 CHF für 1 Mahlzeit)
-              </MenuItem>
-              <MenuItem value="teuer">
-                Teuer (&gt;15 CHF für 1 Mahlzeit)
-              </MenuItem>
-              <MenuItem value="sehrteuer">
-                sehr Teuer (&gt;20 CHF für 1 Mahlzeit)
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <p>Wie ist die Qualität?</p>
-          <FormControl className="w-3/4 flex-grow">
-            <Select
-              value={quality}
-              label="Qualität"
-              onChange={(e) => setQuality(e.target.value)}
-              variant="standard"
-              input={<SelectInput />}
-            >
-              <MenuItem value="sehrlecker">Sehr Lecker</MenuItem>
-              <MenuItem value="lecker">Lecker</MenuItem>
-              <MenuItem value="io">In Ordnung</MenuItem>
-              <MenuItem value="nichtlecker">nicht Lecker</MenuItem>
-              <MenuItem value="ekelhaft">Ekelhaft</MenuItem>
-            </Select>
-          </FormControl>
+          <div className="bg-black/50 rounded-xl p-5 shadow-lg shadow-black">
+            <div className="w-full flex items-center flex-col ">
+              <p className="self-start text-lg">
+                Welche Kategorien liefert das Restaurant?
+              </p>
+              <FormControl className="w-full flex-grow">
+                <Select
+                  id="category-select"
+                  value={category}
+                  label="Kategorie"
+                  onChange={(e) => setCategory(e.target.value as [])}
+                  variant="standard"
+                  multiple
+                  input={<SelectInput />}
+                >
+                  <MenuItem value="asian">Asiatisch</MenuItem>
+                  <MenuItem value="greek">Griechisch</MenuItem>
+                  <MenuItem value="italian">Italienisch</MenuItem>
+                  <MenuItem value="fastfood">Fast Food</MenuItem>
+                  <MenuItem value="burger">Burger</MenuItem>
+                  <MenuItem value="kebab">Kebab</MenuItem>
+                  <MenuItem value="sandwich">Sandwich</MenuItem>
+                  <MenuItem value="other">Sonstiges</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="w-full flex items-center flex-col ">
+              <p className="self-start text-lg">Wie ist der Preis</p>
+              <FormControl className="w-full flex-grow">
+                <Select
+                  id="price-select"
+                  value={price}
+                  label="Preis"
+                  onChange={(e) => setPrice(e.target.value)}
+                  variant="standard"
+                  input={<SelectInput />}
+                >
+                  <MenuItem value="sehrguenstig">
+                    Sehr Günstig (5 CHF für 1 Mahlzeit)
+                  </MenuItem>
+                  <MenuItem value="guenstig">
+                    Günstig (&gt;7 CHF für 1 Mahlzeit)
+                  </MenuItem>
+                  <MenuItem value="io">
+                    In Ordnung (&gt;10 CHF für 1 Mahlzeit)
+                  </MenuItem>
+                  <MenuItem value="teuer">
+                    Teuer (&gt;15 CHF für 1 Mahlzeit)
+                  </MenuItem>
+                  <MenuItem value="sehrteuer">
+                    sehr Teuer (&gt;20 CHF für 1 Mahlzeit)
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="w-full flex items-center flex-col">
+              <p className="self-start text-lg">Wie ist die Qualität?</p>
+              <FormControl className="w-full flex-grow">
+                <Select
+                  value={quality}
+                  label="Qualität"
+                  onChange={(e) => setQuality(e.target.value)}
+                  variant="standard"
+                  input={<SelectInput />}
+                >
+                  <MenuItem value="sehrlecker">Sehr Lecker</MenuItem>
+                  <MenuItem value="lecker">Lecker</MenuItem>
+                  <MenuItem value="io">In Ordnung</MenuItem>
+                  <MenuItem value="nichtlecker">nicht Lecker</MenuItem>
+                  <MenuItem value="ekelhaft">Ekelhaft</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+          </div>
 
-          <FormControl>
-            <FormLabel id="radio-ambiance-group-label">Ambiance</FormLabel>
-            <p>Wie ist der Style?</p>
-            <RadioGroup
-              row
-              aria-labelledby="radio-ambiance-group-label"
-              name="row-radio-style-group"
-              value={ambiance.style}
-              onChange={(e) => {
-                setAmbiance({ ...ambiance, style: e.target.value });
-              }}
-            >
-              <FormControlLabel
-                value="modern"
-                control={<Radio />}
-                label="Modern"
-              />
-              <FormControlLabel
-                value="old-fashioned"
-                control={<Radio />}
-                label="Altmodisch"
-              />
-            </RadioGroup>
-            <p>Wie ist der Platz?</p>
-            <RadioGroup
-              row
-              aria-labelledby="radio-ambiance-group-label"
-              name="row-radio-space-group"
-              value={ambiance.space}
-              onChange={(e) => {
-                setAmbiance({ ...ambiance, space: e.target.value });
-              }}
-            >
-              <FormControlLabel
-                value="tight"
-                control={<Radio />}
-                label="Klein"
-              />
-              <FormControlLabel
-                value="spacious"
-                control={<Radio />}
-                label="Gross"
-              />
-            </RadioGroup>
-            <p>Wie ist die Helligkeit?</p>
-            <RadioGroup
-              row
-              aria-labelledby="radio-ambiance-group-label"
-              name="row-radio-brightness-group"
-              value={ambiance.brightness}
-              onChange={(e) => {
-                setAmbiance({ ...ambiance, brightness: e.target.value });
-              }}
-            >
-              <FormControlLabel
-                value="grim"
-                control={<Radio />}
-                label="Düster"
-              />
-              <FormControlLabel
-                value="bright"
-                control={<Radio />}
-                label="Hell"
-              />
-            </RadioGroup>
-            <p>Wie ist die Lautstärke?</p>
-            <RadioGroup
-              row
-              aria-labelledby="radio-ambiance-group-label"
-              name="row-radio-loudness-group"
-              value={ambiance.loudness}
-              onChange={(e) => {
-                setAmbiance({ ...ambiance, loudness: e.target.value });
-              }}
-            >
-              <FormControlLabel value="loud" control={<Radio />} label="Laut" />
-              <FormControlLabel
-                value="quiet"
-                control={<Radio />}
-                label="Ruhig"
-              />
-            </RadioGroup>
-          </FormControl>
-          <div className="flex flex-col justify-center items-start">
-            <p>Suche die Optionen aus die dem Restaurant zustimmen!</p>
+          <div className="w-full flex text-start flex-col bg-black/50 rounded-xl p-5 shadow-lg shadow-black">
+            <FormControl className="gap-2">
+              <p className="self-start text-lg">Wie ist das Ambiente?</p>
+              <div>
+                <p className="self-start text-md">Wie ist der Style?</p>
+                <RadioGroup
+                  row
+                  aria-labelledby="radio-ambiance-group-label"
+                  name="row-radio-style-group"
+                  value={ambiance.style}
+                  onChange={(e) => {
+                    setAmbiance({ ...ambiance, style: e.target.value });
+                  }}
+                >
+                  <FormControlLabel
+                    value="modern"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Modern"
+                  />
+                  <FormControlLabel
+                    value="old-fashioned"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Altmodisch"
+                  />
+                </RadioGroup>
+              </div>
+              <div>
+                <p>Wie ist der Platz?</p>
+                <RadioGroup
+                  row
+                  aria-labelledby="radio-ambiance-group-label"
+                  name="row-radio-space-group"
+                  value={ambiance.space}
+                  onChange={(e) => {
+                    setAmbiance({ ...ambiance, space: e.target.value });
+                  }}
+                >
+                  <FormControlLabel
+                    value="tight"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Klein"
+                  />
+                  <FormControlLabel
+                    value="spacious"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Gross"
+                  />
+                </RadioGroup>
+              </div>
+              <div>
+                <p>Wie ist die Helligkeit?</p>
+                <RadioGroup
+                  row
+                  aria-labelledby="radio-ambiance-group-label"
+                  name="row-radio-brightness-group"
+                  value={ambiance.brightness}
+                  onChange={(e) => {
+                    setAmbiance({ ...ambiance, brightness: e.target.value });
+                  }}
+                >
+                  <FormControlLabel
+                    value="grim"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Düster"
+                  />
+                  <FormControlLabel
+                    value="bright"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Hell"
+                  />
+                </RadioGroup>
+              </div>
+              <div>
+                <p>Wie ist die Lautstärke?</p>
+                <RadioGroup
+                  row
+                  aria-labelledby="radio-ambiance-group-label"
+                  name="row-radio-loudness-group"
+                  value={ambiance.loudness}
+                  onChange={(e) => {
+                    setAmbiance({ ...ambiance, loudness: e.target.value });
+                  }}
+                >
+                  <FormControlLabel
+                    value="loud"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Laut"
+                  />
+                  <FormControlLabel
+                    value="quiet"
+                    control={
+                      <Radio
+                        sx={{
+                          color: "white",
+                          "&.Mui-checked": {
+                            color: "#0BCAAD",
+                          },
+                        }}
+                      />
+                    }
+                    label="Ruhig"
+                  />
+                </RadioGroup>
+              </div>
+            </FormControl>
+          </div>
+          <div className="w-full flex text-start flex-col bg-black/50 rounded-xl p-5 shadow-lg shadow-black ">
+            <p className="self-start text-lg">Wähle alle passende Attribute</p>
             <CheckboxLabels
-              label="Vegan"
+              label="Vegane Optionen"
               checked={vegan}
               onChange={() => {
                 setVegan(!vegan);
@@ -304,7 +400,7 @@ const page = () => {
               }}
             />
           </div>
-          <CustomButton text="Erstellen" size="lg" onClick={createRestaurant} />
+          <CustomButton text="Erstellen" size="custom" custom="text-2xl w-full h-16" onClick={createRestaurant} />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>

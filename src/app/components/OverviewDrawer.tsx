@@ -31,11 +31,12 @@ export default function OverviewDrawer({
             backgroundColor: "#2d2d30",
             color: "white",
             height: "100%",
-            overflowY: "auto",
+            overflowY: "scroll",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
             justifyItems: "start",
+            scrollbarWidth: "none",
           }}
           role="presentation"
         ><div>

@@ -22,8 +22,8 @@ const Overview = () => {
         <p className="flex items-center gap-5">
           <RiMapPinLine size={40} /> DieStrasse 15, 12345 Ortschaft
         </p>
-        <div className="flex flex-row items-center w-full self-start gap-5">
-          <IoMdTime size={40} />
+        <div className="flex flex-row items-center gap-5">
+          <IoMdTime size={40} className="max-width"/>
           <p>
             Heute Geschlossen oder 11:30 - 14:00 Uhr 17:00 - 22:00 Uhr
           </p>

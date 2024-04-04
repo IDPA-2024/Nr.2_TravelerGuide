@@ -86,23 +86,26 @@ const page = () => {
       async (result: any, status: any) => {
         if (status === "OK") {
           data = {
-            name: result.name,
-            category: category,
-            price: price,
-            quality: quality,
-            ambiance: ambiance,
-            vegan: vegan,
-            seatingOption: seatingOption,
-            seatingIndoor: seatingIndoor,
-            seatingOutdoor: seatingOutdoor,
-            takeaway: takeaway,
-            lat: result.geometry.location.lat(),
-            lng: result.geometry.location.lng(),
-            address: result.formatted_address,
-            image: result.photos[0].getUrl(),
-            website: result.website,
-            opening_hours: result.opening_hours,
-            comments: [],
+            restaurant: {
+              name: result.name,
+              category: category,
+              price: price,
+              quality: quality,
+              ambiance: ambiance,
+              vegan: vegan,
+              seatingOption: seatingOption,
+              seatingIndoor: seatingIndoor,
+              seatingOutdoor: seatingOutdoor,
+              takeaway: takeaway,
+              lat: result.geometry.location.lat(),
+              lng: result.geometry.location.lng(),
+              address: result.formatted_address,
+              image: result.photos[0].getUrl(),
+              website: result.website,
+              opening_hours: result.opening_hours,
+              comments: [],
+            },
+            token: token,
           };
           const response = await fetch("/api/restaurant", {
             method: "POST",
@@ -112,8 +115,9 @@ const page = () => {
             body: JSON.stringify(data),
           });
           if (response.status === 200) {
+            console.log("Restaurant created");
+            console.log(response);
             // TODO: Send toasts
-            // TODO: Redirect to main page
           } else {
             // TODO: Send toasts
           }

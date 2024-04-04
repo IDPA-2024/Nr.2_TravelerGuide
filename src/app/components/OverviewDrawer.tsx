@@ -7,24 +7,27 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Tabs from "./Tabs";
 import CustomButton from "./CustomButton";
 
-export default function OverviewDrawer() {
+export default function OverviewDrawer({
+  openDrawer,
+  setOpenDrawer,
+  restaurant,
+}: {
+  openDrawer: boolean;
+  setOpenDrawer: (value: boolean) => void;
+  restaurant: any;
+}) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Define breakpoint for mobile screens
-
-  const [open, setOpen] = React.useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
+    setOpenDrawer(newOpen);
   };
 
   return (
     <div>
-      <button className="absolute z-40 text-black" onClick={toggleDrawer(true)}>
-        Prototype Button
-      </button>
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box
           sx={{
-            width: isMobile ? "100%" : 410,
+            width: isMobile ? "100vw" : 410,
             backgroundColor: "#2d2d30",
             color: "white",
             height: "100%",
@@ -36,22 +39,12 @@ export default function OverviewDrawer() {
           }}
           role="presentation"
         >
-            <div className="w-full  ">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
-                alt="My Image"
-                style={{ width: "100%", maxHeight: "30vh" }}
-              />
-              <Tabs />
-            </div>
-            <CustomButton
-              text="Schliessen"
-              size="custom"
-              custom="h-10 w-1/3 text-lg mb-5 self-center" 
-              onClick={() => {
-                setOpen(false);
-              }}
-            />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
+            alt="My Image"
+            style={{ width: "100%", maxHeight: "30vh" }}
+          />
+          <Tabs />
         </Box>
       </Drawer>
     </div>

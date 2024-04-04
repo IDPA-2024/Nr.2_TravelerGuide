@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import SearchRestaurant from "../components/SearchRestaurant";
 import InputLabel from "@mui/material/InputLabel";
@@ -14,8 +14,12 @@ import CheckboxLabels from "../components/CheckboxLabels";
 import CustomButton from "../components/CustomButton";
 import { Loader } from "@googlemaps/js-api-loader";
 import SelectInput from "../components/SelectInput";
+import { useTokenContext } from "@/context/useToken";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const { token } = useTokenContext();
+  const router = useRouter();
   const mapRef = React.useRef(null);
   const [search, setSearch] = React.useState("");
   const [category, setCategory] = React.useState([]);
@@ -33,6 +37,12 @@ const page = () => {
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
   const [restaurantId, setRestaurantId] = React.useState("");
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+  }, []);
 
   const createRestaurant: any = async () => {
     const loader = new Loader({

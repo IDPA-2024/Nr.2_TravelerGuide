@@ -5,6 +5,8 @@ import * as React from "react";
 import CustomButton from "./CustomButton";
 import Checkbox from "./CheckboxLabels";
 import Link from "next/link";
+import { useUserContext } from "@/context/useUser";
+import { useTokenContext } from "@/context/useToken";
 
 const Header = ({
   filterOpen,
@@ -21,6 +23,8 @@ const Header = ({
   openProfile: boolean;
   setOpenProfile: (value: boolean) => void;
 }) => {
+  const { user } = useUserContext();
+  const { token } = useTokenContext();
   const [filterOptions, setFilterOptions] = React.useState([
     { label: "Asiatisch", value: "asian", checked: false },
     { label: "Griechisch", value: "greek", checked: false },
@@ -31,9 +35,16 @@ const Header = ({
     { label: "Sandwhich", value: "sandwhich", checked: false },
     { label: "Sonstiges", value: "other", checked: false },
   ]);
+
   let profile = {
-    __html: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256" version="1.1"><rect fill="#e0e0e0" cx="128" width="256" height="256" cy="128" r="128"/><text x="50%" y="50%" style="color: #000000; line-height: 1;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;" alignment-baseline="middle" text-anchor="middle" font-size="112" font-weight="400" dy=".1em" dominant-baseline="middle" fill="#000000">EL</text></svg>`,
+    __html: user
+      ? user.image
+      : `<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" id="user"><path d="M256 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96z"></path></svg>`,
   };
+
+  React.useEffect(() => {
+    profile.__html = user ? user.image : profile.__html;
+  }, [user]);
 
   const handleOpenFilter = () => {
     setFilterOpen(!filterOpen);
@@ -128,24 +139,32 @@ const Header = ({
           className="rounded-full w-12 h-12 border border-dotted border-black  overflow-hidden cursor-pointer  "
           onClick={handleOpenMenu}
         >
-          <div dangerouslySetInnerHTML={profile} className=" w-full h-full" />
+          <div
+            dangerouslySetInnerHTML={profile}
+            className={" w-full h-full bg-gray-300 " + (user ? "" : "p-1")}
+          />
         </div>
-        {userMenuOpen && (
-          <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                setOpenProfile(!openProfile);
-              }}
-            >
-              Mein Konto
+        {userMenuOpen &&
+          (token !== null ? (
+            <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  setOpenProfile(!openProfile);
+                }}
+              >
+                Mein Konto
+              </div>
+              <Link href="/restaurant">Restaurant hinzufügen</Link>
+              <div className="border-t border-white mt-2 pt-2 cursor-pointer">
+                Abmelden
+              </div>
             </div>
-            <Link href="/restaurant">Restaurant hinzufügen</Link>
-            <div className="border-t border-white mt-2 pt-2 cursor-pointer">
-              Abmelden
+          ) : (
+            <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
+              <Link href="/login">Anmelden</Link>
             </div>
-          </div>
-        )}
+          ))}
       </div>
     </div>
   );

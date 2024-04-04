@@ -7,14 +7,18 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import { useTokenContext } from "@/context/useToken";
+import { useUserContext } from "@/context/useUser";
 
 const page = () => {
   const router = useRouter();
+  const { setToken } = useTokenContext();
+  const { setUser } = useUserContext();
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (email === "" || password === "") {
       toast.error("Bitte fülle alle Felder aus", {
         position: "top-left",
@@ -26,7 +30,33 @@ const page = () => {
         theme: "dark",
       });
     } else {
-        router.push("/");
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (data.status === 200) {
+        setToken(data.token);
+        setUser(data.user);
+        setTimeout(() => {
+          router.push("/");
+        }, 10000);
+      } else {
+        toast.error(data.message, {
+          position: "top-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+      }
+
+      router.push("/");
     }
     setEmail("");
     setPassword("");
@@ -53,8 +83,7 @@ const page = () => {
           />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full">
-          
-        <CustomButton text="Anmelden" size="lg" onClick={handleLogin} />
+          <CustomButton text="Anmelden" size="lg" onClick={handleLogin} />
           <Link
             href="/register"
             className="text-white text-lg md:h-1/4 text-center hover:underline"
@@ -68,7 +97,13 @@ const page = () => {
             Passwort vergessen
           </Link>
         </div>
-        <CustomButton text="Gast" size="sm" onClick={() => {router.push("/")}} />
+        <CustomButton
+          text="Gast"
+          size="sm"
+          onClick={() => {
+            router.push("/");
+          }}
+        />
       </div>
       <ToastContainer />
     </div>

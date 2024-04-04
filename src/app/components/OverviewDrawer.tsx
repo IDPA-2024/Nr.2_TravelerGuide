@@ -35,15 +35,17 @@ export default function OverviewDrawer({
           }}
           role="presentation"
         >
-          <img
-            src={
-              restaurant
-                ? restaurant.image
-                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
-            }
-            alt="My Image"
-            style={{ width: "100%", maxHeight: "30vh" }}
-          />
+          <div className="w-full max-h-64 overflow-hidden flex justify-center items-center">
+            <img
+              src={
+                restaurant
+                  ? restaurant.image
+                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
+              }
+              alt="My Image"
+              style={{ width: "100%" }}
+            />
+          </div>
           <Tabs />
         </Box>
       </Drawer>

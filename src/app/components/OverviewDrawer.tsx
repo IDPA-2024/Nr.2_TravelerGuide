@@ -35,22 +35,25 @@ export default function OverviewDrawer({
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            jusitfyItems: "center",
+            justifyItems: "start",
           }}
           role="presentation"
-        >
-          <div className="w-full max-h-64 overflow-hidden flex justify-center items-center">
-            <img
-              src={
-                restaurant
-                  ? restaurant.image
-                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
-              }
-              alt="My Image"
-              style={{ width: "100%" }}
-            />
-          </div>
-          <Tabs />
+        ><div>
+          
+            <div className="w-full overflow-hidden flex justify-center items-center" style={{height: "40vh"}}>
+              <img
+                src={
+                  restaurant
+                    ? restaurant.image
+                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH4mOnM6YDMVtCl6d8niAbJ1zOh64PErQakw&s"
+                }
+                alt="My Image"
+                style={{ width: "100%",}}
+              />
+            </div>
+            <Tabs />
+        </div>
+          <CustomButton text="Schliessen" size="custom" custom="self-center h-10 w-1/3 text-lg mb-5" onClick={() => {setOpenDrawer(false)}} />
         </Box>
       </Drawer>
     </div>

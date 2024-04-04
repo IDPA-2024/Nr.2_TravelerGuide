@@ -7,7 +7,7 @@ const CustomButton = ({ text, size, onClick, custom, type }: { text: string; siz
       actualSize = "min-h-16 w-3/4 text-3xl";
       break;
     case "sm":
-      actualSize = "h-10 w-1/3 text-lg";
+      actualSize = "h-10 w-1/3 text-lg ";
       break;
     case "custom": 
       actualSize = custom || "";

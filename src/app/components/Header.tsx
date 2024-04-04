@@ -133,15 +133,15 @@ const Header = ({
         {userMenuOpen && (
           <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
             <div
-              className="cursor-pointer"
+              className="cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out"
               onClick={() => {
                 setOpenProfile(!openProfile);
               }}
             >
               Mein Konto
             </div>
-            <Link href="/restaurant">Restaurant hinzufügen</Link>
-            <div className="border-t border-white mt-2 pt-2 cursor-pointer">
+            <Link href="/restaurant" className="hover:text-[#0BCAAD] transition duration-150 ease-in-out">Restaurant hinzufügen</Link>
+            <div className="border-t border-white mt-2 pt-2 cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out">
               Abmelden
             </div>
           </div>

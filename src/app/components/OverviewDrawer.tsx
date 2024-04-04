@@ -22,10 +22,11 @@ export default function OverviewDrawer() {
       <Drawer open={open} onClose={toggleDrawer(false)}>
         <Box
           sx={{
-            width: isMobile ? "100vw" : 410,
-            backgroundColor: "#374151",
+            width: isMobile ? "100%" : 410,
+            backgroundColor: "#2d2d30",
             color: "white",
-            height: "100vh",
+            height: "100%",
+            overflowY: "auto",
           }}
           role="presentation"
         >

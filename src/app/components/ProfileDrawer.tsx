@@ -18,7 +18,7 @@ const ProfilDrawer = ({ openProfile, setOpenProfile } : { openProfile: boolean, 
         <Box
           sx={{
             width: isMobile ? "100vw" : 410,
-            backgroundColor: "#374151",
+            backgroundColor: "#2d2d30",
             color: "white",
             height: "100vh",
           }}

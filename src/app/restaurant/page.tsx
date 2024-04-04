@@ -104,7 +104,7 @@ const page = () => {
 
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen max-w-screen flex justify-center items-center md:justify-end">
-      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 md:my-8 p-16 ">
+      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 md:my-8 p-16 ">
         <p className="font-bold text-white md:h-1/4 text-6xl text-center">
           Neues Restaurant
         </p>

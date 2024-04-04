@@ -24,7 +24,7 @@ export default function OverviewDrawer({
 
   return (
     <div>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
+      <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
         <Box
           sx={{
             width: isMobile ? "100vw" : 410,

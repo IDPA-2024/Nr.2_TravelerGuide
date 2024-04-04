@@ -73,7 +73,7 @@ const page = () => {
 
     await service.getDetails(
       { placeId: restaurantId },
-      (result: any, status: any) => {
+      async (result: any, status: any) => {
         if (status === "OK") {
           data = {
             name: result.name,
@@ -94,9 +94,19 @@ const page = () => {
             opening_hours: result.opening_hours,
             comments: [],
           };
-          // TODO: Send data to backend
-          // TODO: Send toasts
-          // TODO: Redirect to main page
+          const response = await fetch("/api/restaurant", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          if (response.status === 200) {
+            // TODO: Send toasts
+            // TODO: Redirect to main page
+          } else {
+            // TODO: Send toasts
+          }
         }
       }
     );
@@ -400,7 +410,12 @@ const page = () => {
               }}
             />
           </div>
-          <CustomButton text="Erstellen" size="custom" custom="text-2xl w-full h-16" onClick={createRestaurant} />
+          <CustomButton
+            text="Erstellen"
+            size="custom"
+            custom="text-2xl w-full h-16"
+            onClick={createRestaurant}
+          />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>

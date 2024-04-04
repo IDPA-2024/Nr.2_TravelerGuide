@@ -12,9 +12,7 @@ export default function CenteredTabs() {
 
   return (
     <Box>
-      <Tabs value={value} onChange={handleChange} variant="fullWidth" centered style={{
-        color: "red",
-      }}>
+      <Tabs value={value} onChange={handleChange} variant="fullWidth" >
         <Tab label="Item One" />
         <Tab label="Item Two" />
         <Tab label="Item Three" />

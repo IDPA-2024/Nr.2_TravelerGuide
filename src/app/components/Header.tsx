@@ -161,7 +161,7 @@ const Header = ({
               </div>
             </div>
           ) : (
-            <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full ">
+            <div className="flex flex-col gap-2 justify-center bg-[#78797A] rounded-xl shadow-lg shadow-black mt-2 p-5 w-56 absolute right-0 top-full hover:text-[#0BCAAD] transition duration-150 ease-in-out">
               <Link href="/login">Anmelden</Link>
             </div>
           ))}

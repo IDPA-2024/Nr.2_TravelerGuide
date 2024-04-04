@@ -6,15 +6,14 @@ import { IoRestaurantOutline } from "react-icons/io5";
 import { LuLeaf } from "react-icons/lu";
 
 const Overview = () => {
-    
-const openingHours = {
+  const openingHours = {
     Monday: ["11:30-14:00", "17:00-22:00"],
     Tuesday: ["11:30-14:00", "17:00-22:00"],
     Wednesday: ["11:30-14:00", "17:00-22:00"],
     Thursday: ["11:30-14:00", "17:00-22:00"],
     Friday: ["11:30-14:00", "17:00-22:00"],
   };
-const [localClosed, setLocalClosed] = React.useState(false);
+  const [localClosed, setLocalClosed] = React.useState(false);
 
   return (
     <div className="flex flex-col gap-10">
@@ -23,11 +22,13 @@ const [localClosed, setLocalClosed] = React.useState(false);
         <p className="flex items-center gap-5">
           <RiMapPinLine size={40} /> DieStrasse 15, 12345 Ortschaft
         </p>
-        <p className="flex items-center gap-5">
-          <IoMdTime size={40} /> Heute Geschlossen oder 11:30 - 14:00 Uhr 17:00 - 22:00 Uhr
-        </p>
+        <div className="flex flex-row items-center w-full self-start gap-5">
+          <IoMdTime size={40} />
+          <p>
+            Heute Geschlossen oder 11:30 - 14:00 Uhr 17:00 - 22:00 Uhr
+          </p>
+        </div>
 
-        
         <p className="flex items-center gap-5">
           <GrMoney size={40} /> 4/5
         </p>

@@ -21,6 +21,7 @@ export async function POST(req: Request) {
       body.email.split("@")[0].split(".")[0]
     }+${body.email.split("@")[0].split(".")[1]}&size=256&format=svg`
   ).then((res) => res.text());
+  const formatedImage = image.replace('width="256px" height="256px"', "");
   const result = await User.create({
     name:
       body.email.split("@")[0].split(".")[0].charAt(0).toUpperCase() +
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
         .split(".")[1]
         .slice(1)
         .replace(/[^a-zA-Z0-9]/g, ""),
-    image: image,
+    image: formatedImage,
     email: body.email,
     passwordHash: passwordHash,
     verified: false,

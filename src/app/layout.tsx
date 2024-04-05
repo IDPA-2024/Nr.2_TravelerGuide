@@ -4,6 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import "./globals.css";
 import UserProvider from "@/context/useUser";
 import TokenProvider from "@/context/useToken";
+import RestaurantsProvider from "@/context/useRestaurants";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <AppRouterCacheProvider>
         <body className={inter.className}>
-          <TokenProvider>
-            <UserProvider>{children}</UserProvider>
-          </TokenProvider>
+          <RestaurantsProvider>
+            <TokenProvider>
+              <UserProvider>{children}</UserProvider>
+            </TokenProvider>
+          </RestaurantsProvider>
         </body>
       </AppRouterCacheProvider>
     </html>

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useUserContext } from "@/context/useUser";
 import { useTokenContext } from "@/context/useToken";
 import { toast, ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Header = ({
   filterOpen,
@@ -15,7 +16,7 @@ const Header = ({
   userMenuOpen,
   setUserMenuOpen,
   openProfile,
-  setOpenProfile,
+  setOpenProfile
 }: {
   filterOpen: boolean;
   setFilterOpen: (value: boolean) => void;
@@ -36,6 +37,25 @@ const Header = ({
     { label: "Sandwhich", value: "sandwhich", checked: false },
     { label: "Sonstiges", value: "other", checked: false },
   ]);
+
+  const handleLogout = () => {
+    setToken(null);
+    setUser(null);
+    setTimeout(() => {
+      toast.success("Erfolgreich abgemeldet", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    }, 50);
+    setUserMenuOpen(false);
+  }
+
+  const router = useRouter();
 
   let profile = {
     __html: user
@@ -77,20 +97,6 @@ const Header = ({
 
     setFilterOpen(false);
   };
-
-  const handleLogout = () => {
-    setToken(null);
-    setUser(null);
-    toast.success("Erfolgreich abgemeldet", {
-      position: "top-left",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "dark",
-    });
-  }
 
   return (
     <div className="flex justify-center items-center flex-row ">

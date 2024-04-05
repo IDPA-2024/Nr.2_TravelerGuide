@@ -6,10 +6,12 @@ import { useState } from "react";
 import ProfileDrawer from "./components/ProfileDrawer";
 import { useTokenContext } from "@/context/useToken";
 import { useUserContext } from "@/context/useUser";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   const { token, setToken } = useTokenContext();
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [filterOpen, setFilterOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
@@ -42,6 +44,7 @@ const page = () => {
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
       />
+      <ToastContainer/>
     </div>
   );
 };

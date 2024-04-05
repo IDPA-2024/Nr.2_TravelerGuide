@@ -24,3 +24,21 @@ export async function POST(req: NextApiRequest) {
   if (!restaurant) return Response.json({ message: "error", status: 500 });
   return Response.json({ message: "ok", status: 200, data: result });
 }
+
+export async function GET(req: Request, params: { id: string }) {
+  const { id } = params;
+  const comments = await Comment.find({ restaurant_id: id });
+  if (!comments) return Response.json({ message: "error", status: 404 });
+  let formattedComments = [];
+  for (let i = 0; i < comments.length; i++) {
+    const user = await User.findById(comments[i].user_id);
+    if (!user) return Response.json({ message: "error", status: 404 });
+    formattedComments.push({
+      user_name: user.name,
+      user_image: user.image,
+      text: comments[i].text,
+      stars: comments[i].stars,
+    });
+  }
+  return Response.json({ message: "ok", status: 200, data: formattedComments });
+}

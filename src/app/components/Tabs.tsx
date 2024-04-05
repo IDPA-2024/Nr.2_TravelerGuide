@@ -45,7 +45,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({restaurant}: {restaurant: any}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (
@@ -69,17 +69,20 @@ export default function BasicTabs() {
         >
           <Tab label="Übersicht" {...a11yProps(0)} />
           <Tab label="Kommentare" {...a11yProps(1)} />
-          <Tab label="Route" {...a11yProps(2)} />
+          <Tab
+            label="Route"
+            {...a11yProps(2)}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Overview />
+        <Overview restaurant={restaurant} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Comments />
+        <Comments restaurant={restaurant} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Route />
+        <Route restaurant={restaurant}/>
       </CustomTabPanel>
     </Box>
   );

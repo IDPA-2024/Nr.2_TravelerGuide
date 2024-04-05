@@ -5,7 +5,14 @@ import CustomButton from "../components/CustomButton";
 import Link from "next/link";
 
 const page = () => {
+  const [email, setEmail] = React.useState("");
   const handleSend = () => {
+    fetch(`/api/auth/password?email=${email}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     console.log("Login");
   };
 
@@ -16,7 +23,13 @@ const page = () => {
           Passwort zurücksetzen
         </p>
         <div className="flex flex-col gap-5 md:h-1/3 justify-center items-center w-full">
-          <Input placeholder="Email" onChange={() => {}} value={""} />
+          <Input
+            placeholder="Email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            value={email}
+          />
           <CustomButton text="Anmelden" size="lg" onClick={handleSend} />
         </div>
         <div className="flex flex-col gap-4">

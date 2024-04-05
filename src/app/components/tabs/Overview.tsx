@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RiMapPinLine } from "react-icons/ri";
 import { IoMdTime } from "react-icons/io";
 import { GrMoney } from "react-icons/gr";
@@ -9,46 +9,62 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 
-const Overview = () => {
-  const openingHours = {
-    Monday: ["11:30-14:00", "17:00-22:00"],
-    Tuesday: ["11:30-14:00", "17:00-22:00"],
-    Wednesday: ["11:30-14:00", "17:00-22:00"],
-    Thursday: ["11:30-14:00", "17:00-22:00"],
-    Friday: ["11:30-14:00", "17:00-22:00"],
-  };
-  const [localClosed, setLocalClosed] = React.useState(false);
-  const [todayOpeningHours, setTodayOpeningHours] = React.useState(
-    "11:30-14:00, 17:00-22:00"
-  );
+const Overview = ({ restaurant }: { restaurant: any }) => {
+  const [todayOpeningHours, setTodayOpeningHours] = React.useState("");
   const [vegan, setVegan] = React.useState(true);
 
+  enum quality {
+    "io" = "In Ordnung",
+    "sehrlecker" = "Sehr lecker",
+    "lecker" = "Lecker",
+    "nichtlecker" = "Nicht lecker",
+    "ekelhaft" = "Ekelhaft",
+  }
+
+  enum price {
+    "sehrguenstig" = "Sehr Günstig (5 CHF für 1 Mahlzeit)",
+    "guenstig" = "Günstig (>7 CHF für 1 Mahlzeit)",
+    "io" = "In Ordnung (>10 CHF für 1 Mahlzeit)",
+    "teuer" = "Teuer (>15 CHF für 1 Mahlzeit)",
+    "sehrteuer" = "sehr Teuer (>20 CHF für 1 Mahlzeit)",
+  }
+
+  useEffect(() => {
+    setTodayOpeningHours(
+      restaurant.opening_hours.weekday_text[new Date().getDay() - 1]
+    );
+    if (restaurant.vegan) {
+      setVegan(true);
+    }
+  }, []);
   return (
     <div className="flex flex-col gap-10">
-      <h1 className="text-center font-bold text-2xl">RestaurantName</h1>
+      <h1 className="text-center font-bold text-2xl">{restaurant.name}</h1>
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-6">
           <RiMapPinLine size={40} />
           <p className="flex items-center gap-5 col-span-5">
-            DieStrasse 15, 12345 Ortschaft
+            {restaurant.address}
           </p>
         </div>
         <div className="grid grid-cols-6">
           <IoMdTime size={40} />
-          <Accordion className="flex flex-col items-start col-span-5 " sx={{   background: "rgba(0, 0, 0, 0.25)", color: "white" }} >
+          <Accordion
+            className="flex flex-col items-start col-span-5 "
+            sx={{ background: "rgba(0, 0, 0, 0.25)", color: "white" }}
+          >
             <AccordionSummary
-            className="flex flex-row justify-between w-full"
+              className="flex flex-row justify-between w-full"
               expandIcon={<IoIosArrowDown color="white" />}
               aria-controls="panel1-content"
               id="panel1-header"
             >
-              {localClosed ? "Geschlossen" : todayOpeningHours}
+              {todayOpeningHours}
             </AccordionSummary>
             <AccordionDetails>
-              {Object.keys(openingHours).map((day) => (
+              {restaurant.opening_hours.weekday_text.map((day: string) => (
                 <div key={day} className="flex flex-col mt-4">
                   <p>{day}</p>
-                  <p>{openingHours[day].join(", ")}</p>
                 </div>
               ))}
             </AccordionDetails>
@@ -56,16 +72,22 @@ const Overview = () => {
         </div>
         <div className="grid grid-cols-6">
           <GrMoney size={40} />
-          <p className="flex items-center gap-5 col-span-5">4/5</p>
+          <p className="flex items-center gap-5 col-span-5">
+            Preis: {price[restaurant.price as keyof typeof price]}
+          </p>
         </div>
         <div className="grid grid-cols-6">
           <IoRestaurantOutline size={40} />
-          <p className="flex items-center gap-5 col-span-5">Qualität</p>
+          <p className="flex items-center gap-5 col-span-5">
+            Qualität: {quality[restaurant.quality as keyof typeof quality]}
+          </p>
         </div>
-        { vegan && <div className="grid grid-cols-6">
-          <LuLeaf size={40} />
-          <p className="flex items-center gap-5 col-span-5">Vegan</p>
-        </div>}
+        {vegan && (
+          <div className="grid grid-cols-6">
+            <LuLeaf size={40} />
+            <p className="flex items-center gap-5 col-span-5">Vegan</p>
+          </div>
+        )}
       </div>
     </div>
   );

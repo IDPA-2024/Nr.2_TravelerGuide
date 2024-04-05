@@ -31,11 +31,12 @@ export default function OverviewDrawer({
             backgroundColor: "#2d2d30",
             color: "white",
             height: "100%",
-            overflowY: "auto",
+            overflowY: "scroll",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
             justifyItems: "start",
+            scrollbarWidth: "none",
           }}
           role="presentation"
         ><div>
@@ -51,7 +52,7 @@ export default function OverviewDrawer({
                 style={{ width: "100%",}}
               />
             </div>
-            <Tabs />
+            <Tabs restaurant={restaurant} />
         </div>
           <CustomButton text="Schliessen" size="custom" custom="self-center h-10 w-1/3 text-lg mb-5" onClick={() => {setOpenDrawer(false)}} />
         </Box>

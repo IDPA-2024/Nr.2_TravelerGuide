@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import CustomButton from "../components/CustomButton";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,16 @@ const page = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
+
+  useEffect(() => {
+    fetch(`/api/auth/verify?id=${id}`, {
+      method: "GET",
+      body: JSON.stringify({ id: id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }, []);
 
   return (
     <div className="bg-bg bg-cover h-screen w-screen flex justify-center items-center md:justify-end">

@@ -16,7 +16,8 @@ const Header = ({
   userMenuOpen,
   setUserMenuOpen,
   openProfile,
-  setOpenProfile
+  setOpenProfile,
+  setData,
 }: {
   filterOpen: boolean;
   setFilterOpen: (value: boolean) => void;
@@ -24,6 +25,7 @@ const Header = ({
   setUserMenuOpen: (value: boolean) => void;
   openProfile: boolean;
   setOpenProfile: (value: boolean) => void;
+  setData: (value: any) => void;
 }) => {
   const { user, setUser } = useUserContext();
   const { token, setToken } = useTokenContext();
@@ -56,6 +58,7 @@ const Header = ({
   }
 
   const router = useRouter();
+  const [search, setSearch] = React.useState("");
 
   let profile = {
     __html: user
@@ -67,16 +70,33 @@ const Header = ({
     profile.__html = user ? user.image : profile.__html;
   }, [user]);
 
-  const handleOpenFilter = () => {
+  const handleOpenFilter = async () => {
     setFilterOpen(!filterOpen);
-    // TODO: API call with checkedValues
   };
 
   const handleOpenMenu = () => {
     setUserMenuOpen(!userMenuOpen);
   };
 
-  const handleFilter = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    console.log(e.target.value);
+    let search = e.target.value === "" ? "" : e.target.value;
+    let checkedValues: Array<string> = [];
+    filterOptions.forEach((option) => {
+      if (option.checked) {
+        checkedValues.push(option.value);
+      }
+    });
+    const response = await fetch(`/api/restaurant`, {
+      method: "PUT",
+      body: JSON.stringify({ filter: checkedValues, search: search }),
+    });
+    const data = await response.json();
+    setData(data.data);
+  };
+
+  const handleFilter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let checkedValues: Array<string> = [];
@@ -93,8 +113,19 @@ const Header = ({
       }
     });
     setFilterOptions(newFilterOptions);
-    // TODO: API call with checkedValues
-
+    let array = [];
+    for (let i = 0; i < checkedValues.length; i++) {
+      let value = filterOptions.find(
+        (option) => option.label === checkedValues[i]
+      );
+      array.push(value?.value);
+    }
+    const response = await fetch(`/api/restaurant`, {
+      method: "PUT",
+      body: JSON.stringify({ filter: array, search: "" }),
+    });
+    const data = await response.json();
+    setData(data.data);
     setFilterOpen(false);
   };
 
@@ -108,6 +139,8 @@ const Header = ({
           type="text"
           className=" w-full rounded-md text-center bg-transparent text-lg pl-3 placeholder:text-white/50 border-none focus:outline-none focus:placeholder:text-transparent"
           placeholder="Suche"
+          value={search}
+          onChange={handleSearch}
         />
         <button onClick={handleOpenFilter}>
           <div className=" md:hover:bg-black transition duration-150 ease-in-out cursor-pointer rounded-r-lg py-4 px-5 ">
@@ -176,7 +209,12 @@ const Header = ({
               >
                 Mein Konto
               </div>
-              <Link href="/restaurant" className="hover:text-[#0BCAAD] transition duration-150 ease-in-out">Restaurant hinzufügen</Link>
+              <Link
+                href="/restaurant"
+                className="hover:text-[#0BCAAD] transition duration-150 ease-in-out"
+              >
+                Restaurant hinzufügen
+              </Link>
               <div className="border-t border-white mt-2 pt-2 cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out" onClick={handleLogout}>
                 Abmelden
               </div>

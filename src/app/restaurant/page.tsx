@@ -1,12 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
 import SearchRestaurant from "../components/SearchRestaurant";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,6 +13,8 @@ import { Loader } from "@googlemaps/js-api-loader";
 import SelectInput from "../components/SelectInput";
 import { useTokenContext } from "@/context/useToken";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   const { token } = useTokenContext();
@@ -115,11 +114,28 @@ const page = () => {
             body: JSON.stringify(data),
           });
           if (response.status === 200) {
-            console.log("Restaurant created");
-            console.log(response);
-            // TODO: Send toasts
+            toast.success("Restaurant erfolgreich erstellt", {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "dark",
+            });
+            setTimeout(() => {
+              router.push("/restaurant");
+            }, 2000);
           } else {
-            // TODO: Send toasts
+            toast.error("Restaurant konnte nicht erstellt werden", {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "dark",
+            });
           }
         }
       }
@@ -433,8 +449,8 @@ const page = () => {
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>
-      <ToastContainer />
       <div className="hidden" ref={mapRef}></div>
+      <ToastContainer />
     </div>
   );
 };

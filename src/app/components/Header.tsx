@@ -7,6 +7,7 @@ import Checkbox from "./CheckboxLabels";
 import Link from "next/link";
 import { useUserContext } from "@/context/useUser";
 import { useTokenContext } from "@/context/useToken";
+import { toast, ToastContainer } from "react-toastify";
 
 const Header = ({
   filterOpen,
@@ -23,8 +24,8 @@ const Header = ({
   openProfile: boolean;
   setOpenProfile: (value: boolean) => void;
 }) => {
-  const { user } = useUserContext();
-  const { token } = useTokenContext();
+  const { user, setUser } = useUserContext();
+  const { token, setToken } = useTokenContext();
   const [filterOptions, setFilterOptions] = React.useState([
     { label: "Asiatisch", value: "asian", checked: false },
     { label: "Griechisch", value: "greek", checked: false },
@@ -76,6 +77,20 @@ const Header = ({
 
     setFilterOpen(false);
   };
+
+  const handleLogout = () => {
+    setToken(null);
+    setUser(null);
+    toast.success("Erfolgreich abgemeldet", {
+      position: "top-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+    });
+  }
 
   return (
     <div className="flex justify-center items-center flex-row ">
@@ -156,7 +171,7 @@ const Header = ({
                 Mein Konto
               </div>
               <Link href="/restaurant" className="hover:text-[#0BCAAD] transition duration-150 ease-in-out">Restaurant hinzufügen</Link>
-              <div className="border-t border-white mt-2 pt-2 cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out">
+              <div className="border-t border-white mt-2 pt-2 cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out" onClick={handleLogout}>
                 Abmelden
               </div>
             </div>
@@ -166,6 +181,7 @@ const Header = ({
             </div>
           ))}
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -15,6 +15,8 @@ import { useTokenContext } from "@/context/useToken";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Link from 'next/link';
+import Checkbox from "@mui/material/Checkbox";
 
 const page = () => {
   const { token } = useTokenContext();
@@ -36,6 +38,11 @@ const page = () => {
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
   const [restaurantId, setRestaurantId] = React.useState("");
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChecked = () => {
+    setChecked(!checked);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -48,6 +55,7 @@ const page = () => {
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
       version: "weekly",
     });
+    
 
     const { PlacesService } = await loader.importLibrary("places");
 
@@ -76,6 +84,17 @@ const page = () => {
       !quality ||
       !restaurantId
     ) {
+      return;
+    } else if (checked == false) {
+      toast.error("Bitte akzeptiere die AGB's", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
       return;
     }
     let data;
@@ -439,6 +458,23 @@ const page = () => {
                 setTakeaway(!takeaway);
               }}
             />
+          </div>
+          <div className="flex items-center justify-center ">
+            <Checkbox
+              onChange={handleChecked}
+              sx={{
+                color: "white",
+                "&.Mui-checked": {
+                  color: "#0BCAAD",
+                },
+              }}
+            />
+            <p>
+              Ich akzeptiere die{" "}
+              <Link href="" className="text-[#0BCAAD] hover:underline">
+                AGB's
+              </Link>
+            </p>
           </div>
           <CustomButton
             text="Erstellen"

@@ -79,7 +79,7 @@ export default function BasicTabs({restaurant}: {restaurant: any}) {
         <Overview restaurant={restaurant} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Comments />
+        <Comments restaurant={restaurant} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <Route restaurant={restaurant}/>

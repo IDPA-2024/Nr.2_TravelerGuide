@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomButton = ({ text, size, onClick, custom, type }: { text: string; size: string, onClick?: () => void, custom?: string, type?: any }) => {
+const CustomButton = ({ text, size, onClick, custom, type }: { text: any ; size: string, onClick?: () => void, custom?: string, type?: any }) => {
   let actualSize = "";
   switch (size) {
     case "lg":

@@ -6,6 +6,8 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Tabs from "./Tabs";
 import CustomButton from "./CustomButton";
+import { IoMdClose } from "react-icons/io";
+
 
 export default function OverviewDrawer({
   openDrawer,
@@ -54,7 +56,7 @@ export default function OverviewDrawer({
             </div>
             <Tabs restaurant={restaurant} />
         </div>
-          <CustomButton text="Schliessen" size="custom" custom="self-center h-10 w-1/3 text-lg mb-5" onClick={() => {setOpenDrawer(false)}} />
+         <CustomButton text={<IoMdClose size={30} />} size="custom" custom="bg-black/15 backdrop-filter backdrop-blur-md shadow-none hover:bg-black/50 absolute right-4 top-4 " onClick={() => {setOpenDrawer(false)}} />
         </Box>
       </Drawer>
     </div>

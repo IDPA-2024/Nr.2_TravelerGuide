@@ -89,6 +89,12 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
           </div>
         )}
       </div>
+      <div className="grid grid-cols-6">
+          <IoRestaurantOutline size={40} />
+          <p className="flex items-center gap-5 col-span-5">
+            Qualität: {quality[restaurant.quality as keyof typeof quality]}
+          </p>
+        </div>
     </div>
   );
 };

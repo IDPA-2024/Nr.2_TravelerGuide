@@ -29,7 +29,7 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
             <textarea
               id="chat"
               rows={1}
-              className="caret-white block mx-4 p-2.5 w-full text-sm text-gray-900 bg-transparent border-b-white border-b focus:outline-none focus:border-b-[#0BCAAD]"
+              className="caret-white block mx-4 p-2.5 overflow-hidden w-full text-sm text-white bg-transparent border-b-white border-b focus:outline-none focus:border-b-[#0BCAAD]"
               placeholder="Schreibe einen Kommentar..."
             ></textarea>
             <button

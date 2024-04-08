@@ -8,10 +8,10 @@ const Comment = ({ comment }: { comment: any }) => {
   };
   return (
     <div className="flex flex-row items-start gap-3">
-      <div className="rounded-full border border-dotted border-black  overflow-hidden cursor-pointer max-h-56 w-56">
+      <div className="rounded-full border border-dotted border-black  overflow-hidden cursor-pointer max-h-14 w-14">
         <div
           dangerouslySetInnerHTML={profile}
-          className={" w-full h-full bg-gray-300 p-1 size-5"}
+          className={" w-full h-full bg-gray-300 size-5"}
         />
       </div>
       <div>

@@ -41,21 +41,10 @@ const Header = ({
   ]);
 
   const handleLogout = () => {
+    setUserMenuOpen(false);
     setToken(null);
     setUser(null);
-    setTimeout(() => {
-      toast.success("Erfolgreich abgemeldet", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
-    }, 50);
-    setUserMenuOpen(false);
-  }
+}
 
   const router = useRouter();
   const [search, setSearch] = React.useState("");

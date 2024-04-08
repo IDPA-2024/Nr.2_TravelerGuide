@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <AppRouterCacheProvider>
         <body className={inter.className}>
-          <TokenProvider>
-            <UserProvider>{children}</UserProvider>
-          </TokenProvider>
+            <TokenProvider>
+              <UserProvider>{children}</UserProvider>
+            </TokenProvider>
         </body>
       </AppRouterCacheProvider>
     </html>

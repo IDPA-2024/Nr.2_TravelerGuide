@@ -68,18 +68,7 @@ const page = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
-        toast.success("Registrierung erfolgreich", {
-          position: "top-left",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "dark",
-        });
-        setTimeout(() => {
           router.push("/verify");
-        }, 2000);
       } else {
         toast.error(data.message, {
           position: "top-left",

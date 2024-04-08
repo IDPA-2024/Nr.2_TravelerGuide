@@ -1,13 +1,16 @@
 "use client";
 import React, { useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import { useRestaurants } from "@/hooks/useRestaurants";
 
 const Map = ({
   setRestaurant,
   setOpenDrawer,
+  restaurants,
 }: {
   setRestaurant: (restaurant: any) => void;
   setOpenDrawer: (value: boolean) => void;
+  restaurants: any;
 }) => {
   const mapRef = React.useRef(null);
 
@@ -37,14 +40,11 @@ const Map = ({
       };
 
       const map = new Map(mapRef.current, mapOptions);
-
-      const restaurants = await fetch("/api/restaurant?filter=&search=", {
-        method: "GET",
-      }).then((res) => res.json());
-      restaurants.data.forEach((restaurant: any) => {
+      if (!restaurants) return;
+      restaurants.forEach(async (restaurant: any) => {
         const marker = new Marker({
           position: { lat: restaurant.lat, lng: restaurant.lng },
-          map,
+          map: map,
           title: restaurant.name,
           label: restaurant.name.charAt(0),
         });
@@ -53,10 +53,12 @@ const Map = ({
           setOpenDrawer(true);
         });
       });
+
       return map;
     };
     initMap();
-  }, []);
+  }, [restaurants]);
+
   return <div className="w-screen h-screen" ref={mapRef} />;
 };
 

@@ -1,12 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
 import SearchRestaurant from "../components/SearchRestaurant";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,6 +13,10 @@ import { Loader } from "@googlemaps/js-api-loader";
 import SelectInput from "../components/SelectInput";
 import { useTokenContext } from "@/context/useToken";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from 'next/link';
+import Checkbox from "@mui/material/Checkbox";
 
 const page = () => {
   const { token } = useTokenContext();
@@ -37,6 +38,11 @@ const page = () => {
   const [seatingIndoor, setSeatingIndoor] = React.useState(false);
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
   const [restaurantId, setRestaurantId] = React.useState("");
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChecked = () => {
+    setChecked(!checked);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -49,6 +55,7 @@ const page = () => {
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
       version: "weekly",
     });
+    
 
     const { PlacesService } = await loader.importLibrary("places");
 
@@ -77,6 +84,17 @@ const page = () => {
       !quality ||
       !restaurantId
     ) {
+      return;
+    } else if (checked == false) {
+      toast.error("Bitte akzeptiere die AGB's", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
       return;
     }
     let data;
@@ -115,11 +133,28 @@ const page = () => {
             body: JSON.stringify(data),
           });
           if (response.status === 200) {
-            console.log("Restaurant created");
-            console.log(response);
-            // TODO: Send toasts
+            toast.success("Restaurant erfolgreich erstellt", {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "dark",
+            });
+            setTimeout(() => {
+              router.push("/restaurant");
+            }, 2000);
           } else {
-            // TODO: Send toasts
+            toast.error("Restaurant konnte nicht erstellt werden", {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "dark",
+            });
           }
         }
       }
@@ -424,6 +459,23 @@ const page = () => {
               }}
             />
           </div>
+          <div className="flex items-center justify-center ">
+            <Checkbox
+              onChange={handleChecked}
+              sx={{
+                color: "white",
+                "&.Mui-checked": {
+                  color: "#0BCAAD",
+                },
+              }}
+            />
+            <p>
+              Ich akzeptiere die{" "}
+              <Link href="" className="text-[#0BCAAD] hover:underline">
+                AGB's
+              </Link>
+            </p>
+          </div>
           <CustomButton
             text="Erstellen"
             size="custom"
@@ -433,8 +485,8 @@ const page = () => {
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>
       </div>
-      <ToastContainer />
       <div className="hidden" ref={mapRef}></div>
+      <ToastContainer />
     </div>
   );
 };

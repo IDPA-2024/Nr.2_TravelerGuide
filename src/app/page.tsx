@@ -6,15 +6,19 @@ import { useState } from "react";
 import ProfileDrawer from "./components/ProfileDrawer";
 import { useTokenContext } from "@/context/useToken";
 import { useUserContext } from "@/context/useUser";
+import { useRestaurants } from "@/hooks/useRestaurants";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   const { token, setToken } = useTokenContext();
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const [filterOpen, setFilterOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [restaurant, setRestaurant] = useState(null);
+  const { data, setData } = useRestaurants();
 
   return (
     <div>
@@ -23,7 +27,11 @@ const page = () => {
         setOpenDrawer={setOpenDrawer}
         restaurant={restaurant}
       />
-      <Map setRestaurant={setRestaurant} setOpenDrawer={setOpenDrawer} />
+      <Map
+        setRestaurant={setRestaurant}
+        setOpenDrawer={setOpenDrawer}
+        restaurants={data}
+      />
       <div
         className={
           "absolute bg-black/75 top-0 left-0 right-0 bottom-0 z-10  " +
@@ -37,11 +45,13 @@ const page = () => {
         setUserMenuOpen={setUserMenuOpen}
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
+        setData={setData}
       />
       <ProfileDrawer
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
       />
+      <ToastContainer/>
     </div>
   );
 };

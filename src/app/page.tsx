@@ -20,8 +20,16 @@ const page = () => {
   const [restaurant, setRestaurant] = useState(null);
   const { data, setData } = useRestaurants();
 
+  const handleClick = () => {
+    if (userMenuOpen) {
+      setUserMenuOpen(false);
+    } else if (filterOpen) {
+      setFilterOpen(false);
+    }
+  }
+
   return (
-    <div>
+    <div onClick={handleClick}>
       <OverviewDrawer
         openDrawer={openDrawer}
         setOpenDrawer={setOpenDrawer}

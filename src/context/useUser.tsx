@@ -10,6 +10,7 @@ import React, {
 } from "react";
 
 export type User = {
+  _id: string;
   email: string;
   passwordHash: string;
   name: string;

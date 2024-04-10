@@ -14,6 +14,7 @@ const commentSchema = new mongoose.Schema({
 });
 
 const restaurantSchema = new mongoose.Schema({
+  place_id: String,
   lat: Number,
   lng: Number,
   name: String,
@@ -77,6 +78,7 @@ type CommentType = Document & {
   restaurantId: string;
 };
 type RestaurantType = Document & {
+  place_id: string;
   lat: number;
   lng: number;
   name: string;

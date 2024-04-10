@@ -122,6 +122,7 @@ const page = () => {
               website: result.website,
               opening_hours: result.opening_hours,
               comments: [],
+              place_id: restaurantId,
             },
             token: token,
           };

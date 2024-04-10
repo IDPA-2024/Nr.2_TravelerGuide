@@ -13,6 +13,7 @@ export async function POST(req: Request) {
     restaurantId: body.restaurant_id,
     text: body.content,
     stars: 0,
+    created_at: new Date(),
   });
   if (!result) return Response.json({ message: "error", status: 500 });
   const user = await User.findByIdAndUpdate(body.user_id, {
@@ -39,6 +40,7 @@ export async function GET(req: Request, params: { id: string }) {
       user_image: user.image,
       text: comments[i].text,
       stars: comments[i].stars,
+      created_at: comments[i].created_at,
     });
   }
   return Response.json({ message: "ok", status: 200, data: formattedComments });

@@ -16,6 +16,9 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
     const getData = async () => {
       const res = await fetch(`/api/comment?id=${restaurant._id}`);
       const data = await res.json();
+      data.data.sort((a: any, b: any) => {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      });
       setComments(data.data);
     };
     getData();

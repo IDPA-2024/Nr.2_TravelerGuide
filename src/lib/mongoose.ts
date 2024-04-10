@@ -11,6 +11,7 @@ const commentSchema = new mongoose.Schema({
   text: String,
   stars: { type: Number, default: 0 },
   restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
+  created_at: { type: Date, default: Date.now },
 });
 
 const restaurantSchema = new mongoose.Schema({
@@ -75,6 +76,7 @@ type CommentType = Document & {
   text: string;
   stars: number;
   restaurantId: string;
+  created_at: Date;
 };
 type RestaurantType = Document & {
   lat: number;

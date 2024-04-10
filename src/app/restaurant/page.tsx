@@ -15,7 +15,7 @@ import { useTokenContext } from "@/context/useToken";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Link from 'next/link';
+import Link from "next/link";
 import Checkbox from "@mui/material/Checkbox";
 
 const page = () => {
@@ -55,7 +55,6 @@ const page = () => {
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
       version: "weekly",
     });
-    
 
     const { PlacesService } = await loader.importLibrary("places");
 
@@ -144,7 +143,7 @@ const page = () => {
               theme: "dark",
             });
             setTimeout(() => {
-              router.push("/restaurant");
+              router.push("/");
             }, 2000);
           } else {
             toast.error("Restaurant konnte nicht erstellt werden", {
@@ -482,6 +481,14 @@ const page = () => {
             size="custom"
             custom="text-2xl w-full h-16"
             onClick={createRestaurant}
+          />
+          <CustomButton
+            text="Zurück"
+            size="custom"
+            custom="self-center min-h-8 w-1/3 text-lg mb-5"
+            onClick={() => {
+              router.push("/");
+            }}
           />
         </div>
         <div className="flex flex-col gap-2 justify-center items-center w-full"></div>

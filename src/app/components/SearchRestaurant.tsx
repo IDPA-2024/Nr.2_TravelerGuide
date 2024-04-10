@@ -1,8 +1,6 @@
 import React from "react";
-import Input from "./Input";
 import { Loader } from "@googlemaps/js-api-loader";
 import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 
 const SearchRestaurant = ({
   search,
@@ -79,11 +77,10 @@ const SearchRestaurant = ({
     <>
       <Autocomplete
         onChange={(e, value) => {
-          if (!value) {
-            return;
+          if (value) {
+            setSearch(value.label);
+            setId(value.place_id);
           }
-          setSearch(value.label);
-          setId(value.place_id);
         }}
         disablePortal
         options={searchResults}

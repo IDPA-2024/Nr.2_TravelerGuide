@@ -8,6 +8,7 @@ import PasswordInput from "./PasswordInput";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CustomButton from "./CustomButton";
+import { IoMdClose } from "react-icons/io";
 
 const ProfilDrawer = ({
   openProfile,
@@ -141,16 +142,17 @@ const ProfilDrawer = ({
               />
             </form>
             <CustomButton
-              text="Schliessen"
-              size="custom"
-              custom="self-center min-h-8 w-1/3 text-lg mb-5"
-              onClick={() => {
-                setOpenProfile(false);
-              }}
-            />
+            text={<IoMdClose size={30} />}
+            size="custom"
+            custom="bg-black/15 backdrop-filter backdrop-blur-md shadow-none hover:bg-black/50 absolute right-4 top-4 "
+            onClick={() => {
+              setOpenProfile(false);
+            }}
+          />
           </div>
         </Box>
       </Drawer>
+
       <ToastContainer />
     </div>
   );

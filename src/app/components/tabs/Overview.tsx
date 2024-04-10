@@ -8,10 +8,12 @@ import { IoIosArrowDown } from "react-icons/io";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import { MdChairAlt } from "react-icons/md";
 
 const Overview = ({ restaurant }: { restaurant: any }) => {
   const [todayOpeningHours, setTodayOpeningHours] = React.useState("");
   const [vegan, setVegan] = React.useState(true);
+
 
   enum quality {
     "io" = "In Ordnung",
@@ -90,10 +92,27 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
         )}
       </div>
       <div className="grid grid-cols-6">
-          <IoRestaurantOutline size={40} />
-          <p className="flex items-center gap-5 col-span-5">
-            Qualität: {quality[restaurant.quality as keyof typeof quality]}
-          </p>
+          <MdChairAlt size={40} />
+          <Accordion
+            className="flex flex-col items-start col-span-5 "
+            sx={{ background: "rgba(0, 0, 0, 0.25)", color: "white" }}
+          >
+            <AccordionSummary
+              className="flex flex-row justify-between w-full"
+              expandIcon={<IoIosArrowDown color="white" />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Sitzmöglichkeiten und Ambiente
+            </AccordionSummary>
+            <AccordionDetails>
+              {restaurant.opening_hours.weekday_text.map((day: string) => (
+                <div key={day} className="flex flex-col mt-4">
+                  <p>{day}</p>
+                </div>
+              ))}
+            </AccordionDetails>
+          </Accordion>
         </div>
     </div>
   );

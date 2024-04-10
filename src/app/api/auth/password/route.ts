@@ -16,7 +16,7 @@ export async function GET(req: Request, params: { email: string }) {
     subject: "Passwort zurücksetzen - Lunch Guide",
     react: EmailTemplate({
       name: user.name,
-      link: `${process.env.NEXT_PUBLIC_URL}/resetPassword?id=${user._id}`,
+      link: `${process.env.NEXT_PUBLIC_URL}/setNewPassword?id=${user._id}`,
     }),
   });
 }

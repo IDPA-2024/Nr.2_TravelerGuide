@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 import CustomButton from "../components/CustomButton";
 import Link from "next/link";
@@ -13,8 +13,21 @@ const page = () => {
         "Content-Type": "application/json",
       },
     });
-    console.log("Login");
   };
+  const [countdown, setCountdown] = useState(30);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 0) return 0;
+        return prev - 1;
+      });
+      if (countdown === 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [setCountdown, countdown]);
 
   return (
     <div className="bg-bg bg-cover h-screen w-screen flex justify-center items-center md:justify-end">
@@ -30,7 +43,19 @@ const page = () => {
             }}
             value={email}
           />
-          <CustomButton text="Anmelden" size="lg" onClick={handleSend} />
+          <CustomButton
+            text={
+              "Erneut senden " + (countdown > 0 ? "in " + countdown + "s" : "")
+            }
+            size="custom"
+            custom={
+              countdown === 0
+                ? "min-h-16 w-3/4 text-3xl"
+                : "min-h-16 w-3/4 text-3xl cursor-not-allowed hover:bg-opacity-100 opacity-50"
+            }
+            disabled={countdown > 0}
+            onClick={handleSend}
+          />
         </div>
         <div className="flex flex-col gap-4">
           <div className="text-white text-lg md:h-1/4 text-center hover:underline">

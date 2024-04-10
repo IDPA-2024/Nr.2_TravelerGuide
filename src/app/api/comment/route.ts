@@ -1,4 +1,5 @@
 import { Comment, Restaurant, User } from "@/lib/mongoose";
+import { NextRequest } from "next/server";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -26,9 +27,11 @@ export async function POST(req: Request) {
   return Response.json({ message: "ok", status: 200, data: result });
 }
 
-export async function GET(req: Request, params: { id: string }) {
-  const { id } = params;
-  const comments = await Comment.find({ restaurantId: id });
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const id = searchParams.get("id");
+  if (!id) return Response.json({ message: "error", status: 400 });
+  const comments = await Comment.find({ restaurantId: { $eq: id } });
   if (!comments) return Response.json({ message: "error", status: 404 });
   let formattedComments = [];
   for (let i = 0; i < comments.length; i++) {

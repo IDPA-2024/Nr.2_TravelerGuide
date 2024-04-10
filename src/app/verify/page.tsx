@@ -8,6 +8,13 @@ const page = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const router = useRouter();
+  let countdown = 30;
+  const timer = setInterval(() => {
+    countdown--;
+    if (countdown === 0) {
+      clearInterval(timer);
+    }
+  }, 1000);
 
   return (
     <div className="bg-bg bg-cover h-screen w-screen flex justify-center items-center md:justify-end">
@@ -17,8 +24,9 @@ const page = () => {
           Es wurde eine Email gesendet. Bitte verifizieren Sie sich
         </p>
         <CustomButton
-          text="Erneut senden"
+          text={"Erneut senden" + (countdown > 0 ? `(${countdown})` : "")}
           size="lg"
+          disabled={countdown > 0}
           onClick={() => {
             fetch("/api/auth/resendVerify", {
               method: "POST",

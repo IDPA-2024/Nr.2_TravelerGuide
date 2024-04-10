@@ -1,7 +1,9 @@
 import { User } from "@/lib/mongoose";
+import { NextRequest } from "next/server";
 
-export async function GET(req: Request) {
-  const id = await req.url.split("=")[1];
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const id = searchParams.get("id");
   const result = await User.findOneAndUpdate(
     { _id: id },
     { verified: true },

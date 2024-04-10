@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomButton = ({ text, size, onClick, custom, type }: { text: any ; size: string, onClick?: () => void, custom?: string, type?: any }) => {
+const CustomButton = ({ text, size, onClick, custom, type, disabled }: { text: any ; size: string, onClick?: () => void, custom?: string, type?: any, disabled?: boolean }) => {
   let actualSize = "";
   switch (size) {
     case "lg":
@@ -23,6 +23,7 @@ const CustomButton = ({ text, size, onClick, custom, type }: { text: any ; size:
       }
       onClick={onClick}
       type={type || "button"}
+      disabled={disabled !== undefined ? disabled : false}
     >
       {text}
     </button>

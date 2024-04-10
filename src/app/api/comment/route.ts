@@ -10,8 +10,8 @@ export async function POST(req: Request) {
     return Response.json({ message: "error", status: 400 });
   const result = await Comment.create({
     user_id: body.user_id,
-    restaurant_id: body.restaurant_id,
-    content: body.content,
+    restaurantId: body.restaurant_id,
+    text: body.content,
     stars: 0,
   });
   if (!result) return Response.json({ message: "error", status: 500 });

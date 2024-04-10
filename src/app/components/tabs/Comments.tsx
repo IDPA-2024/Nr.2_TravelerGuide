@@ -29,6 +29,9 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
 
   const createComment = async (e: any) => {
     e.preventDefault();
+    if (user === null) {
+      return;
+    }
     const res = await fetch(`/api/comment`, {
       method: "POST",
       headers: {
@@ -36,8 +39,9 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
       },
       body: JSON.stringify({
         token: token,
-        comment: newComment,
-        restaurant: restaurant._id,
+        content: newComment,
+        restaurant_id: restaurant._id,
+        user_id: user._id,
       }),
     });
     const data = await res.json();

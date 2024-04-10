@@ -6,13 +6,13 @@ export async function POST(req: Request) {
   if (token === "" || token === undefined) {
     return Response.json({ message: "No Token", status: 401 });
   }
-  if (!body.user_id || !body.restaurant_id || !body.content || !body.stars)
+  if (!body.user_id || !body.restaurant_id || !body.content)
     return Response.json({ message: "error", status: 400 });
   const result = await Comment.create({
     user_id: body.user_id,
     restaurant_id: body.restaurant_id,
     content: body.content,
-    stars: body.stars,
+    stars: 0,
   });
   if (!result) return Response.json({ message: "error", status: 500 });
   const user = await User.findByIdAndUpdate(body.user_id, {

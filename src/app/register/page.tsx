@@ -68,7 +68,7 @@ const page = () => {
       });
       const data = await response.json();
       if (data.status === 200) {
-          router.push("/verify");
+          router.push("/verify?email=" + email);
       } else {
         toast.error(data.message, {
           position: "top-left",

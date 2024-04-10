@@ -12,7 +12,6 @@ const page = () => {
     const verify = async () => {
       const result = await fetch(`/api/auth/verify?id=${id}`, {
         method: "GET",
-        body: JSON.stringify({ id: id }),
         headers: {
           "Content-Type": "application/json",
         },

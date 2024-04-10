@@ -3,6 +3,7 @@ import Comment from "../Comment";
 import { useTokenContext } from "@/context/useToken";
 import { useUserContext } from "@/context/useUser";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 
 const Comments = ({ restaurant }: { restaurant: any }) => {
   const [comments, setComments] = useState([]);
@@ -26,6 +27,50 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
       : `<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" id="user"><path d="M256 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96z"></path></svg>`,
   };
 
+  const createComment = async (e: any) => {
+    e.preventDefault();
+    const res = await fetch(`/api/comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: token,
+        comment: newComment,
+        restaurant: restaurant._id,
+      }),
+    });
+    const data = await res.json();
+    if (data.message === "ok") {
+      const updatedCommentsRes = await fetch(
+        `/api/comment?id=${restaurant._id}`
+      );
+      const updatedCommentsData = await updatedCommentsRes.json();
+      setComments(updatedCommentsData.data);
+      setNewComment(""); 
+      toast.success("Kommentar erfolgreich erstellt", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    } else {
+      console.log(data.message)
+      toast.error("Fehler beim erstellen des Kommentars", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    }
+  };
+
   const handleRedirect = () => {
     router.push("/login");
   };
@@ -35,9 +80,7 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
       {token !== null && (
         <form>
           <div className="flex items-center px-3 py-2 rounded-lg bg-black/25">
-            <div
-              className="rounded-full w-12 h-auto border border-dotted border-black overflow-hidden cursor-pointer  "
-            >
+            <div className="rounded-full w-12 h-auto border border-dotted border-black overflow-hidden cursor-pointer  ">
               <div
                 dangerouslySetInnerHTML={profile}
                 className={" w-full h-full bg-gray-300 " + (user ? "" : "p-1")}
@@ -54,7 +97,7 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
             <button
               type="submit"
               className="inline-flex justify-center p-2 text-white transition duration-150 ease-in-out rounded-full cursor-pointer hover:text-[#0BCAAD]"
-              onClick={(e) => {}}
+              onClick={createComment}
             >
               <svg
                 className="w-5 h-5 rotate-90 rtl:-rotate-90"
@@ -94,6 +137,7 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
       {comments.map((comment: any) => (
         <Comment key={comment._id} comment={comment} />
       ))}
+      <ToastContainer />
     </div>
   );
 };

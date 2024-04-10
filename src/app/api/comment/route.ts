@@ -1,10 +1,11 @@
-import { NextApiRequest } from "next";
 import { Comment, Restaurant, User } from "@/lib/mongoose";
 
-export async function POST(req: NextApiRequest) {
-  const token = req.cookies.token;
-  if (!token) return Response.json({ message: "error", status: 401 });
-  const body = await req.body;
+export async function POST(req: Request) {
+  const body = await req.json();
+  const token = body.token;
+  if (token === "" || token === undefined) {
+    return Response.json({ message: "No Token", status: 401 });
+  }
   if (!body.user_id || !body.restaurant_id || !body.content || !body.stars)
     return Response.json({ message: "error", status: 400 });
   const result = await Comment.create({

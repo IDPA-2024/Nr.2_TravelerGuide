@@ -23,7 +23,7 @@ const ProfilDrawer = ({
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
 
-  const handleChangePassword = () => {
+  const handleChangePassword = async () => {
     if (password === "" || passwordConfirm === "") {
       toast.error("Bitte fülle alle Felder aus", {
         position: "top-left",
@@ -55,19 +55,44 @@ const ProfilDrawer = ({
         theme: "dark",
       });
     } else {
-      // call api to change password
-
-      toast.success("Passwort erfolgreich geändert", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
-      setPassword("");
-      setPasswordConfirm("");
+      if (user !== null) {
+        const result = await fetch("/api/auth/password", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: user._id,
+            newPassword: password,
+          }),
+        });
+        const data = await result.json();
+        if (data.status === 200) {
+          toast.success("Passwort erfolgreich geändert", {
+            position: "top-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+          });
+          setPassword("");
+          setPasswordConfirm("");
+        } else {
+          toast.error("Fehler beim ändern des Passworts", {
+            position: "top-left",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+          });
+        }
+      } else {
+        return;
+      }
     }
   };
 
@@ -142,13 +167,13 @@ const ProfilDrawer = ({
               />
             </form>
             <CustomButton
-            text={<IoMdClose size={30} />}
-            size="custom"
-            custom="bg-black/15 backdrop-filter backdrop-blur-md shadow-none hover:bg-black/50 absolute right-4 top-4 "
-            onClick={() => {
-              setOpenProfile(false);
-            }}
-          />
+              text={<IoMdClose size={30} />}
+              size="custom"
+              custom="bg-black/15 backdrop-filter backdrop-blur-md shadow-none hover:bg-black/50 absolute right-4 top-4 "
+              onClick={() => {
+                setOpenProfile(false);
+              }}
+            />
           </div>
         </Box>
       </Drawer>

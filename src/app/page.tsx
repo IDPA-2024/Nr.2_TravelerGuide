@@ -9,6 +9,7 @@ import { useUserContext } from "@/context/useUser";
 import { useRestaurants } from "@/hooks/useRestaurants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import React from "react";
 
 const page = () => {
   const { token, setToken } = useTokenContext();
@@ -19,6 +20,7 @@ const page = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [restaurant, setRestaurant] = useState(null);
   const { data, setData } = useRestaurants();
+  const mapRef = React.useRef(null);
 
   const handleClick = () => {
     if (userMenuOpen) {
@@ -39,6 +41,7 @@ const page = () => {
         setRestaurant={setRestaurant}
         setOpenDrawer={setOpenDrawer}
         restaurants={data}
+        mapRef={mapRef}
       />
       <div
         className={

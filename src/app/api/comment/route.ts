@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request, params: { id: string }) {
   const { id } = params;
-  const comments = await Comment.find({ restaurant_id: id });
+  const comments = await Comment.find({ restaurantId: id });
   if (!comments) return Response.json({ message: "error", status: 404 });
   let formattedComments = [];
   for (let i = 0; i < comments.length; i++) {

@@ -21,6 +21,7 @@ const page = () => {
     }
   }, []);
 
+  // Function to handle password change
   const handleChangePassword = async () => {
     if (password === "" || passwordConfirm === "") {
       toast.error("Bitte fülle alle Felder aus", {

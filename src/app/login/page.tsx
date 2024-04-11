@@ -41,9 +41,7 @@ const page = () => {
       if (data.status === 200) {
         setToken(data.token);
         setUser(data.user);
-        setTimeout(() => {
-          router.push("/");
-        }, 10000);
+        router.push("/");
       } else {
         toast.error(data.message, {
           position: "top-left",

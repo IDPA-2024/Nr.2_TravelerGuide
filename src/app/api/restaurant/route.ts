@@ -8,6 +8,10 @@ export async function POST(req: Request) {
     return Response.json({ message: "No Token", status: 401 });
   }
   const restaurant = body.restaurant;
+  const check = await Restaurant.findOne({ name: restaurant.name });
+  if (check) {
+    return Response.json({ message: "Restaurant already exists", status: 409 });
+  }
   const result = await Restaurant.create(restaurant);
 
   if (!result) return Response.json({ message: "error", status: 500 });

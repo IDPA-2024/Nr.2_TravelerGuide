@@ -471,7 +471,7 @@ const page = () => {
             />
             <p>
               Ich akzeptiere die{" "}
-              <Link href="" className="text-[#0BCAAD] hover:underline">
+              <Link href="/privacyPolicy" className="text-[#0BCAAD] hover:underline">
                 AGB's
               </Link>
             </p>

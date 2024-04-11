@@ -8,7 +8,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { MdChairAlt } from "react-icons/md";
+import { FaChair } from "react-icons/fa";
 import { TbPaperBag } from "react-icons/tb";
 
 const Overview = ({ restaurant }: { restaurant: any }) => {
@@ -29,11 +29,11 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
   }
 
   enum price {
-    "sehrguenstig" = "Sehr Günstig (5 CHF für 1 Mahlzeit)",
-    "guenstig" = "Günstig (>7 CHF für 1 Mahlzeit)",
-    "io" = "In Ordnung (>10 CHF für 1 Mahlzeit)",
-    "teuer" = "Teuer (>15 CHF für 1 Mahlzeit)",
-    "sehrteuer" = "sehr Teuer (>20 CHF für 1 Mahlzeit)",
+    "sehrguenstig" = "Sehr Günstig (5 CHF pro Mahlzeit)",
+    "guenstig" = "Günstig (7 CHF oder mehr pro Mahlzeit)",
+    "io" = "In Ordnung (10 CHF oder mehr pro Mahlzeit)",
+    "teuer" = "Teuer (15 CHF oder mehr pro Mahlzeit)",
+    "sehrteuer" = "sehr Teuer (20 CHF oder mehr pro Mahlzeit)",
   }
 
   useEffect(() => {
@@ -195,7 +195,7 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
         )}
         {seatingOption && (
           <div className="grid grid-cols-6">
-            <MdChairAlt size={40} />
+            <FaChair size={40} />
             <Accordion
               className="flex flex-col items-start col-span-5 "
               sx={{ background: "rgba(0, 0, 0, 0.25)", color: "white" }}

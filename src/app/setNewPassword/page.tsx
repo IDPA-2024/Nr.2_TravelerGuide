@@ -1,24 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import PasswordInput from "../components/PasswordInput";
-import Input from "../components/Input";
 import CustomButton from "../components/CustomButton";
 import Link from "next/link";
-import Checkbox from "@mui/material/Checkbox";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
-
-  const [checked, setChecked] = React.useState(false);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
-  const [email, setEmail] = React.useState("");
 
-  const handleRegister = async () => {
-    if (email === "" || password === "" || passwordConfirm === "") {
+  useEffect(() => {
+    if (id === null || id === "" || id === undefined) {
+      router.push("/");
+    }
+  }, []);
+
+  const handleChangePassword = async () => {
+    if (password === "" || passwordConfirm === "") {
       toast.error("Bitte fülle alle Felder aus", {
         position: "top-left",
         autoClose: 2000,
@@ -48,29 +52,32 @@ const page = () => {
         draggable: true,
         theme: "dark",
       });
-    } else if (checked == false) {
-      toast.error("Bitte akzeptiere die AGB's", {
-        position: "top-left",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-      });
     } else {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
+      const result = await fetch("/api/auth/password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          id: id,
+          newPassword: password,
+        }),
       });
-      const data = await response.json();
+      const data = await result.json();
       if (data.status === 200) {
-          router.push("/verify?email=" + email);
+        toast.success("Passwort erfolgreich geändert", {
+          position: "top-left",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
+        setPassword("");
+        setPasswordConfirm("");
       } else {
-        toast.error(data.message, {
+        toast.error("Fehler beim ändern des Passworts", {
           position: "top-left",
           autoClose: 2000,
           hideProgressBar: false,
@@ -81,28 +88,15 @@ const page = () => {
         });
       }
     }
-    setChecked(false);
-    setPassword("");
-    setPasswordConfirm("");
-    setEmail("");
-  };
-
-  const handleChecked = () => {
-    setChecked(!checked);
   };
 
   return (
     <div className="bg-bg bg-cover h-screen w-screen flex justify-center items-center md:justify-end">
       <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:size-11/12 md:w-1/3 md:mr-10">
-        <p className="font-bold text-white md:h-1/4 text-6xl">Registrieren</p>
+        <p className="font-bold text-white md:h-1/4 text-6xl text-center">
+          Neues Passwort setzen
+        </p>
         <div className="flex flex-col gap-5 md:h-2/4 justify-center items-center w-full">
-          <Input
-            value={email}
-            placeholder="Schul-Mail"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
           <PasswordInput
             placeholder="Passwort"
             value={password}
@@ -117,25 +111,12 @@ const page = () => {
               setPasswordConfirm(e.target.value);
             }}
           />
-          <div className="flex items-center justify-center ">
-            <Checkbox
-              onChange={handleChecked}
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
-                  color: "#0BCAAD",
-                },
-              }}
-            />
-            <p>
-              Ich akzeptiere die{" "}
-              <Link href="" className="text-[#0BCAAD] hover:underline">
-                AGB's
-              </Link>
-            </p>
-          </div>
         </div>
-        <CustomButton text="Registrieren" size="lg" onClick={handleRegister} />
+        <CustomButton
+          text="Passwort ändern"
+          size="lg"
+          onClick={handleChangePassword}
+        />
         <Link
           href="/login"
           className="text-white text-lg md:h-1/4 text-center hover:underline"

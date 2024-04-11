@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect } from "react";
-import CustomButton from "../components/CustomButton";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -10,13 +9,20 @@ const page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/auth/verify?id=${id}`, {
-      method: "GET",
-      body: JSON.stringify({ id: id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const verify = async () => {
+      const result = await fetch(`/api/auth/verify?id=${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (result.status === 200) {
+        router.replace("/login");
+      } else {
+        router.replace("/verify");
+      }
+    };
+    verify();
   }, []);
 
   return (
@@ -24,13 +30,6 @@ const page = () => {
       <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-2/3 md:w-1/3 md:mr-10">
         <p className="font-bold text-white text-6xl">Verifiziert</p>
         <p className="text-2xl text-center">Erfolgreich verifiziert </p>
-        <CustomButton
-          text="Anmelden"
-          size="lg"
-          onClick={() => {
-            router.push("/login");
-          }}
-        />
       </div>
     </div>
   );

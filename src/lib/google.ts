@@ -9,6 +9,7 @@ const google = async () => {
   const { Map } = await loader.importLibrary("maps");
   const { Marker } = await loader.importLibrary("marker");
   const { PlacesService } = await loader.importLibrary("places");
+  const { Point } = await loader.importLibrary("core");
 
   const position = {
     lat: 47.500229,
@@ -25,7 +26,7 @@ const google = async () => {
     zoomControl: false,
   };
 
-  return { loader, Map, Marker, position, mapOptions, PlacesService };
+  return { loader, Map, Marker, position, mapOptions, PlacesService, Point };
 };
 
 export default google;

@@ -83,15 +83,19 @@ export default function OverviewDrawer({
             justifyContent: "space-between",
             justifyItems: "start",
             scrollbarWidth: "none",
+            scrollbarColor: "transparent transparent",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
           }}
           role="presentation"
         >
           <div>
             <div
               className="w-full overflow-hidden flex justify-center items-center"
-              style={{ height: "40vh" }}
+              style={{ height: "25vh" }}
             >
-              <img src={image} alt="My Image" style={{ width: "100%" }} />
+              <img src={image} alt="My Image" className="w-full min-h-full" />
             </div>
             <Tabs restaurant={restaurant} />
           </div>

@@ -181,7 +181,7 @@ const Header = ({
       </div>
       <div className="absolute right-4 top-7 md:right-7 z-20">
         <div
-          className="rounded-full w-12 h-12 border border-dotted border-black  overflow-hidden cursor-pointer  "
+          className="rounded-full w-12 h-12 border border-black overflow-hidden cursor-pointer  "
           onClick={handleOpenMenu}
         >
           <div

@@ -173,12 +173,12 @@ const page = () => {
             setSearch={setSearch}
             setId={setRestaurantId}
           />
-          <div className="bg-black/50 rounded-xl p-5 shadow-lg shadow-black">
+          <div className="bg-black/50 rounded-xl max-w-full p-5 shadow-lg shadow-black">
             <div className="w-full flex items-center flex-col ">
               <p className="self-start text-lg">
                 Welche Kategorien liefert das Restaurant?
               </p>
-              <FormControl className="w-full flex-grow">
+              <FormControl className="w-full max-w-5/6 flex-grow">
                 <Select
                   id="category-select"
                   value={category}

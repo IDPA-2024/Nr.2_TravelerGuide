@@ -27,9 +27,9 @@ const Header = ({
   setOpenProfile: (value: boolean) => void;
   setData: (value: any) => void;
 }) => {
-  const { user, setUser } = useUserContext();
-  const { token, setToken } = useTokenContext();
-  const [filterOptions, setFilterOptions] = React.useState([
+  const { user, setUser } = useUserContext(); // Using the useUserContext hook to get the user and setUser values from the user context
+  const { token, setToken } = useTokenContext(); // Using the useTokenContext hook to get the token and setToken values from the token context
+  const [filterOptions, setFilterOptions] = React.useState([ // Using the useState hook to initialize the filterOptions state variable with an array of filter options
     { label: "Asiatisch", value: "asian", checked: false },
     { label: "Griechisch", value: "greek", checked: false },
     { label: "Italienisch", value: "italian", checked: false },
@@ -67,6 +67,7 @@ const Header = ({
     setUserMenuOpen(!userMenuOpen);
   };
 
+  // Search function
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     console.log(e.target.value);
@@ -85,6 +86,7 @@ const Header = ({
     setData(data.data);
   };
 
+  // Filter function
   const handleFilter = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');

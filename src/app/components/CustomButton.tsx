@@ -1,20 +1,25 @@
 import React from "react";
 
+// CustomButton component
 const CustomButton = ({ text, size, onClick, custom, type, disabled }: { text: any ; size: string, onClick?: () => void, custom?: string, type?: any, disabled?: boolean }) => {
   let actualSize = "";
+
+  // Determine the actual size of the button based on the 'size' prop
   switch (size) {
     case "lg":
-      actualSize = "min-h-16 w-3/4 text-3xl";
+      actualSize = "min-h-16 w-3/4 text-3xl"; 
       break;
     case "sm":
-      actualSize = "h-10 w-1/3 text-lg ";
+      actualSize = "h-10 w-1/3 text-lg "; 
       break;
     case "custom": 
-      actualSize = custom || "";
+      actualSize = custom || ""; 
       break;
     default:
       break;
   }
+
+  // Render the button component
   return (
     <button
       className={

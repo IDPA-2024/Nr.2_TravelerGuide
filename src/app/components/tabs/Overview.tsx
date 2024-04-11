@@ -12,6 +12,7 @@ import { FaChair } from "react-icons/fa";
 import { TbPaperBag } from "react-icons/tb";
 
 const Overview = ({ restaurant }: { restaurant: any }) => {
+  // Define state variables
   const [todayOpeningHours, setTodayOpeningHours] = React.useState("");
   const [vegan, setVegan] = React.useState(false);
   const [seatingOption, setSeatingOption] = React.useState(false);
@@ -20,6 +21,7 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
     { day: number; text: string }[]
   >([]);
 
+  // Enum for quality levels
   enum quality {
     "io" = "In Ordnung",
     "sehrlecker" = "Sehr lecker",
@@ -28,6 +30,7 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
     "ekelhaft" = "Ekelhaft",
   }
 
+  // Enum for price levels
   enum price {
     "sehrguenstig" = "Sehr Günstig (5 CHF pro Mahlzeit)",
     "guenstig" = "Günstig (7 CHF oder mehr pro Mahlzeit)",
@@ -37,6 +40,7 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
   }
 
   useEffect(() => {
+    // Set state values based on restaurant data
     if (restaurant.vegan) {
       setVegan(true);
     }
@@ -46,6 +50,8 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
     if (restaurant.take_away) {
       setTakeAway(true);
     }
+
+    // Format and set opening hours
     let openingHoursFormat: { day: number; text: string }[] = [];
     restaurant.opening_hours.periods.map((period: any) => {
       let string = "";
@@ -95,6 +101,8 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
         text: string,
       });
     });
+
+    // Add closed days if not present in opening hours
     let days = [0, 1, 2, 3, 4, 5, 6];
     if (openingHoursFormat.length < 7) {
       days.map((day) => {
@@ -131,11 +139,14 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
         }
       });
     }
+
+    // Set today's opening hours and all opening hours
     setTodayOpeningHours(
       openingHoursFormat.find((e) => e.day === new Date().getDay())?.text || ""
     );
     setOpeningHours(openingHoursFormat);
   }, []);
+
   return (
     <div className="flex flex-col gap-10">
       <h1 className="text-center font-bold text-2xl">{restaurant.name}</h1>
@@ -161,7 +172,7 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
               {todayOpeningHours}
             </AccordionSummary>
             <AccordionDetails>
-              {opening_hours.map((day: {day: number, text: string}) => (
+              {opening_hours.map((day: { day: number; text: string }) => (
                 <div key={day.day} className="flex flex-col mt-4">
                   <p>{day.text}</p>
                 </div>

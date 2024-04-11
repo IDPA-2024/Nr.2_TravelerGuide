@@ -18,6 +18,7 @@ export default function OverviewDrawer({
   setOpenDrawer: (value: boolean) => void;
   restaurant: any;
 }) {
+  // Define state variables
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Define breakpoint for mobile screens
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -28,6 +29,7 @@ export default function OverviewDrawer({
   );
   const mapRef = React.useRef(null);
 
+  // Fetch image of the restaurant
   useEffect(() => {
     const getImage = async () => {
       if (!restaurant) return;

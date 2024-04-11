@@ -11,7 +11,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 
+// Define the page component
 const page = () => {
+  // Define state variables
   const { token, setToken } = useTokenContext();
   const { user, setUser } = useUserContext();
   const [filterOpen, setFilterOpen] = useState(false);

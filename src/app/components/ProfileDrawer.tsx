@@ -17,12 +17,15 @@ const ProfilDrawer = ({
   openProfile: boolean;
   setOpenProfile: (value: boolean) => void;
 }) => {
+  // Define state variables
+  // Get Context
   const { user } = useUserContext();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
 
+  // Function to handle password change
   const handleChangePassword = async () => {
     if (password === "" || passwordConfirm === "") {
       toast.error("Bitte fülle alle Felder aus", {

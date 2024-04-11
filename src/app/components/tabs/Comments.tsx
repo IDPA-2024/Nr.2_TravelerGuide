@@ -6,22 +6,23 @@ import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from "react-toastify";
 
 const Comments = ({ restaurant }: { restaurant: any }) => {
-  const [comments, setComments] = useState([]);
+  //Define state variables
+  const [comments, setComments] = useState([]); 
   const { token, setToken } = useTokenContext();
-  const { user, setUser } = useUserContext();
+  const { user, setUser } = useUserContext(); 
   const router = useRouter();
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState(""); 
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch(`/api/comment?id=${restaurant._id}`);
-      const data = await res.json();
+      const res = await fetch(`/api/comment?id=${restaurant._id}`); // Fetch comments for the given restaurant ID
+      const data = await res.json(); // Parse response as JSON
       data.data.sort((a: any, b: any) => {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime(); // Sort comments by creation date
       });
-      setComments(data.data);
+      setComments(data.data); // Update comments state with fetched data
     };
-    getData();
+    getData(); // Call the getData function when the component mounts
   }, []);
 
   let profile = {
@@ -53,8 +54,8 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
         `/api/comment?id=${restaurant._id}`
       );
       const updatedCommentsData = await updatedCommentsRes.json();
-      setComments(updatedCommentsData.data);
-      setNewComment(""); 
+      setComments(updatedCommentsData.data); // Update comments state with newly created comment
+      setNewComment(""); // Clear the new comment input field
       toast.success("Kommentar erfolgreich erstellt", {
         position: "top-left",
         autoClose: 2000,
@@ -79,7 +80,7 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
   };
 
   const handleRedirect = () => {
-    router.push("/login");
+    router.push("/login"); // Redirect to login page
   };
 
   return (
@@ -142,9 +143,9 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
         </div>
       )}
       {comments.map((comment: any) => (
-        <Comment key={comment._id} comment={comment} />
+        <Comment key={comment._id} comment={comment} /> // Render each comment component
       ))}
-      <ToastContainer />
+      <ToastContainer /> // Toast container for displaying success/error messages
     </div>
   );
 };

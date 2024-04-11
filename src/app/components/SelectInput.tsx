@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 
+// Custom styled component for the select input
 const SelectInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
     color: "white",

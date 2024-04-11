@@ -16,6 +16,9 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
   const [vegan, setVegan] = React.useState(false);
   const [seatingOption, setSeatingOption] = React.useState(false);
   const [takeAway, setTakeAway] = React.useState(false);
+  const [opening_hours, setOpeningHours] = React.useState<
+    { day: number; text: string }[]
+  >([]);
 
   enum quality {
     "io" = "In Ordnung",
@@ -34,9 +37,6 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
   }
 
   useEffect(() => {
-    setTodayOpeningHours(
-      restaurant.opening_hours.weekday_text[new Date().getDay() - 1]
-    );
     if (restaurant.vegan) {
       setVegan(true);
     }
@@ -46,6 +46,95 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
     if (restaurant.take_away) {
       setTakeAway(true);
     }
+    let openingHoursFormat: { day: number; text: string }[] = [];
+    restaurant.opening_hours.periods.map((period: any) => {
+      let string = "";
+      switch (period.open.day) {
+        case 0:
+          string = "Sonntag";
+          break;
+        case 1:
+          string = "Montag";
+          break;
+        case 2:
+          string = "Dienstag";
+          break;
+        case 3:
+          string = "Mittwoch";
+          break;
+        case 4:
+          string = "Donnerstag";
+          break;
+        case 5:
+          string = "Freitag";
+          break;
+        case 6:
+          string = "Samstag";
+          break;
+      }
+      string += ": ";
+      if (period.open.hours === 0) {
+        string += "00";
+      }
+      string +=
+        (period.open.hours < 10 ? "0" + period.open.hours : period.open.hours) +
+        ":" +
+        (period.open.minutes < 10
+          ? "0" + period.open.minutes
+          : period.open.minutes) +
+        " - " +
+        (period.close.hours < 10
+          ? "0" + period.close.hours
+          : period.close.hours) +
+        ":" +
+        (period.close.minutes < 10
+          ? "0" + period.close.minutes
+          : period.close.minutes);
+      openingHoursFormat.push({
+        day: period.open.day,
+        text: string,
+      });
+    });
+    let days = [0, 1, 2, 3, 4, 5, 6];
+    if (openingHoursFormat.length < 7) {
+      days.map((day) => {
+        if (!openingHoursFormat.some((e) => e.day === day)) {
+          let string = "";
+          switch (day) {
+            case 0:
+              string = "Sonntag";
+              break;
+            case 1:
+              string = "Montag";
+              break;
+            case 2:
+              string = "Dienstag";
+              break;
+            case 3:
+              string = "Mittwoch";
+              break;
+            case 4:
+              string = "Donnerstag";
+              break;
+            case 5:
+              string = "Freitag";
+              break;
+            case 6:
+              string = "Samstag";
+              break;
+          }
+          string += ": Geschlossen";
+          openingHoursFormat.push({
+            day: day,
+            text: string,
+          });
+        }
+      });
+    }
+    setTodayOpeningHours(
+      openingHoursFormat.find((e) => e.day === new Date().getDay())?.text || ""
+    );
+    setOpeningHours(openingHoursFormat);
   }, []);
   return (
     <div className="flex flex-col gap-10">
@@ -72,9 +161,9 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
               {todayOpeningHours}
             </AccordionSummary>
             <AccordionDetails>
-              {restaurant.opening_hours.weekday_text.map((day: string) => (
-                <div key={day} className="flex flex-col mt-4">
-                  <p>{day}</p>
+              {opening_hours.map((day: {day: number, text: string}) => (
+                <div key={day.day} className="flex flex-col mt-4">
+                  <p>{day.text}</p>
                 </div>
               ))}
             </AccordionDetails>

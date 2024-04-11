@@ -11,6 +11,9 @@ const page = () => {
   const [countdown, setCountdown] = useState(30);
 
   useEffect(() => {
+    if (email === null || email === "" || email === undefined) {
+      router.push("/");
+    }
     const interval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 0) return 0;

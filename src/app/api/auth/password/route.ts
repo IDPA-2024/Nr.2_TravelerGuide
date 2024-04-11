@@ -3,10 +3,12 @@ import { NextApiRequest } from "next";
 import bcrypt from "bcrypt";
 import { Resend } from "resend";
 import { EmailTemplate } from "@/email/PasswordEmail";
+import { NextRequest } from "next/server";
 
-export async function GET(req: Request, params: { email: string }) {
-  const { email } = params;
-  const user = await User.findOne({ email });
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const email = searchParams.get("email");
+  const user = await User.findOne({ email: email as string });
   if (!user) return Response.json({ message: "error", status: 404 });
 
   const resend = new Resend(process.env.RESEND_API_KEY);

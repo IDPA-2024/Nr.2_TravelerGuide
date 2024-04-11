@@ -8,7 +8,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { FaChair } from "react-icons/fa";
+import { FaChair, FaCheck, FaTimes } from "react-icons/fa";
 import { TbPaperBag } from "react-icons/tb";
 
 const Overview = ({ restaurant }: { restaurant: any }) => {
@@ -221,15 +221,23 @@ const Overview = ({ restaurant }: { restaurant: any }) => {
               </AccordionSummary>
               <AccordionDetails>
                 <div key="indoor_seating" className="flex flex-col">
-                  <p>
-                    Innen Sitzmöglichkeiten:{" "}
-                    {restaurant.indoor_seating ? "Ja" : "Nein"}
+                  <p className="flex justify-start gap-2 items-center">
+                    {restaurant.indoor_seating ? (
+                      <FaCheck color="green" />
+                    ) : (
+                      <FaTimes color="red" />
+                    )}
+                    Innen Sitzmöglichkeiten
                   </p>
                 </div>
                 <div key="outdoor_seating" className="flex flex-col mt-4">
-                  <p>
-                    Aussen Sitzmöglichkeiten:{" "}
-                    {restaurant.outdoor_seating ? "Ja" : "Nein"}
+                  <p className="flex justify-start gap-2 items-center">
+                    {restaurant.outdoor_seating ? (
+                      <FaCheck color="green" />
+                    ) : (
+                      <FaTimes color="red" />
+                    )}
+                    Aussen Sitzmöglichkeiten
                   </p>
                 </div>
                 <div key="style" className="flex flex-col mt-4">

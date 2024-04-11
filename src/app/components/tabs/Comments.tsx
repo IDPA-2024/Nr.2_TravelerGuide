@@ -145,7 +145,7 @@ const Comments = ({ restaurant }: { restaurant: any }) => {
       {comments.map((comment: any) => (
         <Comment key={comment._id} comment={comment} /> // Render each comment component
       ))}
-      <ToastContainer /> // Toast container for displaying success/error messages
+      <ToastContainer /> 
     </div>
   );
 };

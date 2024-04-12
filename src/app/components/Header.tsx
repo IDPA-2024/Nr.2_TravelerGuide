@@ -29,7 +29,8 @@ const Header = ({
 }) => {
   const { user, setUser } = useUserContext(); // Using the useUserContext hook to get the user and setUser values from the user context
   const { token, setToken } = useTokenContext(); // Using the useTokenContext hook to get the token and setToken values from the token context
-  const [filterOptions, setFilterOptions] = React.useState([ // Using the useState hook to initialize the filterOptions state variable with an array of filter options
+  const [filterOptions, setFilterOptions] = React.useState([
+    // Using the useState hook to initialize the filterOptions state variable with an array of filter options
     { label: "Asiatisch", value: "asian", checked: false },
     { label: "Griechisch", value: "greek", checked: false },
     { label: "Italienisch", value: "italian", checked: false },
@@ -44,7 +45,7 @@ const Header = ({
     setUserMenuOpen(false);
     setToken(null);
     setUser(null);
-}
+  };
 
   const router = useRouter();
   const [search, setSearch] = React.useState("");
@@ -206,7 +207,10 @@ const Header = ({
               >
                 Restaurant hinzufügen
               </Link>
-              <div className="border-t border-white mt-2 pt-2 cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out" onClick={handleLogout}>
+              <div
+                className="border-t border-white mt-2 pt-2 cursor-pointer hover:text-[#0BCAAD] transition duration-150 ease-in-out"
+                onClick={handleLogout}
+              >
                 Abmelden
               </div>
             </div>

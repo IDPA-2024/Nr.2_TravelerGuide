@@ -1,0 +1,1048 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Lunch Guide API",
+    "description": "This is the API for the Lunch Guide made by Ael Banyard, Evan Lüber and Yannick Schläpfer.",
+    "termsOfService": "http://lunch-guide.ch/privacyPolicy",
+    "contact": {
+      "email": "ael.banyard@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.1"
+  },
+  "externalDocs": {
+    "description": "Our Repository",
+    "url": "https://github.com/IDPA-2024/Nr.2_TravelerGuide"
+  },
+  "servers": [
+    {
+      "url": "https://lunch-guide.ch/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "restaurant",
+      "description": "Everything about Restaurants in our System"
+    },
+    {
+      "name": "user",
+      "description": "Access to Comments"
+    },
+    {
+      "name": "auth",
+      "description": "Authenticate to access certain Routes"
+    },
+    {
+      "name": "comments",
+      "description": "Everything about Comments"
+    }
+  ],
+  "paths": {
+    "/comment": {
+      "post": {
+        "tags": ["comments"],
+        "summary": "Create a new Comment",
+        "description": "Create a new Comment",
+        "operationId": "createComment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "user_id": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "restaurantId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Body missing fields"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["comments"],
+        "summary": "Get all Comments",
+        "description": "Get all Comments",
+        "operationId": "getComments",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the Restaurant",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Comments"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Id"
+          },
+          "404": {
+            "description": "No Comments found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/restaurant": {
+      "post": {
+        "tags": ["restaurant"],
+        "summary": "Create a new Restaurant",
+        "description": "Create a new Restaurant",
+        "operationId": "createRestaurant",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Restaurant"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Restaurant"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Restaurant already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "tags": ["restaurant"],
+        "summary": "Get all the Restaurants",
+        "description": "Get All the Restaurants that are stored in the Database",
+        "operationId": "getRestaurants",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "body",
+            "description": "Multiple filter values can be provided as an array",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "enum": [
+                "asian",
+                "fastfood",
+                "vegan",
+                "burger",
+                "kebab",
+                "greek",
+                "sandwich",
+                "italian",
+                "other"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "in": "body",
+            "description": "Search for certain Restaurants by name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Restaurant"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/restaurant/{id}": {
+      "get": {
+        "tags": ["restaurant"],
+        "summary": "Get a Restaurant by ID",
+        "description": "Get a single Restaurant by ID",
+        "operationId": "getRestaurantById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Restaurant",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Restaurant"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["restaurant"],
+        "summary": "Update an existing Restaurant",
+        "description": "Update an existing Restaurant",
+        "operationId": "updateRestaurantById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Restaurant",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Restaurant"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get a User",
+        "description": "Get a User by ID",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the User",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "body",
+            "description": "Token of the User",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "tags": ["user"],
+        "summary": "Update a User",
+        "description": "Update a User by ID",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the User",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "body",
+            "description": "Token of the User",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "tags": ["user"],
+        "summary": "Delete a User",
+        "description": "Delete a User by ID",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the User",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "token",
+            "in": "body",
+            "description": "Token of the User",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Login",
+        "description": "Login to API",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "User not verified"
+          },
+          "402": {
+            "description": "Password wrong"
+          },
+          "403": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Register",
+        "description": "Register as a new User",
+        "operationId": "register",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Not a School Email"
+          },
+          "401": {
+            "description": "User already exists"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Verify",
+        "description": "Verify a Users Email",
+        "operationId": "verify",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the User",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/resendVerify": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Resend Verification Email",
+        "description": "Resend the Verification Email",
+        "operationId": "resendVerify",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email was sent"
+          },
+          "400": {
+            "description": "Not a School Email"
+          },
+          "401": {
+            "description": "User does not exist"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/password": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Send Password Reset Email",
+        "description": "Route to send the Password Reset Email",
+        "operationId": "passwordGetReset",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email of the user to send to",
+            "explode": true,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email was sent"
+          },
+          "404": {
+            "description": "User does not exist"
+          }
+        }
+      },
+      "post": {
+        "tags": ["auth"],
+        "summary": "Reset the Password",
+        "description": "Reset the Password",
+        "operationId": "passwordPostReset",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password was changed"
+          },
+          "400": {
+            "description": "Body missing fields"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["auth"],
+        "summary": "Reset the Password",
+        "description": "Reset the Password when loged in",
+        "operationId": "passwordPutReset",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password was changed"
+          },
+          "400": {
+            "description": "Body missing fields"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "184798124jklshajkh"
+          },
+          "email": {
+            "type": "string",
+            "example": "ael.banyard@stud.kbw.ch"
+          },
+          "name": {
+            "type": "string",
+            "example": "Ael Banyard"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          },
+          "image": {
+            "type": "string",
+            "example": "link to image"
+          },
+          "verified": {
+            "type": "boolean",
+            "description": "User Status",
+            "example": true
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comments"
+            }
+          }
+        }
+      },
+      "Comments": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "example": "184798124jklshajkh"
+          },
+          "text": {
+            "type": "string",
+            "example": "this is a comment"
+          },
+          "restaurantId": {
+            "type": "string",
+            "example": "18927301hajhkja"
+          }
+        }
+      },
+      "Ambience": {
+        "type": "object",
+        "properties": {
+          "style": {
+            "type": "string",
+            "enum": ["modern", "old_fashioned"]
+          },
+          "space": {
+            "type": "string",
+            "enum": ["spacious", "tight"]
+          },
+          "brightness": {
+            "type": "string",
+            "enum": ["bright", "grim"]
+          },
+          "loudness": {
+            "type": "string",
+            "enum": ["loud", "quiet"]
+          }
+        }
+      },
+      "OpenClose": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "number"
+          },
+          "hours": {
+            "type": "number"
+          },
+          "minutes": {
+            "type": "number"
+          },
+          "time": {
+            "type": "string"
+          },
+          "next_date": {
+            "type": "number"
+          }
+        }
+      },
+      "Periods": {
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string"
+          },
+          "open": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/OpenClose"
+            }
+          },
+          "close": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/OpenClose"
+            }
+          }
+        }
+      },
+      "OpeningHours": {
+        "type": "object",
+        "properties": {
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Periods"
+            }
+          },
+          "weekday_text": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Restaurant": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "18927301hajhkja"
+          },
+          "name": {
+            "type": "string",
+            "example": "TechPoint"
+          },
+          "lat": {
+            "type": "number",
+            "example": 47.49995
+          },
+          "lng": {
+            "type": "number",
+            "example": 8.737565
+          },
+          "address": {
+            "type": "string",
+            "example": "Rosenstrasse 1A, 8400 Winterthur"
+          },
+          "price": {
+            "type": "string",
+            "description": "Price Category",
+            "enum": [
+              "SEHR_GUENSTIG",
+              "GUENSTIG",
+              "INORDNUNG",
+              "TEUER",
+              "SEHR_TEUER"
+            ]
+          },
+          "quality": {
+            "type": "string",
+            "description": "Quality Category",
+            "enum": [
+              "SEHR_LECKER",
+              "LECKER",
+              "INORDNUNG",
+              "NICHT_LECKER",
+              "EKELHAFT"
+            ]
+          },
+          "seating_option": {
+            "type": "boolean",
+            "example": false
+          },
+          "indoor_seating": {
+            "type": "boolean",
+            "example": false
+          },
+          "outdoor_seating": {
+            "type": "boolean",
+            "example": false
+          },
+          "take_away": {
+            "type": "boolean",
+            "example": false
+          },
+          "ambience": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/Ambience"
+            }
+          },
+          "vegan": {
+            "type": "boolean",
+            "example": false
+          },
+          "website": {
+            "type": "string",
+            "example": "www.lunch-guide.ch"
+          },
+          "opening_hours": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/OpeningHours"
+            }
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "asian",
+                "fastfood",
+                "vegan",
+                "burger",
+                "kebab",
+                "greek",
+                "sandwich",
+                "italian",
+                "other"
+              ]
+            }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comments"
+            }
+          }
+        }
+      },
+      "RestaurantNoId": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "Bearer 12345"
+          },
+          "restaurant": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "TechPoint"
+              },
+              "lat": {
+                "type": "number",
+                "example": 47.49995
+              },
+              "lng": {
+                "type": "number",
+                "example": 8.737565
+              },
+              "address": {
+                "type": "string",
+                "example": "Rosenstrasse 1A, 8400 Winterthur"
+              },
+              "price": {
+                "type": "string",
+                "description": "Price Category",
+                "enum": [
+                  "SEHR_GUENSTIG",
+                  "GUENSTIG",
+                  "INORDNUNG",
+                  "TEUER",
+                  "SEHR_TEUER"
+                ]
+              },
+              "quality": {
+                "type": "string",
+                "description": "Quality Category",
+                "enum": [
+                  "SEHR_LECKER",
+                  "LECKER",
+                  "INORDNUNG",
+                  "NICHT_LECKER",
+                  "EKELHAFT"
+                ]
+              },
+              "seating_option": {
+                "type": "boolean",
+                "example": false
+              },
+              "indoor_seating": {
+                "type": "boolean",
+                "example": false
+              },
+              "outdoor_seating": {
+                "type": "boolean",
+                "example": false
+              },
+              "take_away": {
+                "type": "boolean",
+                "example": false
+              },
+              "ambience": {
+                "type": "object",
+                "items": {
+                  "$ref": "#/components/schemas/Ambience"
+                }
+              },
+              "vegan": {
+                "type": "boolean",
+                "example": false
+              },
+              "website": {
+                "type": "string",
+                "example": "www.lunch-guide.ch"
+              },
+              "opening_hours": {
+                "type": "object",
+                "items": {
+                  "$ref": "#/components/schemas/OpeningHours"
+                }
+              },
+              "category": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "asian",
+                    "fastfood",
+                    "vegan",
+                    "burger",
+                    "kebab",
+                    "greek",
+                    "sandwich",
+                    "italian",
+                    "other"
+                  ]
+                }
+              },
+              "comments": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Comments"
+                }
+              }
+            }
+          }
+        }
+      },
+      "requestBodies": {
+        "Restaurant": {
+          "description": "a Restaurant to be created",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestaurantNoId"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

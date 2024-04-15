@@ -38,11 +38,10 @@ export async function POST(req: NextApiRequest) {
   return Response.json({ message: "error", status: 400 });
 }
 
-export async function PUT(req: NextApiRequest) {
-  const token = req.cookies.token;
+export async function PUT(req: Request) {
+  const body = await req.json();
+  const { token } = body;
   if (!token) return Response.json({ message: "error", status: 401 });
-
-  const body = await req.body;
   if (body.newPassword && body.id) {
     const passwordHash = await bcrypt.hash(body.newPassword, 10);
     const result = await User.findOneAndUpdate(

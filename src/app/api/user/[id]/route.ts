@@ -1,8 +1,8 @@
 import { User } from "@/lib/mongoose";
-import { NextApiRequest } from "next";
 
-export async function GET(req: NextApiRequest, params: { id: string }) {
-  const token = req.cookies.token;
+export async function GET(req: Request, params: { id: string }) {
+  const body = await req.json();
+  const token = body.token;
   if (!token) return Response.json({ message: "error", status: 401 });
   const { id } = params;
   const result = await User.findOne({
@@ -12,10 +12,10 @@ export async function GET(req: NextApiRequest, params: { id: string }) {
   return Response.json({ message: "ok", status: 200, data: result });
 }
 
-export async function PUT(req: NextApiRequest, params: { id: string }) {
-  const token = req.cookies.token;
+export async function PUT(req: Request, params: { id: string }) {
+  const body = await req.json();
+  const token = body.token;
   if (!token) return Response.json({ message: "error", status: 401 });
-  const body = await req.body;
   const { id } = params;
   const result = await User.findOneAndUpdate(
     { _id: id },
@@ -26,8 +26,9 @@ export async function PUT(req: NextApiRequest, params: { id: string }) {
   return Response.json({ message: "ok", status: 200, data: result });
 }
 
-export async function DELETE(req: NextApiRequest, params: { id: string }) {
-  const token = req.cookies.token;
+export async function DELETE(req: Request, params: { id: string }) {
+  const body = await req.json();
+  const token = body.token;
   if (!token) return Response.json({ message: "error", status: 401 });
   const { id } = params;
   const result = await User.findOneAndDelete({

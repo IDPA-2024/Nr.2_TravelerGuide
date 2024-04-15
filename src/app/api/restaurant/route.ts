@@ -1,5 +1,4 @@
 import { Restaurant } from "@/lib/mongoose";
-import { NextApiRequest } from "next";
 
 export async function POST(req: Request) {
   const body = await req.json();

@@ -42,7 +42,6 @@ export async function GET(req: NextRequest) {
       user_name: user.name,
       user_image: user.image,
       text: comments[i].text,
-      stars: comments[i].stars,
       created_at: comments[i].created_at,
     });
   }

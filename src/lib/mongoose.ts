@@ -9,7 +9,6 @@ async function main() {
 const commentSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   text: String,
-  stars: { type: Number, default: 0 },
   restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
   created_at: { type: Date, default: Date.now },
 });
@@ -27,8 +26,6 @@ const restaurantSchema = new mongoose.Schema({
   indoor_seating: Boolean,
   outdoor_seating: Boolean,
   take_away: Boolean,
-  student_reduction: Boolean,
-  delivery_service: Boolean,
   ambience: {
     style: String,
     space: String,
@@ -75,7 +72,6 @@ const userSchema = new mongoose.Schema({
 type CommentType = Document & {
   user_id: string;
   text: string;
-  stars: number;
   restaurantId: string;
   created_at: Date;
 };
@@ -92,8 +88,6 @@ type RestaurantType = Document & {
   indoor_seating: boolean;
   outdoor_seating: boolean;
   take_away: boolean;
-  student_reduction: boolean;
-  delivery_service: boolean;
   ambience: {
     style: string;
     space: string;

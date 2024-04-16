@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document } from "mongoose";
+import mongoose, { Model, Document } from "mongoose";
 
 main().catch((err) => console.log(err));
 
@@ -68,65 +68,6 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comments" }],
 });
-
-type CommentType = Document & {
-  user_id: string;
-  text: string;
-  restaurantId: string;
-  created_at: Date;
-};
-type RestaurantType = Document & {
-  place_id: string;
-  lat: number;
-  lng: number;
-  name: string;
-  address: string;
-  image: string;
-  price: string;
-  quality: string;
-  seating_option: boolean;
-  indoor_seating: boolean;
-  outdoor_seating: boolean;
-  take_away: boolean;
-  ambience: {
-    style: string;
-    space: string;
-    brightness: string;
-    loudness: string;
-  };
-  vegan: boolean;
-  website: string;
-  opening_hours: {
-    periods: {
-      day: string;
-      open: {
-        day: number;
-        hours: number;
-        minutes: number;
-        time: string;
-        next_date: number;
-      };
-      close: {
-        day: number;
-        hours: number;
-        minutes: number;
-        time: string;
-        next_date: number;
-      };
-    }[];
-    weekday_text: string[];
-  };
-  category: string[];
-  comments: string[];
-};
-type UserType = Document & {
-  email: string;
-  passwordHash: string;
-  name: string;
-  image: string;
-  verified: boolean;
-  comments: string[];
-};
 
 let Comment: Model<Document & CommentType>;
 let Restaurant: Model<Document & RestaurantType>;

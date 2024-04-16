@@ -77,6 +77,7 @@ const page = () => {
         });
         setPassword("");
         setPasswordConfirm("");
+        router.push("/login");
       } else {
         toast.error("Fehler beim ändern des Passworts", {
           position: "top-left",

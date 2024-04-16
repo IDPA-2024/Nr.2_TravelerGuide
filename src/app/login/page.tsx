@@ -53,8 +53,6 @@ const page = () => {
           theme: "dark",
         });
       }
-
-      router.push("/");
     }
     setEmail("");
     setPassword("");

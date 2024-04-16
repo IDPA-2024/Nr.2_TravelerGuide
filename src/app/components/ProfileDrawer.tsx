@@ -28,6 +28,7 @@ const ProfilDrawer = ({
   // Function to handle password change
   const handleChangePassword = async () => {
     if (password === "" || passwordConfirm === "") {
+      setOpenProfile(false);
       toast.error("Bitte fülle alle Felder aus", {
         position: "top-left",
         autoClose: 2000,
@@ -38,6 +39,7 @@ const ProfilDrawer = ({
         theme: "dark",
       });
     } else if (password.length < 6) {
+      setOpenProfile(false);
       toast.error("Passwort muss mindestens 6 Zeichen lang sein", {
         position: "top-left",
         autoClose: 2000,
@@ -48,6 +50,7 @@ const ProfilDrawer = ({
         theme: "dark",
       });
     } else if (password !== passwordConfirm) {
+      setOpenProfile(false);
       toast.error("Passwörter stimmen nicht überein", {
         position: "top-left",
         autoClose: 2000,
@@ -71,6 +74,7 @@ const ProfilDrawer = ({
         });
         const data = await result.json();
         if (data.status === 200) {
+          setOpenProfile(false);
           toast.success("Passwort erfolgreich geändert", {
             position: "top-left",
             autoClose: 2000,
@@ -83,6 +87,7 @@ const ProfilDrawer = ({
           setPassword("");
           setPasswordConfirm("");
         } else {
+          setOpenProfile(false);
           toast.error("Fehler beim ändern des Passworts", {
             position: "top-left",
             autoClose: 2000,
@@ -93,8 +98,6 @@ const ProfilDrawer = ({
             theme: "dark",
           });
         }
-      } else {
-        return;
       }
     }
   };
@@ -139,8 +142,11 @@ const ProfilDrawer = ({
               {user ? user.email : ""}
             </div>
             <form
-              action="submit"
               className="flex flex-col gap-5 w-full border-t border-t-white pt-8 text-start  items-center justify-center"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleChangePassword();
+              }}
             >
               <p className="font-bold text-xl">Passwort ändern</p>
               <PasswordInput
@@ -163,7 +169,6 @@ const ProfilDrawer = ({
               />
               <CustomButton
                 text="Ändern"
-                onClick={handleChangePassword}
                 size="custom"
                 custom=" bg-[#0BCAAD] rounded-lg flex justify-center h-10 w-2/3 items-center shadow-md shadow-black hover:bg-opacity-50 transition duration-150 ease-in-out cursor-pointer "
                 type="submit"

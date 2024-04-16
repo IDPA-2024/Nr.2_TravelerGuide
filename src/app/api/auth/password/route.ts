@@ -21,15 +21,17 @@ export async function GET(req: NextRequest) {
       link: `${process.env.NEXT_PUBLIC_URL}/setNewPassword?id=${user._id}`,
     }),
   });
+  if (send.error) return Response.json({ message: "error", status: 500 });
+  return Response.json({ message: "ok", status: 200 });
 }
 
-export async function POST(req: NextApiRequest) {
-  const body = await req.body;
+export async function POST(req: Request) {
+  const body = await req.json();
   if (body.newPassword && body.id) {
     const passwordHash = await bcrypt.hash(body.newPassword, 10);
     const result = await User.findOneAndUpdate(
       { _id: body.id },
-      { password: passwordHash },
+      { passwordHash: passwordHash },
       { new: true }
     );
     if (!result) return Response.json({ message: "error", status: 500 });

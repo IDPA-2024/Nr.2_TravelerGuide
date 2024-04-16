@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   const id = await result._id;
   const { error } = await resend.batch.send([
     {
-      from: "noreply@lunch-guide.ch",
+      from: "Lunch-Guide <noreply@lunch-guide.ch>",
       to: ["ael.banyard@gmail.com"],
       subject: "Neues Restaurant hinzugefügt",
       react: EmailTemplate({
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       }),
     },
     {
-      from: "noreply@lunch-guide.ch",
+      from: "Lunch-Guide <noreply@lunch-guide.ch>",
       to: ["en.lueber@gmail.com"],
       subject: "Neues Restaurant hinzugefügt",
       react: EmailTemplate({
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
       }),
     },
     {
-      from: "noreply@lunch-guide.ch",
+      from: "Lunch-Guide <noreply@lunch-guide.ch>",
       to: ["yaenschlaepfer@gmail.com"],
       subject: "Neues Restaurant hinzugefügt",
       react: EmailTemplate({

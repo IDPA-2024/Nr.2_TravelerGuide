@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
   const send = await resend.emails.send({
-    from: "noreply@lunch-guide.ch",
+    from: "Lunch-Guide <noreply@lunch-guide.ch>",
     to: [user.email],
     subject: "Passwort zurücksetzen - Lunch Guide",
     react: EmailTemplate({

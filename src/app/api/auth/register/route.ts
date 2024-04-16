@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   if (!result) return Response.json({ message: "error", status: 500 });
   const resend = new Resend(process.env.RESEND_API_KEY);
   const { error } = await resend.emails.send({
-    from: "noreply@lunch-guide.ch",
+    from: "Lunch-Guide <noreply@lunch-guide.ch>",
     to: [body.email],
     subject: "Verifiziere deine E-Mail-Adresse",
     react: EmailTemplate({

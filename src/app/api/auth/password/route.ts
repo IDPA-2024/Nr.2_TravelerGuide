@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   if (!user) return Response.json({ message: "error", status: 404 });
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const { data, error } = await resend.emails.send({
+  const send = await resend.emails.send({
     from: "noreply@lunch-guide.ch",
     to: [user.email],
     subject: "Passwort zurücksetzen - Lunch Guide",

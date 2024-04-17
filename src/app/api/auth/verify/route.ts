@@ -1,14 +1,8 @@
 import { User } from "@/lib/mongoose";
-import { NextRequest } from "next/server";
-export async function generateStaticParams() {
-  const users = await User.find();
-  return users.map((user: UserType) => ({
-    id: user._id.toString(),
-  }));
-}
 
-export async function GET(req: Request, params: { id: string }) {
-  const { id } = params;
+
+export async function POST(req: Request) {
+  const { id } = await req.json();
   if (!id) return Response.json({ message: "error", status: 400 });
   const result = await User.findOneAndUpdate(
     { _id: id },

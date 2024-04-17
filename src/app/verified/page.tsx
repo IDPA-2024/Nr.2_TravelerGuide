@@ -11,8 +11,9 @@ const Verified = () => {
 
   useEffect(() => {
     const verify = async () => {
-      const result = await fetch(`/api/auth/verify?id=${id}`, {
-        method: "GET",
+      const result = await fetch(`/api/auth/verify`, {
+        method: "POST",
+        body: JSON.stringify({ id: id }),
         headers: {
           "Content-Type": "application/json",
         },

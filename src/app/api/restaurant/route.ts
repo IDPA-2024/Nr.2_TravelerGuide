@@ -35,40 +35,6 @@ export async function POST(req: Request) {
         website: restaurant.website,
       }),
     },
-    {
-      from: "Lunch-Guide <noreply@lunch-guide.ch>",
-      to: ["en.lueber@gmail.com"],
-      subject: "Neues Restaurant hinzugefügt",
-      react: EmailTemplate({
-        name: restaurant.name,
-        address: restaurant.address,
-        price: restaurant.price,
-        quality: restaurant.quality,
-        seating_option: restaurant.seating_option,
-        indoor_seating: restaurant.indoor_seating,
-        outdoor_seating: restaurant.outdoor_seating,
-        take_away: restaurant.take_away,
-        vegan: restaurant.vegan,
-        website: restaurant.website,
-      }),
-    },
-    {
-      from: "Lunch-Guide <noreply@lunch-guide.ch>",
-      to: ["yaenschlaepfer@gmail.com"],
-      subject: "Neues Restaurant hinzugefügt",
-      react: EmailTemplate({
-        name: restaurant.name,
-        address: restaurant.address,
-        price: restaurant.price,
-        quality: restaurant.quality,
-        seating_option: restaurant.seating_option,
-        indoor_seating: restaurant.indoor_seating,
-        outdoor_seating: restaurant.outdoor_seating,
-        take_away: restaurant.take_away,
-        vegan: restaurant.vegan,
-        website: restaurant.website,
-      }),
-    },
   ]);
   if (error) {
     return Response.json({ message: error, status: 500 });

@@ -18,6 +18,7 @@ const Verified = () => {
         },
       });
       if (result.status === 200) {
+        console.log("verified", result);
         router.replace("/login");
       } else {
         router.replace("/verify");

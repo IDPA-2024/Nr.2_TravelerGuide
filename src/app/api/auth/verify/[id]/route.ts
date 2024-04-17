@@ -9,6 +9,7 @@ export async function generateStaticParams() {
 
 export async function GET(req: Request, params: { id: string }) {
   const { id } = params;
+  if (!id) return Response.json({ message: "error", status: 400 });
   const result = await User.findOneAndUpdate(
     { _id: id },
     { verified: true },

@@ -26,5 +26,5 @@ jobs:
 
       - name: 'Build Inventory Image'
         run: |
-            docker build . --tag ghcr.io/aelelliotbanyard/store:latest
-            docker push ghcr.io/aelelliotbanyard/store:latest
+            docker build . --tag ghcr.io/aelelliotbanyard/idpa:latest
+            docker push ghcr.io/aelelliotbanyard/idpa:latest

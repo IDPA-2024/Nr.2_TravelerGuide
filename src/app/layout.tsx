@@ -19,11 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="http://lunch-guide.ch/favicon.ico" sizes="any" />
+      </head>
       <AppRouterCacheProvider>
         <body className={inter.className}>
-            <TokenProvider>
-              <UserProvider>{children}</UserProvider>
-            </TokenProvider>
+          <TokenProvider>
+            <UserProvider>{children}</UserProvider>
+          </TokenProvider>
         </body>
       </AppRouterCacheProvider>
     </html>

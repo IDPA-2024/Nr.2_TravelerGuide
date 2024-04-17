@@ -107,7 +107,11 @@ const ProfilDrawer = ({
   };
 
   return (
-    <div>
+    <div
+      style={{
+        height: "--webkit-fill-available",
+      }}
+    >
       <Drawer
         open={openProfile}
         onClose={() => {

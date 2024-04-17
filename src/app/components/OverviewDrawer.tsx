@@ -71,7 +71,11 @@ export default function OverviewDrawer({
   }, [restaurant]);
 
   return (
-    <div>
+    <div
+      style={{
+        height: "--webkit-fill-available",
+      }}
+    >
       <Drawer open={openDrawer} onClose={toggleDrawer(false)}>
         <Box
           sx={{

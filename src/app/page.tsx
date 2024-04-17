@@ -27,8 +27,8 @@ const page = () => {
   const handleClick = () => {
     if (userMenuOpen) {
       setUserMenuOpen(false);
-    } 
-  }
+    }
+  };
 
   return (
     <div onClick={handleClick}>
@@ -65,7 +65,7 @@ const page = () => {
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
       />
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

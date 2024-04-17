@@ -1,6 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 
-const google = async () => {
+const google = async ({ mapRef }: { mapRef: React.MutableRefObject<null> }) => {
   const loader = new Loader({
     apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
     version: "weekly",
@@ -25,8 +25,18 @@ const google = async () => {
     streetViewControl: false,
     zoomControl: false,
   };
+  const map: typeof Map = new Map(mapRef.current, mapOptions);
 
-  return { loader, Map, Marker, position, mapOptions, PlacesService, Point };
+  return {
+    loader,
+    Map,
+    Marker,
+    position,
+    mapOptions,
+    PlacesService,
+    Point,
+    map,
+  };
 };
 
 export default google;

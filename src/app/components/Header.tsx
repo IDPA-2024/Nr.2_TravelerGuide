@@ -71,7 +71,6 @@ const Header = ({
   // Search function
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    console.log(e.target.value);
     let search = e.target.value === "" ? "" : e.target.value;
     let checkedValues: Array<string> = [];
     filterOptions.forEach((option) => {

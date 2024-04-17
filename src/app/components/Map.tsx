@@ -11,18 +11,19 @@ const Map = ({
   setRestaurant: (restaurant: any) => void;
   setOpenDrawer: (value: boolean) => void;
   restaurants: any;
-  mapRef: any;
+  mapRef: React.MutableRefObject<null>;
 }) => {
+  const [loading, setLoading] = React.useState(true);
   useEffect(() => {
     const initMap = async () => {
-      const { Map, Marker, mapOptions, Point } = await google();
+      setLoading(true);
+      const { Marker, Point, map } = await google({ mapRef });
 
       const school = {
         filePath: "/school.svg",
         width: 36,
         height: 36,
       };
-      const map = new Map(mapRef.current, mapOptions);
       const kbw = new Marker({
         position: { lat: 47.49548613940601, lng: 8.730583365510228 },
         map: map,
@@ -64,12 +65,24 @@ const Map = ({
         });
       });
 
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
       return map;
     };
     initMap();
   }, [restaurants]);
 
-  return <div className="w-screen h-screen" ref={mapRef} />;
+  return (
+    <>
+      {loading && (
+        <div className="absolute top-0 left-0 bottom-0 right-0 z-10 bg-[#0BCAAD] flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+        </div>
+      )}
+      <div className="w-screen h-screen" ref={mapRef} />
+    </>
+  );
 };
 
 export default Map;

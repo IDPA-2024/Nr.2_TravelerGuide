@@ -39,6 +39,7 @@ const page = () => {
   const [seatingOutdoor, setSeatingOutdoor] = React.useState(false);
   const [restaurantId, setRestaurantId] = React.useState("");
   const [checked, setChecked] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const handleChecked = () => {
     setChecked(!checked);
@@ -51,6 +52,7 @@ const page = () => {
   }, []);
 
   const createRestaurant: any = async () => {
+    setLoading(true);
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
       version: "weekly",
@@ -83,8 +85,23 @@ const page = () => {
       !quality ||
       !restaurantId
     ) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+      toast.error("Es ist ein Fehler aufgetreten", {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
       return;
     } else if (checked == false) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
       toast.error("Bitte akzeptiere die AGB's", {
         position: "top-left",
         autoClose: 2000,
@@ -133,6 +150,9 @@ const page = () => {
             body: JSON.stringify(data),
           });
           if (response.status === 200) {
+            setTimeout(() => {
+              setLoading(false);
+            }, 500);
             toast.success("Restaurant erfolgreich erstellt", {
               position: "top-left",
               autoClose: 2000,
@@ -146,6 +166,9 @@ const page = () => {
               router.push("/");
             }, 2000);
           } else {
+            setTimeout(() => {
+              setLoading(false);
+            }, 500);
             toast.error("Restaurant konnte nicht erstellt werden", {
               position: "top-left",
               autoClose: 2000,
@@ -163,6 +186,11 @@ const page = () => {
 
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen max-w-screen flex justify-center items-center md:justify-end">
+      {loading && (
+        <div className="absolute top-0 left-0 bottom-0 right-0 z-10 bg-[#0BCAAD] flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+        </div>
+      )}
       <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 md:my-8 p-16 ">
         <p className="font-bold text-white md:h-1/4 text-6xl text-center">
           Neues Restaurant
@@ -471,7 +499,10 @@ const page = () => {
             />
             <p>
               Ich akzeptiere die{" "}
-              <Link href="/privacyPolicy" className="text-[#0BCAAD] hover:underline">
+              <Link
+                href="/privacyPolicy"
+                className="text-[#0BCAAD] hover:underline"
+              >
                 AGB's
               </Link>
             </p>

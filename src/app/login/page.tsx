@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { useTokenContext } from "@/context/useToken";
 import { useUserContext } from "@/context/useUser";
+import { set } from "mongoose";
 
 const page = () => {
   const router = useRouter();
@@ -17,9 +18,14 @@ const page = () => {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const handleLogin = async () => {
+    setLoading(true);
     if (email === "" || password === "") {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
       toast.error("Bitte fülle alle Felder aus", {
         position: "top-left",
         autoClose: 2000,
@@ -41,8 +47,14 @@ const page = () => {
       if (data.status === 200) {
         setToken(data.token);
         setUser(data.user);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
         router.push("/");
       } else {
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
         toast.error(data.message, {
           position: "top-left",
           autoClose: 2000,
@@ -60,6 +72,11 @@ const page = () => {
 
   return (
     <div className="bg-bg bg-cover h-screen w-screen flex justify-center items-center md:justify-end">
+      {loading && (
+        <div className="absolute top-0 left-0 bottom-0 right-0 z-10 bg-[#0BCAAD] flex justify-center items-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+        </div>
+      )}
       <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter py-5 backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10">
         <p className="font-bold text-white md:h-1/4 text-6xl">Anmelden</p>
         <div className="flex flex-col gap-5 md:h-2/4 justify-center items-center w-full">

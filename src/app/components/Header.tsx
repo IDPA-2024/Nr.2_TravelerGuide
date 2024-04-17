@@ -37,7 +37,7 @@ const Header = ({
     { label: "Fast Food", value: "fastfood", checked: false },
     { label: "Burger", value: "burger", checked: false },
     { label: "Kebab", value: "kebab", checked: false },
-    { label: "Sandwhich", value: "sandwhich", checked: false },
+    { label: "Sandwich", value: "sandwich", checked: false },
     { label: "Sonstiges", value: "other", checked: false },
   ]);
 

@@ -2,8 +2,9 @@
 import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
-const page = () => {
+const Verified = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
@@ -32,6 +33,14 @@ const page = () => {
         <p className="text-2xl text-center">Erfolgreich verifiziert </p>
       </div>
     </div>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div></div>}>
+      <Verified />
+    </Suspense>
   );
 };
 

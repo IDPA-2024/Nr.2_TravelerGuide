@@ -51,6 +51,7 @@ type RestaurantType = Document & {
 };
 
 type UserType = Document & {
+  _id: string;
   email: string;
   passwordHash: string;
   name: string;

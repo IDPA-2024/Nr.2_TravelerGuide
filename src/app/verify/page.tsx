@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import CustomButton from "../components/CustomButton";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
-const page = () => {
+const Verify = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const router = useRouter();
@@ -38,7 +39,11 @@ const page = () => {
             "Erneut senden " + (countdown > 0 ? "in " + countdown + "s" : "")
           }
           size="custom"
-        custom={countdown === 0 ?"min-h-16 w-3/4 text-3xl": "min-h-16 w-3/4 text-3xl cursor-not-allowed hover:bg-opacity-100 opacity-50"}
+          custom={
+            countdown === 0
+              ? "min-h-16 w-3/4 text-3xl"
+              : "min-h-16 w-3/4 text-3xl cursor-not-allowed hover:bg-opacity-100 opacity-50"
+          }
           disabled={countdown > 0}
           onClick={() => {
             setCountdown(30);
@@ -60,6 +65,14 @@ const page = () => {
         />
       </div>
     </div>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Verify />
+    </Suspense>
   );
 };
 

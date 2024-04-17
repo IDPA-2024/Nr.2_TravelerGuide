@@ -15,7 +15,9 @@ const Popover = ({
       {content.map((item) => {
         return (
           <div className="">
-            {type === "checkbox" ? <CheckboxLabels label={item} /> : null}
+            {type === "checkbox" ? (
+              <CheckboxLabels label={item} onChange={() => {}} />
+            ) : null}
             {type === "menu" ? <div>{item}</div> : null}
           </div>
         );

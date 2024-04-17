@@ -1,6 +1,6 @@
 FROM node:20.4.0 AS builder
 
-WORKDIR /
+WORKDIR /app
 
 COPY . .
 

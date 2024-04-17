@@ -2,7 +2,7 @@ name: "Build and Push to GHCR"
 on:
   push:
     branches:
-      - ghcr
+      - main
 
 env:
   working-directroy: ./

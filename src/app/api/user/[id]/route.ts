@@ -1,4 +1,10 @@
 import { User } from "@/lib/mongoose";
+export async function generateStaticParams() {
+  const users = await User.find();
+  return users.map((user: UserType) => ({
+    id: user._id.toString(),
+  }));
+}
 
 export async function GET(req: Request, params: { id: string }) {
   const body = await req.json();

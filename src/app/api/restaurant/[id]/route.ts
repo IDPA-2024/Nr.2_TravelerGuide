@@ -1,4 +1,11 @@
 import { Restaurant } from "@/lib/mongoose";
+export async function generateStaticParams() {
+  const restaurants = await Restaurant.find({});
+
+  return restaurants.map((restaurant: RestaurantType) => ({
+    id: restaurant._id.toString(),
+  }));
+}
 
 export async function GET(req: Request, params: { id: string }) {
   const { id } = params;

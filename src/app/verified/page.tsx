@@ -2,21 +2,24 @@
 import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
-const page = () => {
+const Verified = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const router = useRouter();
 
   useEffect(() => {
     const verify = async () => {
-      const result = await fetch(`/api/auth/verify?id=${id}`, {
-        method: "GET",
+      const result = await fetch(`/api/auth/verify`, {
+        method: "POST",
+        body: JSON.stringify({ id: id }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       if (result.status === 200) {
+        console.log("verified", result);
         router.replace("/login");
       } else {
         router.replace("/verify");
@@ -32,6 +35,14 @@ const page = () => {
         <p className="text-2xl text-center">Erfolgreich verifiziert </p>
       </div>
     </div>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div></div>}>
+      <Verified />
+    </Suspense>
   );
 };
 

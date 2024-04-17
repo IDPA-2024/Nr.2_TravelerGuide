@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     subject: "Verifiziere deine E-Mail-Adresse",
     react: EmailTemplate({
       name: result.name,
-      link: `${process.env.NEXT_PUBLIC_URL}/verified?id=${result._id}`,
+      link: `http://lunch-guide.ch/verified?id=${result._id}`,
     }),
   });
   if (error) {

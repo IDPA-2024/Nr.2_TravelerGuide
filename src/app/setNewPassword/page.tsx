@@ -7,8 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 
-const page = () => {
+const NewPassword = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -128,6 +129,14 @@ const page = () => {
       </div>
       <ToastContainer />
     </div>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <NewPassword />
+    </Suspense>
   );
 };
 

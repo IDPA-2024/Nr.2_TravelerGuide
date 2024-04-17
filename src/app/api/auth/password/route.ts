@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     subject: "Passwort zurücksetzen - Lunch Guide",
     react: EmailTemplate({
       name: user.name,
-      link: `${process.env.NEXT_PUBLIC_URL}/setNewPassword?id=${user._id}`,
+      link: `http://lunch-guide.ch/setNewPassword?id=${user._id}`,
     }),
   });
   if (send.error) return Response.json({ message: "error", status: 500 });

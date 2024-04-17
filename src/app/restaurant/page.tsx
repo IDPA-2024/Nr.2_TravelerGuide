@@ -196,12 +196,15 @@ const page = () => {
           Neues Restaurant
         </p>
         <div className="flex flex-col gap-5 justify-center items-center w-full ">
+          <p className="text-center">Bitte ein Restaurant auswählen, was angezeigt wird</p>
+          <p className="text-center">Wenn Ihr Restaurant nicht angezeigt wird, passen Sie die Sucheingabe an</p>
           <SearchRestaurant
             search={search}
             setSearch={setSearch}
             setId={setRestaurantId}
           />
-          <div className="bg-black/50 rounded-xl max-w-full p-5 shadow-lg shadow-black">
+          
+          <div className="bg-black/50 rounded-xl max-w-full min-w-full p-5 shadow-lg shadow-black">
             <div className="w-full flex items-center flex-col ">
               <p className="self-start text-lg">
                 Welche Kategorien liefert das Restaurant?

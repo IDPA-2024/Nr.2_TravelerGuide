@@ -16,11 +16,7 @@ FROM node:20.4.0 AS server
 
 WORKDIR /
 
-COPY --from=builder /temp/next.config.mjs ./next.config.mjs
-COPY --from=builder /temp/public ./public
-COPY --from=builder /temp/build ./build
-COPY --from=builder /temp/node_modules ./node_modules
-COPY --from=builder /temp/package.json ./package.json
+COPY --from=builder /temp ./
 
 
 CMD [ "npm", "run", "start" ]

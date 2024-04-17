@@ -74,18 +74,20 @@ const ProfilDrawer = ({
         });
         const data = await result.json();
         if (data.status === 200) {
-          setOpenProfile(false);
-          toast.success("Passwort erfolgreich geändert", {
-            position: "top-left",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            theme: "dark",
-          });
           setPassword("");
           setPasswordConfirm("");
+          setOpenProfile(false);
+          setTimeout(() => {
+            toast.success("Passwort erfolgreich geändert", {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              theme: "dark",
+            });
+          }, 50);
         } else {
           setOpenProfile(false);
           toast.error("Fehler beim ändern des Passworts", {

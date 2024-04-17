@@ -20,12 +20,7 @@ export async function POST(req: Request, res: NextApiResponse) {
         });
       }
       const token = generateToken({ email: user.email });
-      const res = new Response(null, { status: 200 });
-      res.headers.set(
-        "Set-Cookie",
-        `token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=3600`
-      );
-      return res;
+      return Response.json({ token: token, status: 200, user: user});
     } else {
       return Response.json({ message: "Passwort falsch", status: 402 });
     }

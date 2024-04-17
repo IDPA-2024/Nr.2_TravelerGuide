@@ -21,31 +21,36 @@ export async function POST(req: Request) {
       body.email.split("@")[0].split(".")[0]
     }+${body.email.split("@")[0].split(".")[1]}&size=256&format=svg`
   ).then((res) => res.text());
+  const formatedImage = image.replace('width="256px" height="256px"', "");
   const result = await User.create({
     name:
+      body.email.split("@")[0].split(".")[0].charAt(0).toUpperCase() +
       body.email
         .split("@")[0]
         .split(".")[0]
+        .slice(1)
         .replace(/[^a-zA-Z0-9]/g, "") +
       " " +
+      body.email.split("@")[0].split(".")[1].charAt(0).toUpperCase() +
       body.email
         .split("@")[0]
         .split(".")[1]
+        .slice(1)
         .replace(/[^a-zA-Z0-9]/g, ""),
-    image: image,
+    image: formatedImage,
     email: body.email,
     passwordHash: passwordHash,
     verified: false,
   });
   if (!result) return Response.json({ message: "error", status: 500 });
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const { data, error } = await resend.emails.send({
-    from: "noreply@banyard.tech",
+  const { error } = await resend.emails.send({
+    from: "Lunch-Guide <noreply@lunch-guide.ch>",
     to: [body.email],
     subject: "Verifiziere deine E-Mail-Adresse",
     react: EmailTemplate({
       name: result.name,
-      link: `${process.env.NEXT_PUBLIC_URL}/verify?id=${result._id}`,
+      link: `http://lunch-guide.ch/verified?id=${result._id}`,
     }),
   });
   if (error) {

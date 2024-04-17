@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document } from "mongoose";
+import mongoose, { Model, Document } from "mongoose";
 
 main().catch((err) => console.log(err));
 
@@ -9,11 +9,12 @@ async function main() {
 const commentSchema = new mongoose.Schema({
   user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   text: String,
-  stars: { type: Number, default: 0 },
   restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
+  created_at: { type: Date, default: Date.now },
 });
 
 const restaurantSchema = new mongoose.Schema({
+  place_id: String,
   lat: Number,
   lng: Number,
   name: String,
@@ -25,8 +26,6 @@ const restaurantSchema = new mongoose.Schema({
   indoor_seating: Boolean,
   outdoor_seating: Boolean,
   take_away: Boolean,
-  student_reduction: Boolean,
-  delivery_service: Boolean,
   ambience: {
     style: String,
     space: String,
@@ -69,66 +68,6 @@ const userSchema = new mongoose.Schema({
   verified: { type: Boolean, default: false },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comments" }],
 });
-
-type CommentType = Document & {
-  user_id: string;
-  text: string;
-  stars: number;
-  restaurantId: string;
-};
-type RestaurantType = Document & {
-  lat: number;
-  lng: number;
-  name: string;
-  address: string;
-  image: string;
-  price: string;
-  quality: string;
-  seating_option: boolean;
-  indoor_seating: boolean;
-  outdoor_seating: boolean;
-  take_away: boolean;
-  student_reduction: boolean;
-  delivery_service: boolean;
-  ambience: {
-    style: string;
-    space: string;
-    brightness: string;
-    loudness: string;
-  };
-  vegan: boolean;
-  website: string;
-  opening_hours: {
-    periods: {
-      day: string;
-      open: {
-        day: number;
-        hours: number;
-        minutes: number;
-        time: string;
-        next_date: number;
-      };
-      close: {
-        day: number;
-        hours: number;
-        minutes: number;
-        time: string;
-        next_date: number;
-      };
-    }[];
-    weekday_text: string[];
-  };
-  category: string[];
-  comments: string[];
-};
-type UserType = Document & {
-  email: string;
-  passwordHash: string;
-  name: string;
-  image: string;
-  verified: boolean;
-  comments: string[];
-};
 
 let Comment: Model<Document & CommentType>;
 let Restaurant: Model<Document & RestaurantType>;

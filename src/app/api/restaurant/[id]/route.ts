@@ -1,5 +1,11 @@
 import { Restaurant } from "@/lib/mongoose";
-import { NextApiRequest } from "next";
+export async function generateStaticParams() {
+  const restaurants = await Restaurant.find({});
+
+  return restaurants.map((restaurant: RestaurantType) => ({
+    id: restaurant._id.toString(),
+  }));
+}
 
 export async function GET(req: Request, params: { id: string }) {
   const { id } = params;
@@ -10,11 +16,11 @@ export async function GET(req: Request, params: { id: string }) {
   return Response.json({ message: "ok", status: 200, data: result });
 }
 
-export async function PUT(req: NextApiRequest, params: { id: string }) {
-  const token = req.cookies.token;
+export async function PUT(req: Request, params: { id: string }) {
+  const body = await req.json();
+  const token = body.token;
   if (!token) return Response.json({ message: "error", status: 401 });
   const { id } = params;
-  const body = await req.body;
   const result = await Restaurant.findOneAndUpdate(
     { _id: id },
     { ...body },

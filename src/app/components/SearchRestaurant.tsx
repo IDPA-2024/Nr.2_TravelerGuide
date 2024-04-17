@@ -102,7 +102,7 @@ const SearchRestaurant = ({
                 setSearch(e.target.value);
               }}
               className="text-white text-xl md:text-xl outline-none bg-transparent focus:outline-none flex-grow w-full ml-4 "
-              placeholder="Name des Restaurant"
+              placeholder="Name des Restaurants"
             />
           </div>
         )}

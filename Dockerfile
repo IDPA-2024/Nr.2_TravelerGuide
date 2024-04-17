@@ -16,11 +16,11 @@ FROM node:20.4.0 AS server
 
 WORKDIR /app
 
-COPY --from=builder /temp/next.config.mjs ./
-COPY --from=builder /temp/public ./public
-COPY --from=builder /temp/build ./build
-COPY --from=builder /temp/node_modules ./node_modules
-COPY --from=builder /temp/package.json ./package.json
+COPY --from=builder /temp/next.config.mjs ./app/next.config.mjs
+COPY --from=builder /temp/public ./app/public
+COPY --from=builder /temp/build ./app/build
+COPY --from=builder /temp/node_modules ./app/node_modules
+COPY --from=builder /temp/package.json ./app/package.json
 
 
 CMD [ "npm", "run", "start" ]

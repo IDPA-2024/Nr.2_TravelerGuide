@@ -1,17 +1,16 @@
-FROM node:20.4.0
-
+FROM node:18-bullseye as files
 WORKDIR /app
+RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide .
+RUN npm ci
+RUN npm run build
 
-RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide.git .
-
+FROM node:18-bullseye
+WORKDIR /app
+COPY --from=files /app .
 ENV DATABASE_URL=$DATABASE_URL
 ENV JWT_SECRET=$JWT_SECRET
 ENV RESEND_API_KEY=$RESEND_API_KEY
 ENV NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
 ENV SWAGGER_API_DOC_PATH=$SWAGGER_API_DOC_PATH
-
-RUN npm install
-
-RUN npm run build
-
+EXPOSE 3000
 ENTRYPOINT [ "npm", "run", "start" ]

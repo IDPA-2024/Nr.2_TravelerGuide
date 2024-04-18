@@ -1,10 +1,10 @@
-FROM node:18-bullseye as files
+FROM node:21-bullseye as files
 WORKDIR /app
 RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide .
 RUN npm ci
 RUN npm run build
 
-FROM node:18-bullseye
+FROM node:21-bullseye
 WORKDIR /app
 COPY --from=files /app .
 ENV DATABASE_URL=$DATABASE_URL

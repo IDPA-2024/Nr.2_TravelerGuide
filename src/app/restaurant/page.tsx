@@ -191,19 +191,24 @@ const page = () => {
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
         </div>
       )}
-      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 md:my-8 p-16 ">
+      <div className="flex flex-col gap-20 md:gap-10 justify-center items-center w-full h-full bg-black/50 md:rounded-xl shadow-lg shadow-black backdrop-filter backdrop-blur-md md:h-3/4 md:w-1/3 md:mr-10 md:my-8 p-16 overflow-y-scroll">
         <p className="font-bold text-white md:h-1/4 text-6xl text-center">
           Neues Restaurant
         </p>
         <div className="flex flex-col gap-5 justify-center items-center w-full ">
-          <p className="text-center">Bitte ein Restaurant auswählen, was angezeigt wird</p>
-          <p className="text-center">Wenn Ihr Restaurant nicht angezeigt wird, passen Sie die Sucheingabe an</p>
+          <p className="text-center">
+            Bitte ein Restaurant auswählen, was angezeigt wird
+          </p>
+          <p className="text-center">
+            Wenn Ihr Restaurant nicht angezeigt wird, passen Sie die Sucheingabe
+            an
+          </p>
           <SearchRestaurant
             search={search}
             setSearch={setSearch}
             setId={setRestaurantId}
           />
-          
+
           <div className="bg-black/50 rounded-xl max-w-full min-w-full p-5 shadow-lg shadow-black">
             <div className="w-full flex items-center flex-col ">
               <p className="self-start text-lg">

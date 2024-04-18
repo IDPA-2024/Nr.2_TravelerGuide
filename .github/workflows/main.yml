@@ -3,26 +3,26 @@ on:
   push:
     branches:
       - main
-
 env:
   working-directroy: ./
-
 jobs:
   GHCR:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@master
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_SERVER }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd nginx/html/lunch/
-            pm2 delete idpa
-            git pull origin main
-            pm2 start script.sh --name idpa
+       contents: read
+       packages: write
+     steps:
+       - name: Check out the repo
+         uses: actions/checkout@v4
+
+       - name: 'Login to GitHub Container Registry'
+         uses: docker/login-action@v1
+         with:
+           registry: ghcr.io
+           username: ${{secrets.USERNAME}}
+           password: ${{secrets.TOKEN}}
+
+       - name: 'Build Inventory Image'
+         run: |
+             docker build . --tag ghcr.io/aelelliotbanyard/idpa:latest
+             docker push ghcr.io/aelelliotbanyard/idpa:latest

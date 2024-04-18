@@ -15,20 +15,16 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@master
-      - name: Use Node.js 20
-        uses: actions/setup-node@v1
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          node-version: "20.x"
-      - name: Build
-        run: |
-          npm install
-          npm run build
-      - name: Deploy Files
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          server: ${{ secrets.SSH_SERVER }}
-          local_path: "./"
-          remote_path: "/nginx/html/lunch"
-          sftpArgs: "-o ConnectTimeout=5"
+          host: ${{ secrets.SSH_SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd nginx/html/lunch/ |
+            sudo docker compose down |
+            git pull origin main |
+            npm install |
+            npm run build |
+            sudo docker compose up -d

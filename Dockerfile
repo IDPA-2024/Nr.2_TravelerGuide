@@ -1,11 +1,17 @@
-FROM node:20.4.0 AS builder
+FROM node:20.4.0
 
 WORKDIR /app
 
-COPY . .
+RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide.git .
+
+ENV DATABASE_URL=$DATABASE_URL
+ENV JWT_SECRET=$JWT_SECRET
+ENV RESEND_API_KEY=$RESEND_API_KEY
+ENV NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=$NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+ENV SWAGGER_API_DOC_PATH=$SWAGGER_API_DOC_PATH
 
 RUN npm install
 
 RUN npm run build
 
-CMD [ "npm", "run", "start" ]
+ENTRYPOINT [ "npm", "run", "start" ]

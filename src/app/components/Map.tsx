@@ -80,7 +80,13 @@ const Map = ({
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
         </div>
       )}
-      <div className="w-screen h-screen" ref={mapRef} />
+      <div
+        className="w-screen h-screen"
+        style={{
+          height: "--webkit-fill-available",
+        }}
+        ref={mapRef}
+      />
     </>
   );
 };

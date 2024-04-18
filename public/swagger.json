@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Lunch Guide API",
+    "title": "Lunch-Guide API",
     "description": "This is the API for the Lunch Guide made by Ael Banyard, Evan Lüber and Yannick Schläpfer.",
     "termsOfService": "http://lunch-guide.ch/privacyPolicy",
     "contact": {

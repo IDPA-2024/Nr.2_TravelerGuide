@@ -187,7 +187,7 @@ const page = () => {
   return (
     <div className="bg-bg bg-cover bg-fixed min-h-screen max-w-screen flex justify-center items-center md:justify-end">
       {loading && (
-        <div className="absolute top-0 left-0 bottom-0 right-0 z-10 bg-[#0BCAAD] flex justify-center items-center">
+        <div className="fixed top-0 left-0 bottom-0 right-0 z-10 bg-[#0BCAAD] flex justify-center items-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
         </div>
       )}

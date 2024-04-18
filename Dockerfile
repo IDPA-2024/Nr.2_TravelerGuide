@@ -2,7 +2,7 @@ FROM node:20.4.0
 
 WORKDIR /app
 
-COPY . .
+RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide.git .
 
 RUN npm install
 

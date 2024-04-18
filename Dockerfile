@@ -1,12 +1,13 @@
 FROM node:21-bullseye as files
 WORKDIR /app
-RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide .
+RUN git clone https://github.com/IDPA-2024/Nr.2_TravelerGuide
+WORKDIR /app/Nr.2_TravelerGuide
 RUN npm ci
 RUN npm run build
 
 FROM node:21-bullseye
 WORKDIR /app
-COPY --from=files /app .
+COPY --from=files /app/Nr.2_TravelerGuide .
 ENV DATABASE_URL=$DATABASE_URL
 ENV JWT_SECRET=$JWT_SECRET
 ENV RESEND_API_KEY=$RESEND_API_KEY

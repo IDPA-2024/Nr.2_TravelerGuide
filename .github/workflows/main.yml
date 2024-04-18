@@ -30,5 +30,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           server: ${{ secrets.SSH_SERVER }}
           local_path: "./"
-          remote_path: "~/nginx/html/lunch"
+          remote_path: "/nginx/html/lunch"
           sftpArgs: "-o ConnectTimeout=5"

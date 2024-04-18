@@ -23,8 +23,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd nginx/html/lunch/
-            docker compose down
+            pm2 delete idpa
             git pull origin main
-            npm install
-            npm run build
-            docker compose up -d
+            pm2 start script.sh --name idpa

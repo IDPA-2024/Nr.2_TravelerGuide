@@ -7,8 +7,9 @@ import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const email = searchParams.get("email");
-  const user = await User.findOne({ email: email as string });
+  const email = searchParams.get("email") as string;
+  let lowerEmail = email.toLowerCase();
+  const user = await User.findOne({ email: lowerEmail });
   if (!user) return Response.json({ message: "error", status: 404 });
 
   const resend = new Resend(process.env.RESEND_API_KEY);

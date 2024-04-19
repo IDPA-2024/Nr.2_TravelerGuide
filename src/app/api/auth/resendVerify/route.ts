@@ -5,12 +5,13 @@ import { EmailTemplate } from "@/email/VerifyEmail";
 export async function POST(req: Request) {
   const body = await req.json();
   const { email } = body;
+  let lowerEmail = email.toLowerCase();
   let emailPattern: RegExp = /[a-zA-Z0-9._%+-]+@(stud.kbw|stud.krw|edu.zh).ch/g;
-  if (emailPattern.test(email) === false) {
+  if (emailPattern.test(lowerEmail) === false) {
     return Response.json({ message: "error", status: 400 });
   }
   const user = await User.findOne({
-    email: email,
+    email: lowerEmail,
   });
   if (!user) return Response.json({ message: "error", status: 401 });
   const resend = new Resend(process.env.RESEND_API_KEY);

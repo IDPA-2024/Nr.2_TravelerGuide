@@ -6,8 +6,9 @@ import { NextApiResponse } from "next";
 export async function POST(req: Request, res: NextApiResponse) {
   const body = await req.json();
   const { email, password } = body;
+  let lowerEmail = email.toLowerCase();
   const user = await User.findOne({
-    email: email,
+    email: lowerEmail,
   });
 
   if (user) {
@@ -19,7 +20,7 @@ export async function POST(req: Request, res: NextApiResponse) {
           status: 401,
         });
       }
-      const token = generateToken({ email: user.email });
+      const token = generateToken({ email: lowerEmail });
       return Response.json({ token: token, status: 200, user: user});
     } else {
       return Response.json({ message: "Passwort falsch", status: 402 });
